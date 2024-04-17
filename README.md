@@ -1,6 +1,5 @@
-# mecha
+# Mecha
 
-Mecha
 Mecha es una aplicación donde tus notas de clases se convierten en tesoros históricos compartidos a las siguientes generaciones.
 
 Descripción
