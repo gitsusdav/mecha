@@ -1,6 +1,7 @@
 #pragma once
 
 #include <iostream>
+#include <Apunte.hpp>
 
 template <typename T>
 void assert_equal(const T& current, const T& expected) noexcept
@@ -19,12 +20,22 @@ void assert_equal(const T& current, const T& expected) noexcept
 int main()
 {
 
-
+    // paso 2 hacemos los test como esperamos que funcione los metodos 
     std::cout << "Start Testing Mecha app ";
 
     {
         std::cout << "Testing Crear Usuario ";
+        // nombre Esperdo
+        // Usuario
        
+
+       // assert_equal(actual, esperado);
+    }
+
+    {
+        std::cout << "Testing Asignar ID";
+       
+       // con los datos se genera un id por tabla hash
        // assert_equal(actual, esperado);
     }
 
@@ -54,7 +65,12 @@ int main()
 
     {
         std::cout << "Testing Agregar Apunte a Clase";
-       
+        // Apunte ...
+       //  Clase...
+         Apunte::asignar_clase( 1 ); // funciones como esperamos 
+
+         //  esperamos que la clase tenga ese apunte 
+
        // assert_equal(actual, esperado);
     }
     
