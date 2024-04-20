@@ -16,3 +16,7 @@ Los usuarios pueden compartir apuntes públicamente dentro de la aplicación par
 Historial de Calificaciones: La aplicación registra el historial de calificaciones de los usuarios, permitiéndoles acceder fácilmente a notas anteriores y realizar un seguimiento de su progreso académico a lo largo del tiempo.
 
 Mecha está diseñada para optimizar la experiencia de los estudiantes universitarios en la gestión de sus notas y fomentar el intercambio de conocimientos entre pares. ¡Descárgala y transforma tus notas en tesoros históricos!
+
+### Licencia
+
+Este código es público bajo la licencia BSD (Berkeley Software Distribution) 
