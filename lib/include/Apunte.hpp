@@ -5,7 +5,7 @@
 #include <iomanip>
 #include "Comentario.hpp"
 #include "Clase.hpp"
-#include "Usuario.hpp" // Incluir el archivo de encabezado de Comentario
+#include "Usuario.hpp"
 
 class Apunte {
 

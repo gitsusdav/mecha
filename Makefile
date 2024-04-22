@@ -37,6 +37,11 @@ $(MAINDIR)/bin/%: $(MAINDIR)/src/%.cpp $(OBJECTS)
 
 main: $(MAIN) $(INCLUDES) $(SOURCES) $(MKMAIN)
 
+t: test
+	./$(TESTDIR)/bin/Mecha
+go: main
+	./$(MAINDIR)/bin/Mecha
+
 .PHONY:
 clean:
 	$(RM) $(MKTEST) $(MKMAIN)

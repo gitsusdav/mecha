@@ -33,4 +33,7 @@ public:
     void setFechaInicio(const std::string& fechaInicio);
     void setFechaFin(const std::string& fechaFin);
     void setMaterias(const std::vector<std::string>& materias);
+
+    // Método para convertir Periodo en cadena
+    std::string toString();
 };
