@@ -2,6 +2,7 @@
 
 class Apunte {
 public:
+// generar los id con sha256 
     int id; // mejor estrategia para que sea unico 
     // por tabla hash
 
