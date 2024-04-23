@@ -6,6 +6,7 @@
 
 class Utilidades{
 
-std::string generarId(const std::string& claseToString);
+public:
+    static std::string generarId(const std::string& claseToString);
 
 };

@@ -1,5 +1,5 @@
 CXX         = clang++ -std=c++17 
-WARN        = -lcrypto -Wall -Wextra -Wcast-align -Wno-sign-compare -Wno-write-strings -Wno-parentheses -Wfloat-equal -pedantic
+WARN        =  -Wall -Wextra -Wcast-align -Wno-sign-compare -Wno-write-strings -Wno-parentheses -Wfloat-equal -pedantic
 
 # Libs
 LIB         = ./lib
@@ -20,7 +20,7 @@ MKMAIN      = $(MAIN:$(MAINDIR)/src/%.cpp=$(MAINDIR)/bin/%)
 INCLUDEPATH = -I$(LIB)/include
 
 FLAGS       = -DDEBUG -g -O0
-LIBLINK     = $(OBJECTS)
+LIBLINK     = $(OBJECTS) -lcrypto
 
 all: main test
 

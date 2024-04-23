@@ -1,10 +1,11 @@
-#include "utilidades.hpp"
+
+#include "Utilidades.hpp"
 #include <openssl/sha.h>
 #include <sstream>
 #include <iomanip>
 #include <chrono>
 
-std::string generarId(const std::string& claseToString) {
+std::string Utilidades::generarId(const std::string& claseToString) {
     // Concatenar la representación de la clase con la marca de tiempo actual
     auto now = std::chrono::system_clock::now();
     auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
