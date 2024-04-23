@@ -33,4 +33,7 @@ public:
     void setFecha(const std::string& fecha);
     void setLikes(int like);
     void setDislikes(int dislike);
+
+    // Método para convertir Comentario en cadena
+    std::string toString();
 };

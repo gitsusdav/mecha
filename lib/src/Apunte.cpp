@@ -1,4 +1,4 @@
-#include "Apunte.hpp"
+#include <Apunte.hpp>
 
 // Constructor
 Apunte::Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,

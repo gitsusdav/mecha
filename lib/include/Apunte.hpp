@@ -5,7 +5,7 @@
 #include <iomanip>
 #include "Comentario.hpp"
 #include "Clase.hpp"
-#include "Usuario.hpp" 
+#include "Usuario.hpp"
 
 class Apunte {
 
