@@ -11,7 +11,7 @@ class Clase;
 class Apunte {
 
 private:
-    int ID;
+    std::string ID;
     Clase* clase;
     Usuario* usuario;
     std::string Contenido;
@@ -31,7 +31,7 @@ public:
     ~Apunte();
 
     // Métodos de acceso (getters)
-    int getID() const;
+    std::string getID() const;
     Clase* getClase() const;
     Usuario* getUsuario() const;
     std::string getContenido() const;
@@ -42,7 +42,7 @@ public:
     int getPopularidad() const;
 
     // Métodos de modificación (setters)
-    void setID(int id);
+    void setID(std::string id);
     void setClase(Clase* clase);
     void setUsuario(Usuario* usuario);
     void setContenido(const std::string& contenido);

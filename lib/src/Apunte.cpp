@@ -13,7 +13,7 @@ Apunte::~Apunte() {
 }
 
 // Métodos de acceso (getters)
-int Apunte::getID() const { return ID; }
+std::string Apunte::getID() const { return ID; }
 Clase* Apunte::getClase() const { return clase; }
 Usuario* Apunte::getUsuario() const { return usuario; }
 std::string Apunte::getContenido() const { return Contenido; }
@@ -24,7 +24,7 @@ int Apunte::getDislike() const { return Dislike; }
 int Apunte::getPopularidad() const { return Popularidad; }
 
 // Métodos de modificación (setters)
-void Apunte::setID(int id) { ID = id; }
+void Apunte::setID(std::string id) { ID = id; }
 void Apunte::setClase(Clase* clase) { this->clase = clase; }
 void Apunte::setUsuario(Usuario* usuario) { this->usuario = usuario; }
 void Apunte::setContenido(const std::string& contenido) { Contenido = contenido; }

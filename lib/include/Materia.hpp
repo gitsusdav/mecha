@@ -40,5 +40,5 @@ public:
     void setPeriodoActivo(bool periodo);
 
     // Método para convertir Materia en cadena
-    std::string toString();
+    std::string toString() const;
 };
