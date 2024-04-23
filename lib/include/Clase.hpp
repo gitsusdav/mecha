@@ -1,9 +1,8 @@
 #pragma once
-#pragma once
 
 #include <string>
 #include <vector>
-#include "Apunte.hpp" // Incluir el archivo de encabezado de Apunte
+#include "Apunte.hpp"
 
 class Clase {
 private:

@@ -1,92 +1,44 @@
-#include "Usuario.hpp"
+#include "Apunte.hpp"
 
 // Constructor
-Usuario::Usuario(const std::string& nombre, const std::string& id, const std::string& descripcion,
-        const std::vector<Usuario*>& conexiones, const std::vector<Rol>& roles,
-        int popularidad, const std::string& correo, const std::string& clave,
-        const std::vector<Apunte*>& apuntesPropios, const std::vector<Apunte*>& apuntesSeguidos)
-    : Nombre(nombre), ID(id), Descripcion(descripcion), Conexiones(conexiones),
-      Roles(roles), Popularidad(popularidad), Correo(correo), Clave(clave),
-      ApuntesPropios(apuntesPropios), ApuntesSeguidos(apuntesSeguidos) {}
+Apunte::Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,
+               const std::tm& fecha, const std::vector<Comentario*>& comentarios,
+               int like, int dislike, int popularidad)
+    : clase(clase), usuario(usuario), Contenido(contenido),
+      Fecha(fecha), Comentarios(comentarios), Like(like), Dislike(dislike), Popularidad(popularidad) {}
+
+// Destructor
+Apunte::~Apunte() {
+    // Implement any necessary cleanup here
+}
 
 // Métodos de acceso (getters)
-std::string Usuario::getNombre() const {
-    return Nombre;
-}
-
-std::string Usuario::getID() const {
-    return ID;
-}
-
-std::string Usuario::getDescripcion() const {
-    return Descripcion;
-}
-
-std::vector<Usuario*> Usuario::getConexiones() const {
-    return Conexiones;
-}
-
-std::vector<Rol> Usuario::getRoles() const {
-    return Roles;
-}
-
-int Usuario::getPopularidad() const {
-    return Popularidad;
-}
-
-std::string Usuario::getCorreo() const {
-    return Correo;
-}
-
-std::string Usuario::getClave() const {
-    return Clave;
-}
-
-std::vector<Apunte*> Usuario::getApuntesPropios() const {
-    return ApuntesPropios;
-}
-
-std::vector<Apunte*> Usuario::getApuntesSeguidos() const {
-    return ApuntesSeguidos;
-}
+int Apunte::getID() const { return ID; }
+Clase* Apunte::getClase() const { return clase; }
+Usuario* Apunte::getUsuario() const { return usuario; }
+std::string Apunte::getContenido() const { return Contenido; }
+std::tm Apunte::getFecha() const { return Fecha; }
+std::vector<Comentario*> Apunte::getComentarios() const { return Comentarios; }
+int Apunte::getLike() const { return Like; }
+int Apunte::getDislike() const { return Dislike; }
+int Apunte::getPopularidad() const { return Popularidad; }
 
 // Métodos de modificación (setters)
-void Usuario::setNombre(const std::string& nombre) {
-    Nombre = nombre;
-}
+void Apunte::setID(int id) { ID = id; }
+void Apunte::setClase(Clase* clase) { this->clase = clase; }
+void Apunte::setUsuario(Usuario* usuario) { this->usuario = usuario; }
+void Apunte::setContenido(const std::string& contenido) { Contenido = contenido; }
+void Apunte::setFecha(const std::tm& fecha) { Fecha = fecha; }
+void Apunte::setComentarios(const std::vector<Comentario*>& comentarios) { Comentarios = comentarios; }
+void Apunte::setLike(int like) { Like = like; }
+void Apunte::setDislike(int dislike) { Dislike = dislike; }
+void Apunte::setPopularidad(int popularidad) { Popularidad = popularidad; }
 
-void Usuario::setID(const std::string& id) {
-    ID = id;
-}
 
-void Usuario::setDescripcion(const std::string& descripcion) {
-    Descripcion = descripcion;
-}
-
-void Usuario::setConexiones(const std::vector<Usuario*>& conexiones) {
-    Conexiones = conexiones;
-}
-
-void Usuario::setRoles(const std::vector<Rol>& roles) {
-    Roles = roles;
-}
-
-void Usuario::setPopularidad(int popularidad) {
-    Popularidad = popularidad;
-}
-
-void Usuario::setCorreo(const std::string& correo) {
-    Correo = correo;
-}
-
-void Usuario::setClave(const std::string& clave) {
-    Clave = clave;
-}
-
-void Usuario::setApuntesPropios(const std::vector<Apunte*>& apuntesPropios) {
-    ApuntesPropios = apuntesPropios;
-}
-
-void Usuario::setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos) {
-    ApuntesSeguidos = apuntesSeguidos;
-}
+/*
+// Método para convertir Apunte en cadena
+std::string Apunte::toString() {
+    std::ostringstream oss;
+    oss << Contenido << " " << std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
+    return oss.str();
+}*/

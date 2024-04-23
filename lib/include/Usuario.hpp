@@ -2,7 +2,8 @@
 
 #include <string>
 #include <vector>
-#include "Apunte.hpp" // Incluir el archivo de encabezado de Apunte
+#include "Apunte.hpp"
+
 
 enum class Rol {
     PROFESOR,
@@ -24,8 +25,8 @@ private:
     std::vector<Apunte*> ApuntesSeguidos;
 
 public:
-    // Constructor
-    Usuario(const std::string& nombre, const std::string& id, const std::string& descripcion,
+    // Constructor sin ID
+    Usuario(const std::string& nombre, const std::string& descripcion,
             const std::vector<Usuario*>& conexiones, const std::vector<Rol>& roles,
             int popularidad, const std::string& correo, const std::string& clave, // Cambiado a "clave"
             const std::vector<Apunte*>& apuntesPropios, const std::vector<Apunte*>& apuntesSeguidos);
@@ -53,5 +54,8 @@ public:
     void setClave(const std::string& clave); // Cambiado a "clave"
     void setApuntesPropios(const std::vector<Apunte*>& apuntesPropios);
     void setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
+
+    // Método para convertir Usuario en cadena
+    std::string toString() const;
 };
 

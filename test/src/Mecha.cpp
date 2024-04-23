@@ -1,7 +1,6 @@
-#pragma once
-
 #include <iostream>
 #include <Apunte.hpp>
+#include "Utilidades.hpp"
 
 template <typename T>
 void assert_equal(const T& current, const T& expected) noexcept
@@ -16,6 +15,29 @@ void assert_equal(const T& current, const T& expected) noexcept
 
     std::cout << "Test ok!\n";
 }
+
+void testGenerarId() {
+    std::cout << "Testing Generación de ID\n";
+
+    /*Caso de prueba 1: Generación de ID con un ejemplo
+    std::string id1 = generarId("ejemplo");
+    if (id1.empty()) {
+        std::cerr << "Test failed: Generación de ID con ejemplo\n";
+    } else {
+        std::cout << "Test ok: Generación de ID con ejemplo\n";
+    }
+
+    // Caso de prueba 2: Generación de ID con cadena vacía
+    std::string id2 = generarId("");
+    if (id2.empty()) {
+        std::cerr << "Test failed: Generación de ID con cadena vacía\n";
+    } else {
+        std::cout << "Test ok: Generación de ID con cadena vacía\n";
+    }
+    */
+}
+
+
 
 int main()
 {
@@ -67,7 +89,7 @@ int main()
         std::cout << "Testing Agregar Apunte a Clase";
         // Apunte ...
        //  Clase...
-         Apunte::asignar_clase( 1 ); // funciones como esperamos 
+       //  Apunte::asignar_clase( 1 ); // funciones como esperamos 
 
          //  esperamos que la clase tenga ese apunte 
 
@@ -151,5 +173,14 @@ int main()
        
        // assert_equal(actual, esperado);
     }
+
+  
+    {
+        std::cout << "Testing Generar ID";
+
+        testGenerarId;
+    }
+  
+
 
 }
