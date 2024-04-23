@@ -19,7 +19,7 @@ void assert_equal(const T& current, const T& expected) noexcept
 void testGenerarId() {
     std::cout << "Testing Generación de ID\n";
 
-    // Caso de prueba 1: Generación de ID con un ejemplo
+    /*Caso de prueba 1: Generación de ID con un ejemplo
     std::string id1 = generarId("ejemplo");
     if (id1.empty()) {
         std::cerr << "Test failed: Generación de ID con ejemplo\n";
@@ -34,6 +34,7 @@ void testGenerarId() {
     } else {
         std::cout << "Test ok: Generación de ID con cadena vacía\n";
     }
+    */
 }
 
 

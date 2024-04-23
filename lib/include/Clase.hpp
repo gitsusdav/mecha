@@ -1,10 +1,8 @@
 #pragma once
-#pragma once
 
 #include <string>
 #include <vector>
-
-class Apunte;
+#include "Apunte.hpp"
 
 class Clase {
 private:

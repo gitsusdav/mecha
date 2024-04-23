@@ -1,9 +1,8 @@
 #pragma once
 
 #include <string>
-
-class Apunte;
-class Usuario;
+#include "Apunte.hpp"
+#include "Usuario.hpp"
 
 class Comentario {
 private:
