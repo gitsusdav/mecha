@@ -1,6 +1,7 @@
 .vscode/ 
 **.o
 
+test/bin/Mecha
 /app Flutter/windows/flutter/ephemeral
 /app Flutter/.dart_tool
 /app Flutter/.idea
@@ -51,3 +52,4 @@
 /app Flutter//android/app/debug
 /app Flutter//android/app/profile
 /app Flutter//android/app/release
+

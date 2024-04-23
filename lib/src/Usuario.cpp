@@ -8,6 +8,7 @@ Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
     : Nombre(nombre), Descripcion(descripcion), Conexiones(conexiones),
       Roles(roles), Popularidad(popularidad), Correo(correo), Clave(clave),
       ApuntesPropios(apuntesPropios), ApuntesSeguidos(apuntesSeguidos) {}
+Usuario::Usuario(){}
 
 // Métodos de acceso (getters)
 std::string Usuario::getNombre() const {
@@ -94,3 +95,7 @@ void Usuario::setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos) {
 std::string Usuario::toString() const {
     return Nombre +" "+ Descripcion +" "+  Correo;
 } 
+
+bool Usuario::operator==(const Usuario& otro) const {
+    return ID == otro.getID();
+}

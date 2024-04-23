@@ -26,7 +26,7 @@ public:
     Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,
            const std::tm& fecha, const std::vector<Comentario*>& comentarios,
            int like, int dislike, int popularidad);
-
+    Apunte();
     // Destructor
     ~Apunte();
 
@@ -54,5 +54,8 @@ public:
 
     // Método para convertir Apunte en cadena
     std::string toString();
+
+    // Sobrecargamos el operador de igualdad
+    bool operator==(const Apunte& otro) const ;
 };
 
