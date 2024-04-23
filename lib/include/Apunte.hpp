@@ -3,9 +3,10 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include "Comentario.hpp"
-#include "Clase.hpp"
-#include "Usuario.hpp"
+
+class Comentario;
+class Usuario;
+class Clase;
 
 class Apunte {
 
