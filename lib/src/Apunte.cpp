@@ -34,9 +34,11 @@ void Apunte::setLike(int like) { Like = like; }
 void Apunte::setDislike(int dislike) { Dislike = dislike; }
 void Apunte::setPopularidad(int popularidad) { Popularidad = popularidad; }
 
+
+/*
 // Método para convertir Apunte en cadena
 std::string Apunte::toString() {
     std::ostringstream oss;
     oss << Contenido << " " << std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
     return oss.str();
-}
+}*/

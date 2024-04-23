@@ -2,8 +2,8 @@
 
 #include <string>
 #include <vector>
+#include "Apunte.hpp"
 
-class Apunte;
 
 enum class Rol {
     PROFESOR,

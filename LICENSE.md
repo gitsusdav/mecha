@@ -1,3 +1,6 @@
+
+![terminado](https://github.com/gitsusdav/mecha/assets/26911843/42d2743e-c222-4589-9a1a-4a8f4525b4db)
+
 Copyright 2024 Satoshi-Group. All rights reserved.
 
 Redistribution and use in source and binary forms, with or without modification,
