@@ -17,6 +17,13 @@ Historial de Calificaciones: La aplicación registra el historial de calificacio
 
 Mecha está diseñada para optimizar la experiencia de los estudiantes universitarios en la gestión de sus notas y fomentar el intercambio de conocimientos entre pares. ¡Descárgala y transforma tus notas en tesoros históricos!
 
-### Licencia
+## Instalación
+
+El proyecto tiene como dependencia la libreria openssl/sha se debe instalar Openssl para ubuntu.
+
+`sudo apt-get install libssl-dev`
+
+
+## Licencia
 
 Este código es público bajo la licencia BSD (Berkeley Software Distribution) 
