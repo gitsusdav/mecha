@@ -3,7 +3,8 @@
 
 #include <string>
 #include <vector>
-#include "Apunte.hpp" // Incluir el archivo de encabezado de Apunte
+
+class Apunte;
 
 class Clase {
 private:

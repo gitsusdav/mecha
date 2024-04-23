@@ -1,8 +1,9 @@
 #pragma once
 
 #include <string>
-#include "Apunte.hpp" // Incluir el archivo de encabezado de Apunte
-#include "Usuario.hpp" // Incluir el archivo de encabezado de Usuario
+
+class Apunte;
+class Usuario;
 
 class Comentario {
 private:
