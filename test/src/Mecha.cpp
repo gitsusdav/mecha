@@ -1,5 +1,3 @@
-#pragma once
-
 #include <iostream>
 #include <Apunte.hpp>
 #include "Utilidades.hpp"
@@ -90,7 +88,7 @@ int main()
         std::cout << "Testing Agregar Apunte a Clase";
         // Apunte ...
        //  Clase...
-         Apunte::asignar_clase( 1 ); // funciones como esperamos 
+       //  Apunte::asignar_clase( 1 ); // funciones como esperamos 
 
          //  esperamos que la clase tenga ese apunte 
 
