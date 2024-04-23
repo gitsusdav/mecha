@@ -29,6 +29,10 @@ Compilas el proyecto desde la raíz con el comando, debes tener preinstalado el 
 
 `make`
 
+El ejecutable se encuentra en la carpeta desde la raíz main/bin/Mecha o también puedes ejecutar para compilar y ejecutar
+
+`make go`
+
 ## Licencia
 
 Este código es público bajo la licencia BSD (Berkeley Software Distribution) 
