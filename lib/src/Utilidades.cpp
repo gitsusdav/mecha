@@ -4,8 +4,10 @@
 #include <sstream>
 #include <iomanip>
 #include <chrono>
+#include <ctime>
 
-std::string Utilidades::generarId(const std::string& claseToString) {
+std::string Utilidades::generarId(const std::string& claseToString)
+{
     // Concatenar la representación de la clase con la marca de tiempo actual
     auto now = std::chrono::system_clock::now();
     auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
@@ -28,4 +30,23 @@ std::string Utilidades::generarId(const std::string& claseToString) {
     }
 
     return hashStream.str();
+}
+
+std::string Utilidades::crearFecha(int year, int month, int day) {
+    std::ostringstream oss;
+    oss << std::setw(4) << std::setfill('0') << year << '-'
+        << std::setw(2) << std::setfill('0') << month << '-'
+        << std::setw(2) << std::setfill('0') << day;
+    return oss.str();
+}
+
+std::string Utilidades::crearFecha(const std::tm& fecha) {
+    std::ostringstream oss;
+    oss << std::put_time(&fecha, "%Y-%m-%d");
+    return oss.str();
+}
+
+std::tm Utilidades::obtenerFecha(int year, int month, int day) {
+    std::tm fecha = {0, 0, 0, day, month - 1, year - 1900}; // Ajustar mes y año
+    return fecha;
 }
