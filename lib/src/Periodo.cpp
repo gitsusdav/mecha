@@ -1,10 +1,10 @@
 #include "Periodo.hpp"
 
 // Constructor
-Periodo::Periodo(std::string id, const std::string& nombre, const std::string& descripcion,
-        const std::string& fechaInicio, const std::string& fechaFin,
+Periodo::Periodo( const std::string& nombre, const std::string& descripcion,
+        const std::tm& fechaInicio, const std::tm& fechaFin,
         const std::vector<std::string>& materias)
-    : ID(id), Nombre(nombre), Descripcion(descripcion), FechaInicio(fechaInicio),
+    : Nombre(nombre), Descripcion(descripcion), FechaInicio(fechaInicio),
       FechaFin(fechaFin), Materias(materias) {}
 
 // Métodos de acceso (getters)
@@ -20,11 +20,11 @@ std::string Periodo::getDescripcion() const {
     return Descripcion;
 }
 
-std::string Periodo::getFechaInicio() const {
+std::tm Periodo::getFechaInicio() const {
     return FechaInicio;
 }
 
-std::string Periodo::getFechaFin() const {
+std::tm Periodo::getFechaFin() const {
     return FechaFin;
 }
 
@@ -45,14 +45,19 @@ void Periodo::setDescripcion(const std::string& descripcion) {
     Descripcion = descripcion;
 }
 
-void Periodo::setFechaInicio(const std::string& fechaInicio) {
+void Periodo::setFechaInicio(const std::tm& fechaInicio) {
     FechaInicio = fechaInicio;
 }
 
-void Periodo::setFechaFin(const std::string& fechaFin) {
+void Periodo::setFechaFin(const std::tm& fechaFin) {
     FechaFin = fechaFin;
 }
 
 void Periodo::setMaterias(const std::vector<std::string>& materias) {
     Materias = materias;
 }
+std::string Periodo::toString() const {
+              std::ostringstream oss;
+    oss << Nombre  << " " << Descripcion  << " " <<  std::put_time(&FechaInicio, "%Y-%m-%d %H:%M:%S");
+    return oss.str();
+} 

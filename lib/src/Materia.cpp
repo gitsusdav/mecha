@@ -64,3 +64,6 @@ void Materia::setClases(const std::vector<Clase*>& clases) {
 void Materia::setPeriodoActivo(bool periodo) {
     PeriodoActivo = periodo;
 }
+std::string Materia::toString() const {
+        return Nombre +" "+ Descripcion;
+} 

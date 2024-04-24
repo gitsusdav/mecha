@@ -1,4 +1,4 @@
-#include "Apunte.hpp"
+#include <Apunte.hpp>
 
 // Constructor
 Apunte::Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,
@@ -13,7 +13,7 @@ Apunte::~Apunte() {
 }
 
 // Métodos de acceso (getters)
-int Apunte::getID() const { return ID; }
+std::string Apunte::getID() const { return ID; }
 Clase* Apunte::getClase() const { return clase; }
 Usuario* Apunte::getUsuario() const { return usuario; }
 std::string Apunte::getContenido() const { return Contenido; }
@@ -24,7 +24,7 @@ int Apunte::getDislike() const { return Dislike; }
 int Apunte::getPopularidad() const { return Popularidad; }
 
 // Métodos de modificación (setters)
-void Apunte::setID(int id) { ID = id; }
+void Apunte::setID(std::string id) { ID = id; }
 void Apunte::setClase(Clase* clase) { this->clase = clase; }
 void Apunte::setUsuario(Usuario* usuario) { this->usuario = usuario; }
 void Apunte::setContenido(const std::string& contenido) { Contenido = contenido; }
@@ -34,11 +34,9 @@ void Apunte::setLike(int like) { Like = like; }
 void Apunte::setDislike(int dislike) { Dislike = dislike; }
 void Apunte::setPopularidad(int popularidad) { Popularidad = popularidad; }
 
-
-/*
 // Método para convertir Apunte en cadena
 std::string Apunte::toString() {
     std::ostringstream oss;
     oss << Contenido << " " << std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
     return oss.str();
-}*/
+}

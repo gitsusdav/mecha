@@ -1,4 +1,4 @@
-// convertir clase toString a sha256
+// convertir clase toString + Time.now () a sha256 
 
 #pragma once
 
@@ -6,6 +6,7 @@
 
 class Utilidades{
 
-std::string generarId(const std::string& claseToString);
+public:
+    static std::string generarId(const std::string& claseToString);
 
 };

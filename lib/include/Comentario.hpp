@@ -1,28 +1,31 @@
 #pragma once
 
 #include <string>
+#include <iomanip>
 #include "Apunte.hpp"
 #include "Usuario.hpp"
 
 class Comentario {
 private:
+    std::string id;
     Apunte* apunte;
     Usuario* usuario;
     std::string Contenido;
-    std::string Fecha;
+    std::tm Fecha;
     int Like;
     int Dislikes;
 
 public:
     // Constructor
     Comentario(Apunte* apunte, Usuario* usuario, const std::string& contenido,
-               const std::string& fecha, int likes, int dislikes);
+               const std::tm& fecha, int likes, int dislikes);
 
     // Métodos de acceso (getters)
     Apunte* getApunte() const;
     Usuario* getUsuario() const;
     std::string getContenido() const;
-    std::string getFecha() const;
+    std::tm getFecha() const;
+    std::string getID() const;
     int getLikes() const;
     int getDislikes() const;
 
@@ -30,7 +33,11 @@ public:
     void setApunte(Apunte* apunte);
     void setUsuario(Usuario* usuario);
     void setContenido(const std::string& contenido);
-    void setFecha(const std::string& fecha);
+    void setFecha(const std::tm& fecha);
     void setLikes(int like);
+    void setID(const std::string& ID);
     void setDislikes(int dislike);
+
+    // Método para convertir Comentario en cadena
+    std::string toString() const;
 };

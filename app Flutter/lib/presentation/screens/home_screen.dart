@@ -57,7 +57,7 @@ class HomeScreen extends StatelessWidget {
           height: 40,
           child: Center(
             child: ListView.builder(
-              shrinkWrap: true, // lo centra horizontalmente
+              shrinkWrap: true, 
               scrollDirection: Axis.horizontal,
               itemCount: 1,
               itemBuilder: (context, index) {

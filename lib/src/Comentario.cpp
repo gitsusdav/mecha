@@ -2,7 +2,7 @@
 
 // Constructor
 Comentario::Comentario(Apunte* apunte, Usuario* usuario, const std::string& contenido,
-           const std::string& fecha, int likes, int dislikes)
+           const std::tm& fecha, int likes, int dislikes)
     : apunte(apunte), usuario(usuario), Contenido(contenido),
       Fecha(fecha), Like(likes), Dislikes(dislikes) {}
 
@@ -19,7 +19,11 @@ std::string Comentario::getContenido() const {
     return Contenido;
 }
 
-std::string Comentario::getFecha() const {
+std::string Comentario::getID() const {
+    return id;
+}
+
+std::tm Comentario::getFecha() const {
     return Fecha;
 }
 
@@ -44,8 +48,12 @@ void Comentario::setContenido(const std::string& contenido) {
     Contenido = contenido;
 }
 
-void Comentario::setFecha(const std::string& fecha) {
+void Comentario::setFecha(const std::tm& fecha) {
     Fecha = fecha;
+}
+
+void Comentario::setID(const std::string& ID) {
+    id = ID;
 }
 
 void Comentario::setLikes(int like) {
@@ -55,3 +63,8 @@ void Comentario::setLikes(int like) {
 void Comentario::setDislikes(int dislike) {
     Dislikes = dislike;
 }
+std::string Comentario::toString() const {
+            std::ostringstream oss;
+    oss << Contenido  << " " <<  std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
+    return oss.str();
+} 

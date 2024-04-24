@@ -1,16 +1,18 @@
-# mecha_app
+# Mecha App para Android
 
-Aplicacion de Flutter multiplataforma, enfocada para Android
+Mecha es una aplicación para estudiantes universitarios que transforma tus notas de clase en tesoros históricos. Gestiona y organiza tus notas por materia y fecha, comparte tus apuntes con compañeros y realiza un seguimiento de tu progreso académico. ¡Descarga Mecha y lleva tu aprendizaje al siguiente nivel!
 
-## Getting Started
+## Ejecuta el Proyecto de Flutter
 
-This project is a starting point for a Flutter application.
+Para ejecutar el proyecto, necesitas el sdk de Flutter, Visual Studio Code y Android Studio junto con los emuladores y el sdk 33.
 
-A few resources to get you started if this is your first Flutter project:
+Puedes ver mas de como instalar flutter en la documentación.
 
-- [Lab: Write your first Flutter app](https://docs.flutter.dev/get-started/codelab)
-- [Cookbook: Useful Flutter samples](https://docs.flutter.dev/cookbook)
+- [Documentacion de Flutter](https://docs.flutter.dev/)
+- [Instalar Flutter](https://docs.flutter.dev/get-started/install)
 
-For help getting started with Flutter development, view the
-[online documentation](https://docs.flutter.dev/), which offers tutorials,
-samples, guidance on mobile development, and a full API reference.
+## Licencia
+
+Este código es público bajo la licencia BSD (Berkeley Software Distribution) 
+
+
