@@ -5,6 +5,8 @@
 #include "Clase.hpp" 
 #include "Periodo.hpp"
 
+class Periodo;
+
 class Materia {
 private:
     int ID;

@@ -5,7 +5,7 @@ Periodo::Periodo( const std::string& nombre, const std::string& descripcion,
         const std::tm& fechaInicio, const std::tm& fechaFin,
         const std::vector<std::string>& materias)
     : Nombre(nombre), Descripcion(descripcion), FechaInicio(fechaInicio),
-      FechaFin(fechaFin), Materias(materias) {}
+      FechaFin(fechaFin) {}
 Periodo::Periodo(){}
 // Métodos de acceso (getters)
 std::string Periodo::getID() const {
@@ -28,7 +28,7 @@ std::tm Periodo::getFechaFin() const {
     return FechaFin;
 }
 
-std::vector<std::string> Periodo::getMaterias() const {
+std::vector<*Materia> Periodo::getMaterias() const {
     return Materias;
 }
 
@@ -53,11 +53,11 @@ void Periodo::setFechaFin(const std::tm& fechaFin) {
     FechaFin = fechaFin;
 }
 
-void Periodo::setMaterias(const std::vector<std::string>& materias) {
+void Periodo::setMaterias(const std::vector<*Materia>& materias) {
     Materias = materias;
 }
 std::string Periodo::toString() const {
-              std::ostringstream oss;
+    std::ostringstream oss;
     oss << Nombre  << " " << Descripcion  << " " <<  std::put_time(&FechaInicio, "%Y-%m-%d %H:%M:%S");
     return oss.str();
 } 
