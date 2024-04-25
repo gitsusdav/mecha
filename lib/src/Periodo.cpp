@@ -6,7 +6,7 @@ Periodo::Periodo( const std::string& nombre, const std::string& descripcion,
         const std::vector<std::string>& materias)
     : Nombre(nombre), Descripcion(descripcion), FechaInicio(fechaInicio),
       FechaFin(fechaFin), Materias(materias) {}
-
+Periodo::Periodo(){}
 // Métodos de acceso (getters)
 std::string Periodo::getID() const {
     return ID;

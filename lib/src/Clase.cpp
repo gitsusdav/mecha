@@ -4,8 +4,9 @@
 Clase::Clase( int idMateria, const std::string& descripcion,
              const std::tm& fecha, const std::vector<std::string>& recursos,
              const std::vector<Apunte*>& apuntes, const std::string& tema)
-    : ID_Materia(idMateria), Descripcion(descripcion), Fecha(fecha),
-      Recursos(recursos), Apuntes(apuntes), Tema(tema) {}
+          : ID_Materia(idMateria), Descripcion(descripcion), Fecha(fecha),
+            Recursos(recursos), Apuntes(apuntes), Tema(tema) {}
+Clase::Clase(){}
 
 // Getters
 int Clase::getID() const { return ID; }
