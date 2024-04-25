@@ -7,7 +7,7 @@
 
 class Materia {
 private:
-    int ID;
+    std::string ID;
     Periodo* periodo;
     std::string Descripcion;
     std::vector<std::string> Profesores;
@@ -17,12 +17,12 @@ private:
 
 public:
     // Constructor
-    Materia(int id, Periodo* periodo, const std::string& descripcion,
+    Materia( Periodo* periodo, const std::string& descripcion,
             const std::vector<std::string>& profesores, const std::string& nombre,
             const std::vector<Clase*>& clases, bool periodoActivo);
     Materia();
     // Métodos de acceso (getters)
-    int getID() const;
+    std::string getID() const;
     Periodo* getPeriodo() const;
     std::string getDescripcion() const;
     std::vector<std::string> getProfesores() const;
@@ -31,7 +31,7 @@ public:
     bool getPeriodoActivo() const;
 
     // Métodos de modificación (setters)
-    void setID(int id);
+    void setID(std::string id);
     void setPeriodo(Periodo* periodo);
     void setDescripcion(const std::string& descripcion);
     void setProfesores(const std::vector<std::string>& profesores);
