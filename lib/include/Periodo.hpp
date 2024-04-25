@@ -18,7 +18,7 @@ public:
     Periodo(const std::string& nombre, const std::string& descripcion,
             const std::tm& fechaInicio, const std::tm& fechaFin,
             const std::vector<std::string>& materias);
-
+    Periodo();
     // Métodos de acceso (getters)
     std::string getID() const;
     std::string getNombre() const;

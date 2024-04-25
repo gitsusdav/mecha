@@ -21,7 +21,7 @@ public:
     Clase( int idMateria, const std::string& descripcion,
           const std::tm& fecha, const std::vector<std::string>& recursos,
           const std::vector<Apunte*>& apuntes, const std::string& tema);
-
+    Clase();
     // Métodos de acceso (getters)
     int getID() const;
     int getIDMateria() const;

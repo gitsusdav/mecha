@@ -20,7 +20,7 @@ public:
     Materia(int id, Periodo* periodo, const std::string& descripcion,
             const std::vector<std::string>& profesores, const std::string& nombre,
             const std::vector<Clase*>& clases, bool periodoActivo);
-
+    Materia();
     // Métodos de acceso (getters)
     int getID() const;
     Periodo* getPeriodo() const;

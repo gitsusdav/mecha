@@ -6,7 +6,7 @@ Materia::Materia(int id, Periodo* periodo, const std::string& descripcion,
         const std::vector<Clase*>& clases, bool periodoActivo)
     : ID(id), periodo(periodo), Descripcion(descripcion), Profesores(profesores),
       Nombre(nombre), Clases(clases), PeriodoActivo(periodoActivo) {}
-
+Materia::Materia(){}
 // Métodos de acceso (getters)
 int Materia::getID() const {
     return ID;

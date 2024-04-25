@@ -6,7 +6,7 @@ Apunte::Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,
                int like, int dislike, int popularidad)
     : clase(clase), usuario(usuario), Contenido(contenido),
       Fecha(fecha), Comentarios(comentarios), Like(like), Dislike(dislike), Popularidad(popularidad) {}
-
+Apunte::Apunte(){}
 // Destructor
 Apunte::~Apunte() {
     // Implement any necessary cleanup here
@@ -39,4 +39,8 @@ std::string Apunte::toString() {
     std::ostringstream oss;
     oss << Contenido << " " << std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
     return oss.str();
+}
+
+bool Apunte::operator==(const Apunte& otro) const {
+    return ID == otro.getID();
 }
