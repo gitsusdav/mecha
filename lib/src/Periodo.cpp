@@ -33,7 +33,7 @@ std::vector<std::string> Periodo::getMaterias() const {
 }
 
 // Métodos de modificación (setters)
-void Periodo::setID(int id) {
+void Periodo::setID(std::string id) {
     ID = id;
 }
 
