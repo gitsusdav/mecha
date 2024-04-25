@@ -3,7 +3,8 @@
 #include <string>
 #include <vector>
 #include "Clase.hpp" 
-#include "Periodo.hpp"
+
+class Periodo;
 
 class Periodo;
 

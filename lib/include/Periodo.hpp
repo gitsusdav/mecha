@@ -7,6 +7,8 @@
 
 class Materia;
 
+class Materia;
+
 class Periodo {
 private:
     std::string ID;
@@ -19,8 +21,7 @@ private:
 public:
     // Constructor
     Periodo(const std::string& nombre, const std::string& descripcion,
-            const std::tm& fechaInicio, const std::tm& fechaFin,
-            const std::vector<std::string>& materias);
+            const std::tm& fechaInicio, const std::tm& fechaFin);
     Periodo();
     // Métodos de acceso (getters)
     std::string getID() const;
