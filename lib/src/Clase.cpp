@@ -6,8 +6,7 @@ Clase::Clase( std::string idMateria, const std::string& descripcion,
              const std::vector<Apunte*>& apuntes, const std::string& tema)
           : ID_Materia(idMateria), Descripcion(descripcion), Fecha(fecha),
             Recursos(recursos), Apuntes(apuntes), Tema(tema) {}
-Clase::Clase(){}
-
+Clase::Clase(){};
 // Getters
 std::string Clase::getID() const { return ID; }
 std::string Clase::getIDMateria() const { return ID_Materia; }
@@ -26,8 +25,15 @@ void Clase::setRecursos(const std::vector<std::string>& recursos) { Recursos = r
 void Clase::setApuntes(const std::vector<Apunte*>& apuntes) { Apuntes = apuntes; }
 void Clase::setTema(const std::string& tema) { Tema = tema; }
 
+void Clase::agregarApunte(Apunte* nuevoApunte) {
+    Apuntes.push_back(nuevoApunte);
+}
+
 std::string Clase::toString() {
         std::ostringstream oss;
     oss << Descripcion << " " << Tema << " " <<  std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
     return oss.str();
 }
+
+
+

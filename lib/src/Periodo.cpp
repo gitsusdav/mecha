@@ -3,7 +3,7 @@
 
 // Constructor
 Periodo::Periodo( const std::string& nombre, const std::string& descripcion,
-        const std::tm& fechaInicio, const std::tm& fechaFin)
+        const std::tm& fechaInicio, const std::tm& fechaFin )
     : Nombre(nombre), Descripcion(descripcion), FechaInicio(fechaInicio),
       FechaFin(fechaFin) {}
 Periodo::Periodo(){}
@@ -57,7 +57,7 @@ void Periodo::setMaterias(const std::vector<Materia *>& materias) {
     Materias = materias;
 }
 std::string Periodo::toString() const {
-              std::ostringstream oss;
+    std::ostringstream oss;
     oss << Nombre  << " " << Descripcion  << " " <<  std::put_time(&FechaInicio, "%Y-%m-%d %H:%M:%S");
     return oss.str();
 } 

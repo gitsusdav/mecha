@@ -3,11 +3,11 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include "Comentario.hpp"
+#include "Clase.hpp"
+#include "Usuario.hpp"
 
 class Comentario;
-class Usuario;
-class Clase;
-
 class Apunte {
 
 private:
@@ -24,7 +24,7 @@ private:
 public:
     // Constructor
     Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,
-           const std::tm& fecha, const std::vector<Comentario*>& comentarios,
+           const std::tm& fecha, const std::vector<Comentario*> &comentarios,
            int like, int dislike, int popularidad);
     Apunte();
     // Destructor
@@ -47,7 +47,7 @@ public:
     void setUsuario(Usuario* usuario);
     void setContenido(const std::string& contenido);
     void setFecha(const std::tm& fecha);
-    void setComentarios(const std::vector<Comentario*>& comentarios);
+    void setComentarios(const std::vector<Comentario*> comentarios);
     void setLike(int like);
     void setDislike(int dislike);
     void setPopularidad(int popularidad);

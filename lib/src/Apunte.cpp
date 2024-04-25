@@ -1,8 +1,8 @@
 #include <Apunte.hpp>
 
 // Constructor
-Apunte::Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,
-               const std::tm& fecha, const std::vector<Comentario*>& comentarios,
+Apunte::Apunte(Clase* clase, Usuario* usuario, const std::string& contenido,
+               const std::tm& fecha, const std::vector<Comentario*> &comentarios,
                int like, int dislike, int popularidad)
     : clase(clase), usuario(usuario), Contenido(contenido),
       Fecha(fecha), Comentarios(comentarios), Like(like), Dislike(dislike), Popularidad(popularidad) {}
@@ -29,10 +29,10 @@ void Apunte::setClase(Clase* clase) { this->clase = clase; }
 void Apunte::setUsuario(Usuario* usuario) { this->usuario = usuario; }
 void Apunte::setContenido(const std::string& contenido) { Contenido = contenido; }
 void Apunte::setFecha(const std::tm& fecha) { Fecha = fecha; }
-void Apunte::setComentarios(const std::vector<Comentario*>& comentarios) { Comentarios = comentarios; }
+void Apunte::setComentarios(const std::vector<Comentario*> comentarios) { Comentarios = comentarios; }
 void Apunte::setLike(int like) { Like = like; }
 void Apunte::setDislike(int dislike) { Dislike = dislike; }
-void Apunte::setPopularidad(int popularidad) { Popularidad = popularidad; }
+void Apunte::setPopularidad(int popularidad) { Popularidad = getLike() - getDislike(); }
 
 // Método para convertir Apunte en cadena
 std::string Apunte::toString() {
