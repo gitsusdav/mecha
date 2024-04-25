@@ -1,4 +1,5 @@
 #include "Materia.hpp"
+#include "Periodo.hpp"
 
 // Constructor
 Materia::Materia(int id, Periodo* periodo, const std::string& descripcion,
