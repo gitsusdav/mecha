@@ -32,7 +32,7 @@ public:
     std::vector<Materia*> getMaterias() const;
 
     // Métodos de modificación (setters)
-    void setID(int id);
+    void setID(std::string id);
     void setNombre(const std::string& nombre);
     void setDescripcion(const std::string& descripcion);
     void setFechaInicio(const std::tm& fechaInicio);

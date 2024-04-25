@@ -35,7 +35,9 @@ int main()
     Materia* nuevaMateria = new Materia();
     Periodo* nuevoPeriodo = new Periodo();         
     Usuario* nuevoUsuario = new Usuario(); 
-
+    std::vector<Apunte*> misApuntes = {nuevoApunte, nuevoApunteDos};
+    std::vector<Clase*> clasesMateria = {nuevaClase};
+    std::vector<Materia*> periodoMateria = {nuevaMateria};
     // paso 2 hacemos los test como esperamos que funcione los metodos 
     std::cout << "Start Testing Mecha app" << "\n";
     {
@@ -163,37 +165,136 @@ int main()
     }
 
     {
-        std::cout << "Testing Asignar ID Usuario";
 
-       // std::string idApunte =  
-       
-     //  assertEqual(actual, esperado);
+        std::cout << "Testing Crear Clase" << "\n";
+    
+        auto now = std::chrono::system_clock::now();
+
+        std::time_t time = std::chrono::system_clock::to_time_t(now);
+
+        std::tm* local_time = std::localtime(&time);
+
+        std::vector<std::string> misRecursos = {"urlRecuerso1", "urlRecuerso2", "urlRecuerso3"};
+
+        nuevaClase->setApuntes(misApuntes);
+        nuevaClase->setDescripcion("descrip");
+        nuevaClase->setFecha(*local_time);
+        nuevaClase->setIDMateria("string");
+        nuevaClase->setRecursos(misRecursos);
+        nuevaClase->setTema("tema principal");
+
+        assertEqual(nuevoApunte->getContenido(), nuevaClase->getApuntes().at(0)->getContenido());
+        assertEqual(std::string("descrip"), nuevaClase->getDescripcion());
+        assertEqual(local_time->tm_yday,nuevaClase->getFecha().tm_yday);
+        assertEqual(std::string("string"),nuevaClase->getIDMateria());
+        assertEqual(std::string("tema principal"), nuevaClase->getTema());
+        assertEqual(misApuntes.at(0),nuevaClase->getApuntes().at(0));
+
+        // Constructor full
+
     }
 
     {
-        std::cout << "Testing Crear Periodo";
-       
-       // assert_equal(actual, esperado);
+
+        std::cout << "Testing Crear Materia" << "\n";
+
+        std::vector<std::string> profesoresMateria = {"Profesor1", "Profesor2", "Profesor3"};
+
+        nuevaMateria->setClases(clasesMateria);
+        nuevaMateria->setDescripcion("descrip");
+        nuevaMateria->setNombre("Materia");
+        nuevaMateria->setPeriodo(nuevoPeriodo);
+        nuevaMateria->setPeriodoActivo(true);
+        nuevaMateria->setProfesores(profesoresMateria);
+
+        assertEqual(nuevaClase->getDescripcion() ,nuevaMateria->getClases().at(0)->getDescripcion());
+        assertEqual(std::string("descrip") ,nuevaMateria->getDescripcion());
+        assertEqual(nuevoPeriodo->getDescripcion() ,nuevaMateria->getPeriodo()->getDescripcion());
+        assertEqual(std::string("Materia") ,nuevaMateria->getNombre());
+        assertEqual(true ,nuevaMateria->getPeriodoActivo());
+        assertEqual(profesoresMateria.at(0) ,nuevaMateria->getProfesores().at(0));
+    
     }
 
     {
-        std::cout << "Testing Crear Materia";
-       
-       // assert_equal(actual, esperado);
+
+        std::cout << "Testing Crear Periodo" << "\n";
+
+        auto now = std::chrono::system_clock::now();
+
+        std::time_t time = std::chrono::system_clock::to_time_t(now);
+
+        std::tm* local_time = std::localtime(&time);
+
+        nuevoPeriodo->setDescripcion("descr");
+        nuevoPeriodo->setFechaFin(*local_time);
+        nuevoPeriodo->setFechaInicio(*local_time);
+        nuevoPeriodo->setMaterias(periodoMateria);
+        nuevoPeriodo->setNombre("A2024");
+    
     }
 
     {
-        std::cout << "Testing Crear Clase";
-       
-       // assert_equal(actual, esperado);
+        std::cout << "Testing Asignar ID Usuario" << "\n";
+
+        std::string idUsuario =  Utilidades::generarId(nuevoUsuario->toString());
+        nuevoUsuario->setID(idUsuario);
+
+        assertEqual(idUsuario, nuevoUsuario->getID());
+
+    }
+
+     {
+        std::cout << "Testing Asignar ID Apunte" << "\n";
+
+        std::string idApunte =  Utilidades::generarId(nuevoApunte->toString());
+        nuevoApunte->setID(idApunte);
+
+        assertEqual(idApunte, nuevoApunte->getID());
+
     }
 
     {
-        std::cout << "Testing Crear Apunte";
-       
-       // assert_equal(actual, esperado);
+        std::cout << "Testing Asignar ID Clase" << "\n";
+
+        std::string idClase =  Utilidades::generarId(nuevaClase->toString());
+        nuevaClase->setID(idClase);
+
+        assertEqual(idClase, nuevaClase->getID());
+
     }
 
+    {
+        std::cout << "Testing Asignar ID Materia" << "\n";
+
+        std::string idMateria =  Utilidades::generarId(nuevaMateria->toString());
+        nuevaMateria->setID(idMateria);
+
+        assertEqual(idMateria, nuevaMateria->getID());
+
+    }
+
+    {
+        std::cout << "Testing Asignar ID Periodo" << "\n";
+
+        std::string idPeriodo =  Utilidades::generarId(nuevoPeriodo->toString());
+        nuevoPeriodo->setID(idPeriodo);
+
+        assertEqual(idPeriodo, nuevoPeriodo->getID());
+
+    }
+    
+    {
+        std::cout << "Testing Asignar ID Comentario" << "\n";
+
+        std::string idComentario =  Utilidades::generarId(nuevoComentario->toString());
+        nuevoComentario->setID(idComentario);
+
+        assertEqual(idComentario, nuevoComentario->getID());
+
+    }
+
+   
     {
         std::cout << "Testing Agregar Apunte a Clase";
         // Apunte ...
@@ -284,10 +385,6 @@ int main()
     }
 
   
-    {
-        std::cout << "Testing Generar ID";
-
-    }
 
     // se libera la memoria
     delete nuevoComentario;
