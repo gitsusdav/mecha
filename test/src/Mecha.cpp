@@ -27,7 +27,7 @@ void assertEqual(const T& current, const T& expected) noexcept
 
 int main()
 {
-    // reserbamos memoria 
+    // reservamos memoria 
     Comentario* nuevoComentario = new Comentario();   
     Apunte* nuevoApunte = new Apunte(); 
     Apunte* nuevoApunteDos = new Apunte();
@@ -299,11 +299,15 @@ int main()
         std::cout << "Testing Agregar Apunte a Clase";
         // Apunte ...
        //  Clase...
+      // nuevoApunte
+       nuevaClase->agregarApunte(nuevoApunte);
+
+
        //  Apunte::asignar_clase( 1 ); // funciones como esperamos 
-
+        std::cout << "Apunte Contenido "  << nuevoApunte->getContenido() << "\n";
          //  esperamos que la clase tenga ese apunte 
-
-       // assert_equal(actual, esperado);
+        assertEqual(nuevoApunte->getClase()->getID(), nuevaClase->getID());
+        assertEqual(nuevoApunte->getContenido(), nuevaClase->getApuntes().back()->getContenido());
     }
     
     {
@@ -324,17 +328,6 @@ int main()
        // assert_equal(actual, esperado);
     }
 
-    {
-        std::cout << "Testing Crear Comentario";
-       
-       // assert_equal(actual, esperado);
-    } 
-
-    {
-        std::cout << "Testing Crear Apunte anonimo";
-       
-       // assert_equal(actual, esperado);
-    } 
 
     {
         std::cout << "Testing Agregar Comentario a Apunte";

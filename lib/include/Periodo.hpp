@@ -3,9 +3,6 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include "Materia.hpp"
-
-class Materia;
 
 class Materia;
 
