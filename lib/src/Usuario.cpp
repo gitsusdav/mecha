@@ -1,4 +1,5 @@
 #include <Usuario.hpp>
+#include "Apunte.hpp"
 
 // Constructor
 Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
@@ -98,4 +99,56 @@ std::string Usuario::toString() const {
 
 bool Usuario::operator==(const Usuario& otro) const {
     return ID == otro.getID();
+}
+
+void Usuario::agregarApunteSeguido(Apunte* apunte) {
+    if (std::find(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), apunte) == ApuntesSeguidos.end()) {
+        ApuntesSeguidos.push_back(apunte);
+    }
+}
+
+void Usuario::eliminarApunteSeguido(const std::string& idApunte) {
+    auto it = std::find_if(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesSeguidos.end()) {
+        ApuntesSeguidos.erase(it);
+    }
+}
+
+void Usuario::agregarApuntePropio(Apunte* apunte) {
+    if (std::find(ApuntesPropios.begin(), ApuntesPropios.end(), apunte) == ApuntesPropios.end()) {
+        ApuntesPropios.push_back(apunte);
+    }
+}
+
+void Usuario::eliminarApuntePropio(const std::string& idApunte) {
+    auto it = std::find_if(ApuntesPropios.begin(), ApuntesPropios.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesPropios.end()) {
+        ApuntesPropios.erase(it);
+    }
+}
+
+Apunte* Usuario::buscarApuntePropiosPorID(const std::string& idApunte) const {
+    auto it = std::find_if(ApuntesPropios.begin(), ApuntesPropios.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesPropios.end()) {
+        return *it;
+    } else {
+        return nullptr;
+    }
+}
+
+Apunte* Usuario::buscarApunteSeguidosPorID(const std::string& idApunte) const {
+    auto it = std::find_if(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesSeguidos.end()) {
+        return *it;
+    } else {
+        return nullptr;
+    }
 }
