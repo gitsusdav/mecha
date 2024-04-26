@@ -38,6 +38,7 @@ int main()
     std::vector<Apunte*> misApuntes = {nuevoApunte, nuevoApunteDos};
     std::vector<Clase*> clasesMateria = {nuevaClase};
     std::vector<Materia*> periodoMateria = {nuevaMateria};
+    
     // paso 2 hacemos los test como esperamos que funcione los metodos 
     std::cout << "Start Testing Mecha app" << "\n";
     {
