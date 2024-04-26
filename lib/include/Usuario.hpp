@@ -2,6 +2,9 @@
 
 #include <string>
 #include <vector>
+#include <algorithm> 
+#include <iterator>  
+
 
 class Apunte;
 
@@ -60,6 +63,13 @@ public:
     std::string toString() const;
     
     // Sobrecargamos el operador de igualdad
-    bool operator==(const Usuario& otro) const ;
+    bool operator==(const Usuario& otro) const;
+
+    void agregarApunteSeguido(Apunte* apunte);
+    void eliminarApunteSeguido(const std::string& idApunte);
+    void agregarApuntePropio(Apunte* apunte);
+    void eliminarApuntePropio(const std::string& idApunte);
+    Apunte* buscarApuntePropiosPorID(const std::string& idApunte) const;
+    Apunte* buscarApunteSeguidosPorID(const std::string& idApunte) const;
 };
 
