@@ -4,8 +4,8 @@
 #include <vector>
 #include "Clase.hpp" 
 
-class Periodo;
 
+class Periodo;
 class Materia {
 private:
     std::string ID;
