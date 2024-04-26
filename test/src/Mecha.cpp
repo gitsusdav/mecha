@@ -336,15 +336,19 @@ int main()
     } 
 
     {
-        std::cout << "Testing Buscar tema devuelve Lista de Apuntes";
+        std::cout << "Testing Buscar tema devuelve Lista de Apuntes" << " \n";
        
        // assert_equal(actual, esperado);
     }
 
     {
-        std::cout << "Testing Buscar tema devuelve Lista de Clases";
+        std::cout << "Testing Materia Buscar tema devuelve Lista de Clases" << " \n";
        
-       // assert_equal(actual, esperado);
+        std::vector<Clase *> resultado =  nuevaMateria->buscarTemaEnClases("principal");
+
+        assertEqual(false,resultado.empty());
+        assertEqual(resultado.at(0)->getID(), nuevaMateria->getClases().at(0)->getID());
+        
     }
 
     {

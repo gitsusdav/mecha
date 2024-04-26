@@ -1,6 +1,5 @@
 #include "Materia.hpp"
 #include "Periodo.hpp"
-
 // Constructor
 Materia::Materia( Periodo* periodo, const std::string& descripcion,
         const std::vector<std::string>& profesores, const std::string& nombre,
@@ -68,3 +67,13 @@ void Materia::setPeriodoActivo(bool periodo) {
 std::string Materia::toString() const {
         return Nombre +" "+ Descripcion;
 } 
+
+std::vector<Clase*> Materia::buscarTemaEnClases(const std::string& tema) {
+    std::vector<Clase*> clasesEncontradas;
+    for (Clase* clase : Clases) {
+        if (clase->getTema().find(tema) != std::string::npos) {
+            clasesEncontradas.push_back(clase);
+        }
+    }
+    return clasesEncontradas; 
+}

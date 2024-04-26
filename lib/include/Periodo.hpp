@@ -13,7 +13,7 @@ private:
     std::string Descripcion;
     std::tm FechaInicio;
     std::tm FechaFin;
-    std::vector<Materia*> Materias;
+    std::vector<Materia *> Materias;
 
 public:
     // Constructor
@@ -26,7 +26,7 @@ public:
     std::string getDescripcion() const;
     std::tm getFechaInicio() const;
     std::tm getFechaFin() const;
-    std::vector<Materia*> getMaterias() const;
+    std::vector<Materia *> getMaterias() const;
 
     // Métodos de modificación (setters)
     void setID(std::string id);
@@ -34,7 +34,7 @@ public:
     void setDescripcion(const std::string& descripcion);
     void setFechaInicio(const std::tm& fechaInicio);
     void setFechaFin(const std::tm& fechaFin);
-    void setMaterias(const std::vector<Materia*>& materias);
+    void setMaterias(const std::vector<Materia *>& materias);
 
     // Método para convertir Periodo en cadena
     std::string toString() const;

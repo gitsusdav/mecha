@@ -39,7 +39,7 @@ public:
     void setNombre(const std::string& nombre);
     void setClases(const std::vector<Clase*>& clases);
     void setPeriodoActivo(bool periodo);
-
+    std::vector<Clase*> buscarTemaEnClases(const std::string& tema);
     // Método para convertir Materia en cadena
     std::string toString() const;
 };
