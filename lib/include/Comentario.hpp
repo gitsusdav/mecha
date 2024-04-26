@@ -19,7 +19,7 @@ public:
     // Constructor
     Comentario(Apunte* apunte, Usuario* usuario, const std::string& contenido,
                const std::tm& fecha, int likes, int dislikes);
-
+    Comentario();
     // Métodos de acceso (getters)
     Apunte* getApunte() const;
     Usuario* getUsuario() const;

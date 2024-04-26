@@ -2,6 +2,9 @@
 
 #include <string>
 #include <vector>
+#include <algorithm> 
+#include <iterator>  
+
 
 class Apunte;
 
@@ -27,10 +30,10 @@ private:
 
 public:
     // Constructor sin ID
-    Usuario(const std::string& nombre, const std::string& descripcion,
+     Usuario(const std::string& nombre, const std::string& descripcion,
        const std::vector<Rol>& roles,
        const std::string& correo, const std::string& clave);
-
+    Usuario();
     // Métodos de acceso (getters)
     std::string getNombre() const;
     std::string getID() const;
@@ -57,5 +60,15 @@ public:
 
     // Método para convertir Usuario en cadena
     std::string toString() const;
+    
+    // Sobrecargamos el operador de igualdad
+    bool operator==(const Usuario& otro) const;
+
+    void agregarApunteSeguido(Apunte* apunte);
+    void eliminarApunteSeguido(const std::string& idApunte);
+    void agregarApuntePropio(Apunte* apunte);
+    void eliminarApuntePropio(const std::string& idApunte);
+    Apunte* buscarApuntePropiosPorID(const std::string& idApunte) const;
+    Apunte* buscarApunteSeguidosPorID(const std::string& idApunte) const;
 };
 

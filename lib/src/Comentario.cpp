@@ -5,7 +5,7 @@ Comentario::Comentario(Apunte* apunte, Usuario* usuario, const std::string& cont
            const std::tm& fecha, int likes, int dislikes)
     : apunte(apunte), usuario(usuario), Contenido(contenido),
       Fecha(fecha), Like(likes), Dislikes(dislikes) {}
-
+Comentario::Comentario(){}
 // Métodos de acceso (getters)
 Apunte* Comentario::getApunte() const {
     return apunte;
