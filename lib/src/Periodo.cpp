@@ -56,6 +56,11 @@ void Periodo::setFechaFin(const std::tm& fechaFin) {
 void Periodo::setMaterias(const std::vector<Materia *>& materias) {
     Materias = materias;
 }
+
+void Periodo::agregarMateria(Materia* materia) {
+    Materias.push_back(materia);
+}
+
 std::string Periodo::toString() const {
     std::ostringstream oss;
     oss << Nombre  << " " << Descripcion  << " " <<  std::put_time(&FechaInicio, "%Y-%m-%d %H:%M:%S");
