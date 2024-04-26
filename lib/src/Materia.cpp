@@ -68,6 +68,13 @@ std::string Materia::toString() const {
         return Nombre +" "+ Descripcion;
 } 
 
+// agregar clase a materia
+
+void Materia::agregarClase(Clase* clase) {
+    clase->setIDMateria(ID);
+    Clases.push_back(clase);
+}
+
 std::vector<Clase*> Materia::buscarTemaEnClases(const std::string& tema) {
     std::vector<Clase*> clasesEncontradas;
     for (Clase* clase : Clases) {

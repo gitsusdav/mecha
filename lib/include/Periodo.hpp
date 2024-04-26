@@ -35,6 +35,7 @@ public:
     void setFechaInicio(const std::tm& fechaInicio);
     void setFechaFin(const std::tm& fechaFin);
     void setMaterias(const std::vector<Materia *>& materias);
+    void agregarMateria(Materia* materia);
 
     // Método para convertir Periodo en cadena
     std::string toString() const;

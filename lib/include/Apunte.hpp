@@ -51,6 +51,7 @@ public:
     void setLike(int like);
     void setDislike(int dislike);
     void setPopularidad(int popularidad);
+    void agregarComentario(Comentario *comentario);
 
     // Método para convertir Apunte en cadena
     std::string toString();

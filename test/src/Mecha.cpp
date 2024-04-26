@@ -297,45 +297,118 @@ int main()
    
     {
         std::cout << "Testing Agregar Apunte a Clase"<< "\n";
+
+        auto idClase = nuevaClase->getIDMateria();
+        auto id = nuevoApunte->getClase()->getID();
+
+
+        std::cout << "idClase: " << idClase << std::endl;
+        std::cout << "id: " << id << std::endl;
+
+
+        std::cout << "After changes: " << std::endl;
+
+        nuevaClase->agregarApunte(nuevoApunte);
+        nuevoApunte->setClase(nuevaClase);
+
+        idClase = nuevaClase->getIDMateria();
+        id = nuevoApunte->getClase()->getID();
+
+        std::cout << "idClase: " << idClase << std::endl;
+        std::cout << "id: " << id << std::endl;
+
+        auto idMateria = nuevaClase->getIDMateria();
+        id = nuevaMateria->getID();
         // Apunte ...
        //  Clase...
       // nuevoApunte
-       nuevaClase->agregarApunte(nuevoApunte);
+       
 
 
        //  Apunte::asignar_clase( 1 ); // funciones como esperamos 
-        std::cout << "Apunte Contenido "  << nuevoApunte->getContenido() << "\n";
+        
          //  esperamos que la clase tenga ese apunte 
         assertEqual(nuevoApunte->getClase()->getID(), nuevaClase->getID());
         assertEqual(nuevoApunte->getContenido(), nuevaClase->getApuntes().back()->getContenido());
     }
     
     {
-        std::cout << "Testing Agregar Clase a Materia";
-       
+        std::cout << "Testing Agregar Clase a Materia (original down below)" << std::endl;
+
+        auto idMateria = nuevaClase->getIDMateria();
+        auto id = nuevaMateria->getID();
+
+        std::cout << "idMateria: " << idMateria << std::endl;
+        std::cout << "id: " << id << std::endl;
+
+        nuevaMateria->agregarClase(nuevaClase);
+
+        std::cout << "After changes: " << std::endl;
+
+        idMateria = nuevaClase->getIDMateria();
+        id = nuevaMateria->getID();
+
+        std::cout << "idMateria: " << idMateria << std::endl;
+        std::cout << "id: " << id << std::endl;
+         //  esperamos que la materia tenga esa clase
+        assertEqual(nuevaClase->getIDMateria(), nuevaMateria->getID());
+
+        // revisamos que la ultima clase, sea la ultima de el vector de clases
+        assertEqual(nuevaClase->getDescripcion(), nuevaMateria->getClases().back()->getDescripcion());
        // assert_equal(actual, esperado);
     }
 
     {
-        std::cout << "Testing Agregar Materia a Semestre";
-       
-       // assert_equal(actual, esperado);
-    }
+        std::cout << "Testing Agregar Materia a Periodo (before)" << std::endl;
+        auto idMateria = nuevaMateria->getPeriodo()->getID();
+        auto idPeriodo = nuevoPeriodo->getID();
 
+        std::cout << "ID materia: " << idMateria << std::endl;
+        std::cout << "ID periodo: " << idPeriodo << std::endl;
+
+        nuevoPeriodo->agregarMateria(nuevaMateria);
+        nuevaMateria->setPeriodo(nuevoPeriodo);
+
+        idMateria = nuevaMateria->getPeriodo()->getID();
+        idPeriodo = nuevoPeriodo->getID();
+
+        std::cout << "After\n" << "ID materia: " << idMateria << std::endl;
+        std::cout << "ID periodo: " << idPeriodo << std::endl;
+
+        assertEqual(idMateria, idPeriodo);
+        assertEqual(nuevaMateria->getDescripcion(), nuevoPeriodo->getMaterias().back()->getDescripcion());
+
+    }
+/*
     {
         std::cout << "Testing Agregar Semestre a Usuario";
+
+        
        
        // assert_equal(actual, esperado);
-    }
+    }*/
 
 
     {
-        std::cout << "Testing Agregar Comentario a Apunte";
-       
-       // assert_equal(actual, esperado);
+        std::cout << "Testing Agregar Comentario a Apunte (before)" << std::endl;
+        auto idComentario = nuevoComentario->getApunte()->getID();
+        auto idApunte = nuevoApunte->getID();
+
+        std::cout << "id comentario: " << idComentario << std::endl;
+        std::cout << "id apunte: " << idApunte << std::endl;
+
+        nuevoComentario->setApunte(nuevoApunte);
+        nuevoApunte->agregarComentario(nuevoComentario);
+
+        idComentario = nuevoComentario->getApunte()->getID();
+        idApunte = nuevoApunte->getID();
+
+        assertEqual(idComentario, idApunte);
+        assertEqual(nuevoComentario->getID(), nuevoApunte->getComentarios().back()->getID());
     } 
 
     {
+
         std::cout << "Testing Buscar tema devuelve Lista de Apuntes" << " \n";
        
        // assert_equal(actual, esperado);

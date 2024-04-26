@@ -34,6 +34,10 @@ void Apunte::setLike(int like) { Like = like; }
 void Apunte::setDislike(int dislike) { Dislike = dislike; }
 void Apunte::setPopularidad(int popularidad) { Popularidad = getLike() - getDislike(); }
 
+void Apunte::agregarComentario(Comentario *nuevoComentario){
+    Comentarios.push_back(nuevoComentario);
+}
+
 // Método para convertir Apunte en cadena
 std::string Apunte::toString() {
     std::ostringstream oss;
