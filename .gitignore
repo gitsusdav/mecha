@@ -1,8 +1,8 @@
 .vscode/ 
 **.o
 
-test/bin/Mecha
-main/bin/Mecha
+/test/bin/Mecha
+/main/bin/Mecha
 /app Flutter/windows/flutter/ephemeral
 /app Flutter/.dart_tool
 /app Flutter/.idea

@@ -296,7 +296,7 @@ int main()
 
    
     {
-        std::cout << "Testing Agregar Apunte a Clase";
+        std::cout << "Testing Agregar Apunte a Clase"<< "\n";
         // Apunte ...
        //  Clase...
       // nuevoApunte

@@ -39,6 +39,7 @@ public:
     void setRecursos(const std::vector<std::string>& recursos);
     void setApuntes(const std::vector<Apunte*>& apuntes); // Cambiado el parámetro
     void setTema(const std::string& tema);
+    void agregarApunte(Apunte *apunte);
 
     // Método para convertir Clase en cadena
     std::string toString();
