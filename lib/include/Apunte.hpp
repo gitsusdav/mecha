@@ -55,7 +55,7 @@ public:
     void agregarComentario(Comentario *comentario);
 
     // Método para convertir Apunte en cadena
-    std::string toString();
+    std::string toString() const;
 
     // Sobrecargamos el operador de igualdad
     bool operator==(const Apunte& otro) const ;

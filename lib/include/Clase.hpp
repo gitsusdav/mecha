@@ -43,5 +43,5 @@ public:
     void agregarApunte(Apunte *apunte);
 
     // Método para convertir Clase en cadena
-    std::string toString();
+    std::string toString() const;
 };

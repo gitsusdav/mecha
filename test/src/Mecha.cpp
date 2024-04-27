@@ -473,12 +473,6 @@ int main()
 
     {
         std::cout << "Testing Agregar nodos al Arbol Padre"<< " \n";
-       
-       // rootTreeFather = new NodoPadre<Usuario>(*nuevoUsuario, "/");
-       // periodoTreeFather = new NodoPadre<Periodo>(*nuevoPeriodo, nuevoPeriodo->getID());
-       // materiaTreeFather = new NodoPadre<Materia>(*nuevaMateria, nuevaMateria->getID());
-      //  claseTreeFather = new NodoPadre<Clase>(*nuevaClase, nuevaClase->getID());
-       // ArbolPadre* controlComentario = new Comentario();
 
         ArbolPadre* controlComentario = nuevoComentario;
         ArbolPadre* controlApunte = nuevoApunte;
@@ -502,7 +496,7 @@ int main()
         apunteTreeFather->setPadre(claseTreeFather);
 
         comentarioTreeFather->setPadre(apunteTreeFather);
-
+    /*
         std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
         
         std::cout << "Valor (Periodo): " << periodoTreeFather->obtenerValor()->toString() << " Camino (path): " << periodoTreeFather->obtenerCamino()  << " \n\n";
@@ -514,47 +508,22 @@ int main()
         std::cout << "Valor (Apunte): " << apunteTreeFather->obtenerValor()->toString() << " Camino (path): " << apunteTreeFather->obtenerCamino()  << " \n\n";
 
         std::cout << "Valor (Comentario): " << comentarioTreeFather->obtenerValor()->toString() << " Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n\n";
-
+    */
         assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString());
+        assertEqual(periodoTreeFather->obtenerValor()->toString(), nuevoPeriodo->toString());
+        assertEqual(materiaTreeFather->obtenerValor()->toString(), nuevaMateria->toString());
+        assertEqual(claseTreeFather->obtenerValor()->toString(), nuevaClase->toString());
+        assertEqual(apunteTreeFather->obtenerValor()->toString(), nuevoApunte->toString());
+        assertEqual(comentarioTreeFather->obtenerValor()->toString(), nuevoComentario->toString());
 
+        // Testing de path 
+        assertEqual(rootTreeFather->obtenerCamino(),       std::string("/"));
+        assertEqual(periodoTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/"));
+        assertEqual(materiaTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/"));
+        assertEqual(claseTreeFather->obtenerCamino(),      std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/"));
+        assertEqual(apunteTreeFather->obtenerCamino(),     std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/"));
+        assertEqual(comentarioTreeFather->obtenerCamino(), std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/")+nuevoComentario->getID()+std::string("/"));
 
-     //   controlComentario->setID("casd");
-     //   Comentario* comentarioEspecifico = dynamic_cast<Comentario*>(controlComentario);
-      //  comentarioEspecifico->setContenido("contenido");
-
-       // controlComentario->setDislikes(1);
-
-
-        //controlComentario->set
-//NodoPadre* nodoComentario = new NodoPadre(controlComentario, controlComentario->getID());
-
-//   std::unique_ptr<NodoPadre<Apunte>*> apunteTreeFather(comentarioTreeFather);
-//   std::unique_ptr<NodoPadre<Comentario >*> comentarioTreeFather(apunteTreeFather);
-
-//  apunteTreeFather->setPadre(comentarioTreeFather.get());
-
-//NodoPadre<ArbolPadre>* nodoApunte = static_cast<NodoPadre<Apunte>*>(new NodoPadre<Apunte>(*nuevoApunte, nuevoApunte->getID()));
-//std::unique_ptr<NodoPadre<Apunte>> apunteTreeFather(nodoApunte);
-
-//NodoPadre<ArbolPadre>* nodoComentario = static_cast<NodoPadre<ArbolPadre>*>(new NodoPadre<Comentario>(*nuevoComentario, nuevoComentario->getID()));
-//NodoPadre<ArbolPadre>* nodoComentario = new NodoPadre<ArbolPadre>(nuevoComentario);
-//NodoPadre<ArbolPadre>* nodoComentario = new NodoPadre<Comentario>(*nuevoComentario, nuevoComentario->getID());
-//std::unique_ptr<NodoPadre<Comentario>> comentarioTreeFather(nodoComentario);
-
-//apunteTreeFather->setPadre(comentarioTreeFather);
-
-        //comentarioTreeFather->setPadre(apunteTreeFather);
-        //claseTreeFather->setPadre(materiaTreeFather);
-        //materiaTreeFather->setPadre(periodoTreeFather);
-
-
-
-        // Imprimir la información de los nodos
-     //   std::cout << "Valor (root): " << comentarioTreeFather->obtenerValor().toString() << "Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n";
-    //    std::cout << "Valor (root): " << materiaTreeFather->obtenerValor().toString() << "Camino (path): " << materiaTreeFather->obtenerCamino()  << " \n";
-
-     //   assertEqual(std::string("/"), rootTreeFather->obtenerCamino());
-   //     assertEqual(rootTreeFather->obtenerValor().toString(), nuevoUsuario->toString() );
     }
 
    std::cout << "\n\n Testing Completados :D onFire"<< " \n\n";

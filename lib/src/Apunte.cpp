@@ -35,7 +35,7 @@ void Apunte::agregarComentario(Comentario *nuevoComentario){
 }
 
 // Método para convertir Apunte en cadena
-std::string Apunte::toString() {
+std::string Apunte::toString() const{
     std::ostringstream oss;
     oss << Contenido << " " << std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
     return oss.str();
