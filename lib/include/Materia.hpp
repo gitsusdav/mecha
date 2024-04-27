@@ -3,10 +3,10 @@
 #include <string>
 #include <vector>
 #include "Clase.hpp" 
-
+#include "ArbolPadre.hpp"
 
 class Periodo;
-class Materia {
+class Materia : public ArbolPadre{
 private:
     std::string ID;
     Periodo* periodo;

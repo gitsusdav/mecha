@@ -52,6 +52,6 @@ std::string Utilidades::crearFecha(const std::tm& fecha) {
 }
 
 std::tm Utilidades::obtenerFecha(int year, int month, int day) {
-    std::tm fecha = {0, 0, 0, day, month - 1, year - 1900}; // Ajustar mes y año
+    std::tm fecha = {0, 0, 0, day, month - 1, year - 1900}; 
     return fecha;
 }

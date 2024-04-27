@@ -3,10 +3,11 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include "ArbolPadre.hpp"
 
 class Materia;
 
-class Periodo {
+class Periodo : public ArbolPadre{
 private:
     std::string ID;
     std::string Nombre;

@@ -4,8 +4,9 @@
 #include <iomanip>
 #include "Apunte.hpp"
 #include "Usuario.hpp"
+#include "ArbolPadre.hpp"
 
-class Comentario {
+class Comentario : public ArbolPadre {
 private:
     std::string id;
     Apunte* apunte;

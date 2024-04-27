@@ -6,10 +6,11 @@
 
 #include "Clase.hpp"
 #include "Usuario.hpp"
+#include "ArbolPadre.hpp"
 
 
 class Comentario;
-class Apunte {
+class Apunte : public ArbolPadre {
 
 private:
     std::string ID;

@@ -92,7 +92,7 @@ void Usuario::setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos) {
     ApuntesSeguidos = apuntesSeguidos;
 }
 
-std::string Usuario::toString() const {
+std::string Usuario::toString() const  {
     return Nombre +" "+ Descripcion +" "+  Correo;
 } 
 
