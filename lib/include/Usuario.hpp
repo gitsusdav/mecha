@@ -30,10 +30,9 @@ private:
 
 public:
     // Constructor sin ID
-    Usuario(const std::string& nombre, const std::string& descripcion,
-            const std::vector<Usuario*>& conexiones, const std::vector<Rol>& roles,
-            int popularidad, const std::string& correo, const std::string& clave, // Cambiado a "clave"
-            const std::vector<Apunte*>& apuntesPropios, const std::vector<Apunte*>& apuntesSeguidos);
+     Usuario(const std::string& nombre, const std::string& descripcion,
+       const std::vector<Rol>& roles,
+       const std::string& correo, const std::string& clave);
     Usuario();
     // Métodos de acceso (getters)
     std::string getNombre() const;

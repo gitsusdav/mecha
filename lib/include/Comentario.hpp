@@ -8,17 +8,17 @@
 class Comentario {
 private:
     std::string id;
-    Apunte* apunte;
+    //Apunte* apunte;
     Usuario* usuario;
     std::string Contenido;
     std::tm Fecha;
-    int Like;
-    int Dislikes;
+    //int Like;
+    //int Dislikes;
 
 public:
     // Constructor
-    Comentario(Apunte* apunte, Usuario* usuario, const std::string& contenido,
-               const std::tm& fecha, int likes, int dislikes);
+    Comentario(Usuario* usuario, const std::string& contenido,
+               const std::tm& fecha);
     Comentario();
     // Métodos de acceso (getters)
     Apunte* getApunte() const;

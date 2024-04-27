@@ -3,12 +3,10 @@
 
 // Constructor
 Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
-        const std::vector<Usuario*>& conexiones, const std::vector<Rol>& roles,
-        int popularidad, const std::string& correo, const std::string& clave,
-        const std::vector<Apunte*>& apuntesPropios, const std::vector<Apunte*>& apuntesSeguidos)
-    : Nombre(nombre), Descripcion(descripcion), Conexiones(conexiones),
-      Roles(roles), Popularidad(popularidad), Correo(correo), Clave(clave),
-      ApuntesPropios(apuntesPropios), ApuntesSeguidos(apuntesSeguidos) {}
+        const std::vector<Rol>& roles,
+        const std::string& correo, const std::string& clave)
+    : Nombre(nombre), Descripcion(descripcion), Roles(roles),
+      Correo(correo), Clave(clave) {}
 Usuario::Usuario(){}
 
 // Métodos de acceso (getters)
