@@ -4,6 +4,8 @@
 #include "Periodo.hpp"
 #include "Materia.hpp"
 #include "Clase.hpp"
+#include "Apunte.hpp"
+#include "Comentario.hpp"
 
 int main(int argc, char* argv[])
 {
@@ -63,12 +65,41 @@ std::cout << "\n\n *Materia* \n \n";
     }
     std::cout << std::endl;
 
-/*std::cout << "\n\n *Clases* \n \n";
-    Clase clase("Descripcion", fechaInicio, "Tema"); //Datos de ejemplo, aún faltan
+std::cout << "\n\n *Clases* \n \n";
 
-    std::cout << "Descripcion" << clase.getDescripcion() << std::endl;
-    std::cout << "Fecha de inicio: " << Utilidades::crearFecha(clase.getFecha()) << std::endl; //Acomodar Fecha y fechaInicio
-    std::cout << "Tema" << clase.getTema() << std::endl;*/
+Clase clase("ID de la materia", "Descripción", fechaInicio, "Tema"); //se usa la fecha de utilidades como ejemplo
+
+std::cout << "ID de la materia: " << clase.getIDMateria() << std::endl;
+std::cout << "Descripción: " << clase.getDescripcion() << std::endl;
+std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
+std::cout << "Tema: " << clase.getTema() << std::endl;
+
+
+std::cout << "\n\n *Apunte* \n \n";
+    int popularidad = 10; //provicional aun no se define bien la popularidad
+
+    Apunte apunte(&usuario, "Contenido", fechaInicio, popularidad);
+
+    std::cout << "Nombre: " << usuario.getNombre() << std::endl;
+    std::cout << "Contenido: " << apunte.getContenido() << std::endl;
+    std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
+    std::cout << "Popularidad: " << apunte.getPopularidad() << std::endl;
+
+
+std::cout << "\n\n *Comentario* \n \n";
+    
+    std::string contenido = "Este es un comentario de ejemplo";
+    std::tm fecha; // Supongamos que ya tienes la estructura de fecha inicializada
+
+    // Instanciar un objeto Comentario
+    Comentario comentario(&usuario, "contenido", fechaInicio);
+
+    // Ahora puedes utilizar el objeto comentario como desees
+    std::cout << "Nombre: " << usuario.getNombre() << std::endl;
+    std::cout << "Contenido del comentario: " << comentario.getContenido() << std::endl;
+    std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
 
     return 0;
 }
+
+
