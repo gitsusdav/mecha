@@ -1,13 +1,16 @@
 #include <iostream>
+#include <vector>
+#include <chrono>
+#include <ctime>
+
 #include "Comentario.hpp"
 #include "Apunte.hpp"
 #include "Clase.hpp"
 #include "Materia.hpp"
 #include "Periodo.hpp"
 #include "Usuario.hpp"
-#include <vector>
-#include <chrono>
-#include <ctime>
+#include "NodoPadre.hpp"
+#include "ArbolPadre.hpp"
 #include <Utilidades.hpp>
 
 template <typename T>
@@ -16,8 +19,8 @@ void assertEqual(const T& current, const T& expected) noexcept
     if (!(current == expected))
     {
         std::cerr << "Test failed!\n";
-        std::cerr << "Current value: " << current << std::endl;
-        std::cerr << "Expected value: " << expected << std::endl;
+        std::cerr << "Current value: " << current << " \n";
+        std::cerr << "Expected value: " << expected << " \n";
         abort();
     }
 
@@ -38,6 +41,15 @@ int main()
     std::vector<Apunte*> misApuntes = {nuevoApunte, nuevoApunteDos};
     std::vector<Clase*> clasesMateria = {nuevaClase};
     std::vector<Materia*> periodoMateria = {nuevaMateria};
+
+   
+    NodoPadre* rootTreeFather;
+    NodoPadre* periodoTreeFather;
+    NodoPadre* materiaTreeFather;
+    NodoPadre* claseTreeFather;
+    NodoPadre* apunteTreeFather;
+    NodoPadre* comentarioTreeFather;
+
     // paso 2 hacemos los test como esperamos que funcione los metodos 
     std::cout << "Start Testing Mecha app" << "\n";
     {
@@ -105,6 +117,8 @@ int main()
         nuevoUsuario->setCorreo(correo);
         nuevoUsuario->setClave(clave);
         nuevoUsuario->setNombre(nombre);
+        nuevoUsuario->setRoles(roles);
+        nuevoUsuario->setConexiones(conexions);
 
 
         std::vector<Apunte*> propios;
@@ -112,8 +126,10 @@ int main()
 
   
         propios.push_back(nuevoApunte);
-
         seguidos.push_back(nuevoApunteDos);
+
+        nuevoUsuario->setApuntesPropios(propios);
+        nuevoUsuario->setApuntesSeguidos(seguidos);
 
 
         assertEqual(correo, nuevoUsuario->getCorreo());
@@ -121,7 +137,7 @@ int main()
 
 
         // Constructor full
-
+       // Usuario * fullUsuario = new Usuario("nombre","sobre el usuario en cuestion",)
 
     }
 
@@ -302,11 +318,11 @@ int main()
         auto id = nuevoApunte->getClase()->getID();
 
 
-        std::cout << "idClase: " << idClase << std::endl;
-        std::cout << "id: " << id << std::endl;
+        std::cout << "idClase: " << idClase << " \n";
+        std::cout << "id: " << id << " \n";
 
 
-        std::cout << "After changes: " << std::endl;
+        std::cout << "Despues de los cambios: " << " \n";
 
         nuevaClase->agregarApunte(nuevoApunte);
         nuevoApunte->setClase(nuevaClase);
@@ -314,42 +330,34 @@ int main()
         idClase = nuevaClase->getIDMateria();
         id = nuevoApunte->getClase()->getID();
 
-        std::cout << "idClase: " << idClase << std::endl;
-        std::cout << "id: " << id << std::endl;
+        std::cout << "idClase: " << idClase << " \n";
+        std::cout << "id: " << id << " \n";
 
         auto idMateria = nuevaClase->getIDMateria();
         id = nuevaMateria->getID();
-        // Apunte ...
-       //  Clase...
-      // nuevoApunte
-       
-
-
-       //  Apunte::asignar_clase( 1 ); // funciones como esperamos 
-        
-         //  esperamos que la clase tenga ese apunte 
+   
         assertEqual(nuevoApunte->getClase()->getID(), nuevaClase->getID());
         assertEqual(nuevoApunte->getContenido(), nuevaClase->getApuntes().back()->getContenido());
     }
     
     {
-        std::cout << "Testing Agregar Clase a Materia (original down below)" << std::endl;
+        std::cout << "Testing Agregar Clase a Materia" << " \n";
 
         auto idMateria = nuevaClase->getIDMateria();
         auto id = nuevaMateria->getID();
 
-        std::cout << "idMateria: " << idMateria << std::endl;
-        std::cout << "id: " << id << std::endl;
+        std::cout << "idMateria: " << idMateria << " \n";
+        std::cout << "id: " << id << " \n";
 
         nuevaMateria->agregarClase(nuevaClase);
 
-        std::cout << "After changes: " << std::endl;
+        std::cout << "Despues de los cambios:" << " \n";
 
         idMateria = nuevaClase->getIDMateria();
         id = nuevaMateria->getID();
 
-        std::cout << "idMateria: " << idMateria << std::endl;
-        std::cout << "id: " << id << std::endl;
+        std::cout << "idMateria: " << idMateria << " \n";
+        std::cout << "id: " << id << " \n";
          //  esperamos que la materia tenga esa clase
         assertEqual(nuevaClase->getIDMateria(), nuevaMateria->getID());
 
@@ -359,12 +367,12 @@ int main()
     }
 
     {
-        std::cout << "Testing Agregar Materia a Periodo (before)" << std::endl;
+        std::cout << "Testing Agregar Materia a Periodo" << " \n";
         auto idMateria = nuevaMateria->getPeriodo()->getID();
         auto idPeriodo = nuevoPeriodo->getID();
 
-        std::cout << "ID materia: " << idMateria << std::endl;
-        std::cout << "ID periodo: " << idPeriodo << std::endl;
+        std::cout << "ID materia: " << idMateria << " \n";
+        std::cout << "ID periodo: " << idPeriodo << " \n";
 
         nuevoPeriodo->agregarMateria(nuevaMateria);
         nuevaMateria->setPeriodo(nuevoPeriodo);
@@ -372,30 +380,27 @@ int main()
         idMateria = nuevaMateria->getPeriodo()->getID();
         idPeriodo = nuevoPeriodo->getID();
 
-        std::cout << "After\n" << "ID materia: " << idMateria << std::endl;
-        std::cout << "ID periodo: " << idPeriodo << std::endl;
+        std::cout << "Despues\n" << "ID materia: " << idMateria << " \n";
+        std::cout << "ID periodo: " << idPeriodo << " \n";
 
         assertEqual(idMateria, idPeriodo);
         assertEqual(nuevaMateria->getDescripcion(), nuevoPeriodo->getMaterias().back()->getDescripcion());
-
     }
-/*
-    {
-        std::cout << "Testing Agregar Semestre a Usuario";
 
-        
+    {
+        std::cout << "Testing Agregar Periodo a Usuario";
        
        // assert_equal(actual, esperado);
-    }*/
+    }
 
 
     {
-        std::cout << "Testing Agregar Comentario a Apunte (before)" << std::endl;
+        std::cout << "Testing Agregar Comentario a Apunte" << " \n";
         auto idComentario = nuevoComentario->getApunte()->getID();
         auto idApunte = nuevoApunte->getID();
 
-        std::cout << "id comentario: " << idComentario << std::endl;
-        std::cout << "id apunte: " << idApunte << std::endl;
+        std::cout << "id comentario: " << idComentario << " \n";
+        std::cout << "id apunte: " << idApunte << " \n";
 
         nuevoComentario->setApunte(nuevoApunte);
         nuevoApunte->agregarComentario(nuevoComentario);
@@ -449,12 +454,79 @@ int main()
     }
 
     {
-        std::cout << "Testing Eliminar Apunte";
+        std::cout << "Testing Eliminar Apunte"<< " \n";
        
        // assert_equal(actual, esperado);
     }
 
-  
+    {
+        std::cout << "Testing Crear Raiz con Usuario del Arbol Padre"<< " \n";
+       
+        ArbolPadre* controlUsuario = nuevoUsuario;
+        rootTreeFather = new NodoPadre(controlUsuario, "/");
+
+        std::cout << "Valor (root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
+
+        assertEqual(std::string("/"), rootTreeFather->obtenerCamino());
+        assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString() );
+    }
+
+    {
+        std::cout << "Testing Agregar nodos al Arbol Padre"<< " \n";
+
+        ArbolPadre* controlComentario = nuevoComentario;
+        ArbolPadre* controlApunte = nuevoApunte;
+        ArbolPadre* controlClase = nuevaClase;
+        ArbolPadre* controlMateria = nuevaMateria;
+        ArbolPadre* controlPeriodo = nuevoPeriodo;
+        ArbolPadre* controlUsuario = nuevoUsuario;
+
+        apunteTreeFather = new NodoPadre(controlApunte, nuevoApunte->getID());
+        comentarioTreeFather = new NodoPadre(controlComentario, nuevoComentario->getID());
+        periodoTreeFather = new NodoPadre(controlPeriodo, nuevoPeriodo->getID());
+        materiaTreeFather = new NodoPadre(controlMateria, nuevaMateria->getID());
+        claseTreeFather =  new NodoPadre(controlClase, nuevaClase->getID());
+
+        periodoTreeFather->setPadre(rootTreeFather);
+
+        materiaTreeFather->setPadre(periodoTreeFather);
+
+        claseTreeFather->setPadre(materiaTreeFather);
+
+        apunteTreeFather->setPadre(claseTreeFather);
+
+        comentarioTreeFather->setPadre(apunteTreeFather);
+    /*
+        std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Periodo): " << periodoTreeFather->obtenerValor()->toString() << " Camino (path): " << periodoTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Materia): " << materiaTreeFather->obtenerValor()->toString() << " Camino (path): " << materiaTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Clase): " << claseTreeFather->obtenerValor()->toString() << " Camino (path): " << claseTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Apunte): " << apunteTreeFather->obtenerValor()->toString() << " Camino (path): " << apunteTreeFather->obtenerCamino()  << " \n\n";
+
+        std::cout << "Valor (Comentario): " << comentarioTreeFather->obtenerValor()->toString() << " Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n\n";
+    */
+        assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString());
+        assertEqual(periodoTreeFather->obtenerValor()->toString(), nuevoPeriodo->toString());
+        assertEqual(materiaTreeFather->obtenerValor()->toString(), nuevaMateria->toString());
+        assertEqual(claseTreeFather->obtenerValor()->toString(), nuevaClase->toString());
+        assertEqual(apunteTreeFather->obtenerValor()->toString(), nuevoApunte->toString());
+        assertEqual(comentarioTreeFather->obtenerValor()->toString(), nuevoComentario->toString());
+
+        // Testing de path 
+        assertEqual(rootTreeFather->obtenerCamino(),       std::string("/"));
+        assertEqual(periodoTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/"));
+        assertEqual(materiaTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/"));
+        assertEqual(claseTreeFather->obtenerCamino(),      std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/"));
+        assertEqual(apunteTreeFather->obtenerCamino(),     std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/"));
+        assertEqual(comentarioTreeFather->obtenerCamino(), std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/")+nuevoComentario->getID()+std::string("/"));
+
+    }
+
+   std::cout << "\n\n Testing Completados :D onFire"<< " \n\n";
 
     // se libera la memoria
     delete nuevoComentario;
@@ -464,5 +536,12 @@ int main()
     delete nuevaMateria;
     delete nuevoPeriodo;
     delete nuevoUsuario;
+
+    delete rootTreeFather;
+    delete periodoTreeFather;
+    delete materiaTreeFather;
+    delete claseTreeFather;
+    delete apunteTreeFather;
+    delete comentarioTreeFather;
 
 }

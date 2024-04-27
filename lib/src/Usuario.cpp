@@ -1,14 +1,13 @@
 #include <Usuario.hpp>
 #include "Apunte.hpp"
+#include "Periodo.hpp"
 
 // Constructor
 Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
-        const std::vector<Usuario*>& conexiones, const std::vector<Rol>& roles,
-        int popularidad, const std::string& correo, const std::string& clave,
-        const std::vector<Apunte*>& apuntesPropios, const std::vector<Apunte*>& apuntesSeguidos)
-    : Nombre(nombre), Descripcion(descripcion), Conexiones(conexiones),
-      Roles(roles), Popularidad(popularidad), Correo(correo), Clave(clave),
-      ApuntesPropios(apuntesPropios), ApuntesSeguidos(apuntesSeguidos) {}
+        const std::vector<Rol>& roles,
+        const std::string& correo, const std::string& clave)
+    : Nombre(nombre), Descripcion(descripcion), Roles(roles),
+      Correo(correo), Clave(clave) {}
 Usuario::Usuario(){}
 
 // Métodos de acceso (getters)
@@ -93,7 +92,7 @@ void Usuario::setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos) {
     ApuntesSeguidos = apuntesSeguidos;
 }
 
-std::string Usuario::toString() const {
+std::string Usuario::toString() const  {
     return Nombre +" "+ Descripcion +" "+  Correo;
 } 
 
@@ -151,4 +150,26 @@ Apunte* Usuario::buscarApunteSeguidosPorID(const std::string& idApunte) const {
     } else {
         return nullptr;
     }
+}
+void Usuario::agregarPeriodoActual(Periodo* periodo) {
+    PeriodoActual.push_back(periodo);
+}
+
+void Usuario::eliminarPeriodoActual(const std::string& idPeriodo) {
+    for (auto it = PeriodoActual.begin(); it != PeriodoActual.end(); ++it) {
+        if ((*it)->getID() == idPeriodo) {
+            delete *it;
+            PeriodoActual.erase(it);
+            break; 
+        }
+    }
+}
+
+Periodo* Usuario::buscarPeriodoActualPorID(const std::string& idPeriodo) const {
+    for (auto periodo : PeriodoActual) {
+        if (periodo->getID() == idPeriodo) {
+            return periodo;
+        }
+    }
+    return nullptr;
 }

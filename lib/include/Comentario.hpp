@@ -4,8 +4,9 @@
 #include <iomanip>
 #include "Apunte.hpp"
 #include "Usuario.hpp"
+#include "ArbolPadre.hpp"
 
-class Comentario {
+class Comentario : public ArbolPadre {
 private:
     std::string id;
     Apunte* apunte;
@@ -17,8 +18,8 @@ private:
 
 public:
     // Constructor
-    Comentario(Apunte* apunte, Usuario* usuario, const std::string& contenido,
-               const std::tm& fecha, int likes, int dislikes);
+    Comentario(Usuario* usuario, const std::string& contenido,
+               const std::tm& fecha);
     Comentario();
     // Métodos de acceso (getters)
     Apunte* getApunte() const;

@@ -1,12 +1,10 @@
 #include "Comentario.hpp"
 
 // Constructor
-Comentario::Comentario(Apunte* apunte, Usuario* usuario, const std::string& contenido,
-           const std::tm& fecha, int likes, int dislikes)
-    : apunte(apunte), usuario(usuario), Contenido(contenido),
-      Fecha(fecha), Like(likes), Dislikes(dislikes) {}
+Comentario::Comentario(Usuario* usuario, const std::string& contenido, const std::tm& fecha) : usuario(usuario), Contenido(contenido), Fecha(fecha) {}
 Comentario::Comentario(){}
 // Métodos de acceso (getters)
+
 Apunte* Comentario::getApunte() const {
     return apunte;
 }
@@ -22,6 +20,7 @@ std::string Comentario::getContenido() const {
 std::string Comentario::getID() const {
     return id;
 }
+
 
 std::tm Comentario::getFecha() const {
     return Fecha;
