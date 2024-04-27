@@ -7,7 +7,7 @@
 
 
 class Apunte;
-
+class Periodo;
 
 enum class Rol {
     PROFESOR,
@@ -24,7 +24,8 @@ private:
     std::vector<Rol> Roles;
     int Popularidad;
     std::string Correo;
-    std::string Clave; // Cambiado a "clave"
+    std::string Clave; 
+    std::vector<Periodo*> PeriodoActual;
     std::vector<Apunte*> ApuntesPropios;
     std::vector<Apunte*> ApuntesSeguidos;
 
@@ -70,5 +71,9 @@ public:
     void eliminarApuntePropio(const std::string& idApunte);
     Apunte* buscarApuntePropiosPorID(const std::string& idApunte) const;
     Apunte* buscarApunteSeguidosPorID(const std::string& idApunte) const;
+
+    void agregarPeriodoActual(Periodo* periodo);
+    void eliminarPeriodoActual(const std::string& idPeriodo);
+    Periodo* buscarPeriodoActualPorID(const std::string& idPeriodo) const;
 };
 

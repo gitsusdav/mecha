@@ -11,18 +11,19 @@ std::string Clase::getID() const { return ID; }
 std::string Clase::getIDMateria() const { return ID_Materia; }
 std::string Clase::getDescripcion() const { return Descripcion; }
 std::tm Clase::getFecha() const { return Fecha; }
+std::vector<Apunte*> Clase::getApuntes() const { return Apuntes; }
+std::vector<std::string> Clase::getRecursos() const { return Recursos; }
 std::string Clase::getTema() const { return Tema; }
 
-// Setters
+
 void Clase::setID(std::string id) { ID = id; }
 void Clase::setIDMateria(const std::string& idMateria) { ID_Materia = idMateria; }
 void Clase::setDescripcion(const std::string& descripcion) { Descripcion = descripcion; }
 void Clase::setFecha(const std::tm& fecha) { Fecha = fecha; }
 void Clase::setTema(const std::string& tema) { Tema = tema; }
-
-/*void Clase::agregarApunte(Apunte* nuevoApunte) {
-    Apuntes.push_back(nuevoApunte);
-}*/
+void Clase::setRecursos(const std::vector<std::string>& recurso) { Recursos = recurso; }
+void Clase::setApuntes(const std::vector<Apunte*>& listaApuntes) { Apuntes = listaApuntes; }
+void Clase::agregarApunte(Apunte* nuevoApunte) { Apuntes.push_back(nuevoApunte); }
 
 std::string Clase::toString() {
         std::ostringstream oss;
