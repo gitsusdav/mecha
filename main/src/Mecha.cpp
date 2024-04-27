@@ -39,6 +39,22 @@ void guardarApunteEnLaBaseDeDatos(const Apunte& apunte) {
 void guardarComentarioEnLaBaseDeDatos(const Comentario& comentario) {
     //logica con sqlite para guardar la clase
 }
+std::vector<Materia> obtenerMateriasDeLaBaseDeDatos(){
+    return {};
+}
+
+std::vector<Periodo> obtenerPeriodosDeLaBaseDeDatos(){
+    return {};
+}
+std::vector<Clase> obtenerClasesDeLaBaseDeDatos(){
+    return {};
+}
+std::vector<Apunte> obtenerApuntesDeLaBaseDeDatos(){
+    return {};
+}
+std::vector<Comentario> obtenerComentariosDeLaBaseDeDatos(){
+    return {};
+}
 
 int main(int argc, char* argv[])
 {
@@ -164,3 +180,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+
