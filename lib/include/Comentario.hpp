@@ -8,12 +8,12 @@
 class Comentario {
 private:
     std::string id;
-    //Apunte* apunte;
+    Apunte* apunte;
     Usuario* usuario;
     std::string Contenido;
     std::tm Fecha;
-    //int Like;
-    //int Dislikes;
+    int Like;
+    int Dislikes;
 
 public:
     // Constructor
