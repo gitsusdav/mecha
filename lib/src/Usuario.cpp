@@ -152,21 +152,21 @@ Apunte* Usuario::buscarApunteSeguidosPorID(const std::string& idApunte) const {
     }
 }
 void Usuario::agregarPeriodoActual(Periodo* periodo) {
-    PeriodoActual.push_back(periodo);
+    Periodos.push_back(periodo);
 }
 
 void Usuario::eliminarPeriodoActual(const std::string& idPeriodo) {
-    for (auto it = PeriodoActual.begin(); it != PeriodoActual.end(); ++it) {
+    for (auto it = Periodos.begin(); it != Periodos.end(); ++it) {
         if ((*it)->getID() == idPeriodo) {
             delete *it;
-            PeriodoActual.erase(it);
+            Periodos.erase(it);
             break; 
         }
     }
 }
 
 Periodo* Usuario::buscarPeriodoActualPorID(const std::string& idPeriodo) const {
-    for (auto periodo : PeriodoActual) {
+    for (auto periodo : Periodos) {
         if (periodo->getID() == idPeriodo) {
             return periodo;
         }

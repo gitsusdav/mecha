@@ -25,9 +25,11 @@ Mecha está diseñada para optimizar la experiencia de los estudiantes universit
 
 ## Compilar
 
-El proyecto tiene como dependencia la librería openssl/sha se debe instalar Openssl para ubuntu.
+El proyecto tiene como dependencia la librería openssl/sha se debe instalar Openssl para ubuntu. También utiliza sqlite3
 
 `sudo apt-get install libssl-dev`
+
+`sudo apt-get install libsqlite3-dev`
 
 Compilas el proyecto desde la raíz con el comando, debes tener preinstalado el comando make, clang y c++ en la versión 17
 

@@ -1,11 +1,14 @@
-
-#include "Utilidades.hpp"
 #include <sstream>
 #include <iomanip>
 #include <chrono>
 #include <ctime>
 #include <openssl/evp.h>
 #include <vector>
+#include <iostream>
+#include <sqlite3.h>
+
+#include "Utilidades.hpp"
+
 
 std::string Utilidades::generarId(const std::string& claseToString) //sha256
 {
@@ -54,4 +57,44 @@ std::string Utilidades::crearFecha(const std::tm& fecha) {
 std::tm Utilidades::obtenerFecha(int year, int month, int day) {
     std::tm fecha = {0, 0, 0, day, month - 1, year - 1900}; 
     return fecha;
+}
+
+bool Utilidades::instanciarBaseDeDatos() {
+
+    sqlite3* baseDeDatos;
+    int resultado = sqlite3_open_v2("DatosCalientesMecha.db", &baseDeDatos, SQLITE_OPEN_READWRITE | SQLITE_OPEN_CREATE, nullptr);
+
+    if (resultado) {
+        return false;
+    }
+
+    const char* crearTablaUsuario = R"(
+        CREATE TABLE Usuario (
+            ID INTEGER PRIMARY KEY,
+            id_Usuario TEXT NOT NULL,
+            Nombre TEXT NOT NULL,
+            Descripcion TEXT,
+            Popularidad INTEGER,
+            Correo TEXT NOT NULL UNIQUE
+        );
+    )";
+    resultado = sqlite3_exec(baseDeDatos, crearTablaUsuario, nullptr, nullptr, nullptr);
+
+    const char* createPeriodosTableSQL = R"(
+        CREATE TABLE Periodo (
+            ID INTEGER PRIMARY KEY,
+            id_Periodo TEXT NOT NULL,
+            Nombre TEXT NOT NULL,
+            Descripcion TEXT,
+            FechaInicio TEXT NOT NULL,
+            FechaFin TEXT NOT NULL
+        );
+    )";
+    resultado = sqlite3_exec(baseDeDatos, createPeriodosTableSQL, nullptr, nullptr, nullptr);
+
+
+    sqlite3_close(baseDeDatos);
+
+    return true;
+
 }
