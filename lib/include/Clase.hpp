@@ -3,10 +3,11 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+#include "ArbolPadre.hpp"
 
 class Apunte;
 
-class Clase {
+class Clase : public ArbolPadre {
 private:
     std::string ID;
     std::string ID_Materia;
@@ -42,5 +43,5 @@ public:
     void agregarApunte(Apunte *apunte);
 
     // Método para convertir Clase en cadena
-    std::string toString();
+    std::string toString() const;
 };

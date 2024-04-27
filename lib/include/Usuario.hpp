@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm> 
 #include <iterator>  
-
+#include "ArbolPadre.hpp"
 
 class Apunte;
 class Periodo;
@@ -15,7 +15,7 @@ enum class Rol {
     GRADUADO
 };
 
-class Usuario {
+class Usuario : public ArbolPadre  {
 private:
     std::string Nombre;
     std::string ID;
@@ -60,7 +60,7 @@ public:
     void setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
 
     // Método para convertir Usuario en cadena
-    std::string toString() const;
+    std::string toString() const override ;
     
     // Sobrecargamos el operador de igualdad
     bool operator==(const Usuario& otro) const;

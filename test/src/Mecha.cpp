@@ -10,6 +10,7 @@
 #include "Periodo.hpp"
 #include "Usuario.hpp"
 #include "NodoPadre.hpp"
+#include "ArbolPadre.hpp"
 #include <Utilidades.hpp>
 
 template <typename T>
@@ -41,12 +42,13 @@ int main()
     std::vector<Clase*> clasesMateria = {nuevaClase};
     std::vector<Materia*> periodoMateria = {nuevaMateria};
 
-    NodoPadre<Usuario>* rootTreeFather;
-    NodoPadre<Periodo>* periodoTreeFather;
-    NodoPadre<Materia>* materiaTreeFather;
-    NodoPadre<Clase>* claseTreeFather;
-    NodoPadre<Apunte>* apunteTreeFather;
-    NodoPadre<Comentario>* comentarioTreeFather;
+   
+    NodoPadre* rootTreeFather;
+    NodoPadre* periodoTreeFather;
+    NodoPadre* materiaTreeFather;
+    NodoPadre* claseTreeFather;
+    NodoPadre* apunteTreeFather;
+    NodoPadre* comentarioTreeFather;
 
     // paso 2 hacemos los test como esperamos que funcione los metodos 
     std::cout << "Start Testing Mecha app" << "\n";
@@ -460,39 +462,70 @@ int main()
     {
         std::cout << "Testing Crear Raiz con Usuario del Arbol Padre"<< " \n";
        
-        rootTreeFather = new NodoPadre<Usuario>(*nuevoUsuario, "/");
+        ArbolPadre* controlUsuario = nuevoUsuario;
+        rootTreeFather = new NodoPadre(controlUsuario, "/");
 
-        std::cout << "Valor (root): " << rootTreeFather->obtenerValor().toString() << "Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
+        std::cout << "Valor (root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
 
         assertEqual(std::string("/"), rootTreeFather->obtenerCamino());
-        assertEqual(rootTreeFather->obtenerValor().toString(), nuevoUsuario->toString() );
+        assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString() );
     }
-/*
+
     {
         std::cout << "Testing Agregar nodos al Arbol Padre"<< " \n";
-       
-       // rootTreeFather = new NodoPadre<Usuario>(*nuevoUsuario, "/");
-        periodoTreeFather = new NodoPadre<Periodo>(*nuevoPeriodo, nuevoPeriodo->getID());
-        materiaTreeFather = new NodoPadre<Materia>(*nuevaMateria, nuevaMateria->getID());
-        claseTreeFather = new NodoPadre<Clase>(*nuevaClase, nuevaClase->getID());
-        apunteTreeFather = new NodoPadre<Apunte>(*nuevoApunte, nuevoApunte->getID());
-        comentarioTreeFather = new NodoPadre<Comentario>(*nuevoComentario, nuevoComentario->getID());
 
-        comentarioTreeFather->setPadre(apunteTreeFather);
-        apunteTreeFather->setPadre(claseTreeFather);
-        claseTreeFather->setPadre(materiaTreeFather);
+        ArbolPadre* controlComentario = nuevoComentario;
+        ArbolPadre* controlApunte = nuevoApunte;
+        ArbolPadre* controlClase = nuevaClase;
+        ArbolPadre* controlMateria = nuevaMateria;
+        ArbolPadre* controlPeriodo = nuevoPeriodo;
+        ArbolPadre* controlUsuario = nuevoUsuario;
+
+        apunteTreeFather = new NodoPadre(controlApunte, nuevoApunte->getID());
+        comentarioTreeFather = new NodoPadre(controlComentario, nuevoComentario->getID());
+        periodoTreeFather = new NodoPadre(controlPeriodo, nuevoPeriodo->getID());
+        materiaTreeFather = new NodoPadre(controlMateria, nuevaMateria->getID());
+        claseTreeFather =  new NodoPadre(controlClase, nuevaClase->getID());
+
+        periodoTreeFather->setPadre(rootTreeFather);
+
         materiaTreeFather->setPadre(periodoTreeFather);
 
+        claseTreeFather->setPadre(materiaTreeFather);
 
+        apunteTreeFather->setPadre(claseTreeFather);
 
-        // Imprimir la información de los nodos
-        std::cout << "Valor (root): " << comentarioTreeFather->obtenerValor().toString() << "Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n";
-        std::cout << "Valor (root): " << materiaTreeFather->obtenerValor().toString() << "Camino (path): " << materiaTreeFather->obtenerCamino()  << " \n";
+        comentarioTreeFather->setPadre(apunteTreeFather);
+    /*
+        std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Periodo): " << periodoTreeFather->obtenerValor()->toString() << " Camino (path): " << periodoTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Materia): " << materiaTreeFather->obtenerValor()->toString() << " Camino (path): " << materiaTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Clase): " << claseTreeFather->obtenerValor()->toString() << " Camino (path): " << claseTreeFather->obtenerCamino()  << " \n\n";
+        
+        std::cout << "Valor (Apunte): " << apunteTreeFather->obtenerValor()->toString() << " Camino (path): " << apunteTreeFather->obtenerCamino()  << " \n\n";
 
-        assertEqual(std::string("/"), rootTreeFather->obtenerCamino());
-        assertEqual(rootTreeFather->obtenerValor().toString(), nuevoUsuario->toString() );
+        std::cout << "Valor (Comentario): " << comentarioTreeFather->obtenerValor()->toString() << " Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n\n";
+    */
+        assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString());
+        assertEqual(periodoTreeFather->obtenerValor()->toString(), nuevoPeriodo->toString());
+        assertEqual(materiaTreeFather->obtenerValor()->toString(), nuevaMateria->toString());
+        assertEqual(claseTreeFather->obtenerValor()->toString(), nuevaClase->toString());
+        assertEqual(apunteTreeFather->obtenerValor()->toString(), nuevoApunte->toString());
+        assertEqual(comentarioTreeFather->obtenerValor()->toString(), nuevoComentario->toString());
+
+        // Testing de path 
+        assertEqual(rootTreeFather->obtenerCamino(),       std::string("/"));
+        assertEqual(periodoTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/"));
+        assertEqual(materiaTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/"));
+        assertEqual(claseTreeFather->obtenerCamino(),      std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/"));
+        assertEqual(apunteTreeFather->obtenerCamino(),     std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/"));
+        assertEqual(comentarioTreeFather->obtenerCamino(), std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/")+nuevoComentario->getID()+std::string("/"));
+
     }
-*/
+
    std::cout << "\n\n Testing Completados :D onFire"<< " \n\n";
 
     // se libera la memoria

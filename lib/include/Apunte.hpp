@@ -6,10 +6,11 @@
 
 #include "Clase.hpp"
 #include "Usuario.hpp"
+#include "ArbolPadre.hpp"
 
 
 class Comentario;
-class Apunte {
+class Apunte : public ArbolPadre {
 
 private:
     std::string ID;
@@ -54,7 +55,7 @@ public:
     void agregarComentario(Comentario *comentario);
 
     // Método para convertir Apunte en cadena
-    std::string toString();
+    std::string toString() const;
 
     // Sobrecargamos el operador de igualdad
     bool operator==(const Apunte& otro) const ;

@@ -25,7 +25,7 @@ void Clase::setRecursos(const std::vector<std::string>& recurso) { Recursos = re
 void Clase::setApuntes(const std::vector<Apunte*>& listaApuntes) { Apuntes = listaApuntes; }
 void Clase::agregarApunte(Apunte* nuevoApunte) { Apuntes.push_back(nuevoApunte); }
 
-std::string Clase::toString() {
+std::string Clase::toString() const {
         std::ostringstream oss;
     oss << Descripcion << " " << Tema << " " <<  std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
     return oss.str();
