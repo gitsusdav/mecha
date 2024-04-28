@@ -526,6 +526,13 @@ int main()
 
     }
 
+    {
+        std::cout << "Testing Creando o Abriendo Base de Datos"<< " \n";
+
+        bool crearBaseDeDatos = Utilidades::instanciarBaseDeDatos();
+        assertEqual(crearBaseDeDatos,true);
+    }
+
    std::cout << "\n\n Testing Completados :D onFire"<< " \n\n";
 
     // se libera la memoria
