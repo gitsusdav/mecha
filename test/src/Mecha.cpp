@@ -39,9 +39,11 @@ int main()
     Materia* nuevaMateria = new Materia();
     Periodo* nuevoPeriodo = new Periodo();         
     Usuario* nuevoUsuario = new Usuario(); 
+
     std::vector<Apunte*> misApuntes = {nuevoApunte, nuevoApunteDos};
     std::vector<Clase*> clasesMateria = {nuevaClase};
     std::vector<Materia*> periodoMateria = {nuevaMateria};
+    std::vector<Periodo*> periodoUsuario = {nuevoPeriodo};
 
     ManejoSqlite baseDatos("DatosCalientesMecha.db");
    
@@ -121,7 +123,7 @@ int main()
         nuevoUsuario->asignarNombre(nombre);
         nuevoUsuario->asignarRoles(roles);
         nuevoUsuario->asignarConexiones(conexions);
-
+        nuevoUsuario->asignarPeriodos(periodoUsuario);
 
         std::vector<Apunte*> propios;
         std::vector<Apunte*> seguidos;
@@ -365,7 +367,7 @@ int main()
 
         // revisamos que la ultima clase, sea la ultima de el vector de clases
         assertEqual(nuevaClase->obtenerDescripcion(), nuevaMateria->obtenerClases().back()->obtenerDescripcion());
-       // assert_equal(actual, esperado);
+
     }
 
     {
@@ -387,12 +389,6 @@ int main()
 
         assertEqual(idMateria, idPeriodo);
         assertEqual(nuevaMateria->obtenerDescripcion(), nuevoPeriodo->obtenerMaterias().back()->obtenerDescripcion());
-    }
-
-    {
-        std::cout << "Testing Agregar Periodo a Usuario";
-       
-       // assert_equal(actual, esperado);
     }
 
 
@@ -439,12 +435,6 @@ int main()
 
     {
         std::cout << "Testing Seguir Usuario";
-       
-       // assert_equal(actual, esperado);
-    }
-
-    {
-        std::cout << "Testing Agregar Materia a Usuario";
        
        // assert_equal(actual, esperado);
     }
@@ -498,7 +488,7 @@ int main()
         apunteTreeFather->asignarPadre(claseTreeFather);
 
         comentarioTreeFather->asignarPadre(apunteTreeFather);
-    
+    /*
         std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
         
         std::cout << "Valor (Periodo): " << periodoTreeFather->obtenerValor()->toString() << " Camino (path): " << periodoTreeFather->obtenerCamino()  << " \n\n";
@@ -510,7 +500,7 @@ int main()
         std::cout << "Valor (Apunte): " << apunteTreeFather->obtenerValor()->toString() << " Camino (path): " << apunteTreeFather->obtenerCamino()  << " \n\n";
 
         std::cout << "Valor (Comentario): " << comentarioTreeFather->obtenerValor()->toString() << " Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n\n";
-    
+    */
         assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString());
         assertEqual(periodoTreeFather->obtenerValor()->toString(), nuevoPeriodo->toString());
         assertEqual(materiaTreeFather->obtenerValor()->toString(), nuevaMateria->toString());
@@ -547,7 +537,13 @@ int main()
         baseDatos.insertarUsuario(*nuevoUsuario);
     }
 
-        {
+    {
+        std::cout << "Testing Insertar Usuario Crendenciales en la Base de Datos"<< " \n";
+
+        baseDatos.insertarCredencialUsuario(*nuevoUsuario);
+    }
+
+    {
         std::cout << "Testing Obtener todo los Usuario de la Base de Datos"<< " \n";
 
         std::vector<Usuario> todoLosUsuarios=  baseDatos.obtenerTodoLosUsuarios();
@@ -561,7 +557,7 @@ int main()
         std::cout << "Testing Insertar Periodo en la Base de Datos"<< " \n";
 
 
-        std::cout << "ID Usuario "<< nuevoUsuario->obtenerID() <<" \n";
+        std::cout << "ID Usuario "<< nuevoUsuario->obtenerPeriodos().at(0)->obtenerNombre() <<" \n";
         nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
         nuevoUsuario->asignarNombre(std::string("NOmbre"));
          nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
@@ -584,6 +580,7 @@ int main()
 
 
         std::cout << "Materia: "<< nuevaMateria->toString() <<" \n";
+        nuevaMateria->asignarPeriodoActivo(true);
 
         baseDatos.insertarMateria(*nuevaMateria);
     }

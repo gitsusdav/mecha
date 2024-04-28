@@ -99,7 +99,7 @@ bool Utilidades::instanciarBaseDeDatos() {
             id_Periodo INTEGER NOT NULL,
             Descripcion TEXT,
             Nombre TEXT,
-            obtenerPeriodoActivo BOOLEAN,
+            PeriodoActivo INTEGER,
             FOREIGN KEY (id_Periodo) REFERENCES Periodo(ID) 
         );
     )";
@@ -186,7 +186,7 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Usuario_Apuntes (
             UsuarioID INTEGER,
             ApunteID INTEGER,
-            Seguido BOOLEAN,
+            Seguido INTEGER,
             FOREIGN KEY (UsuarioID) REFERENCES Usuario(ID),
             FOREIGN KEY (ApunteID) REFERENCES Apunte(ID),
             PRIMARY KEY (UsuarioID, ApunteID)

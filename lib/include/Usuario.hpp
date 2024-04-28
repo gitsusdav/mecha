@@ -40,10 +40,11 @@ public:
     std::string obtenerID() const;
     std::string obtenerDescripcion() const;
     std::vector<Usuario*> obtenerConexiones() const;
+    std::vector<Periodo*> obtenerPeriodos() const;
     std::vector<Rol> obtenerRoles() const;
     int obtenerPopularidad() const;
     std::string obtenerCorreo() const;
-    std::string obtenerClave() const; // Cambiado a "clave"
+    std::string obtenerClave() const; 
     std::vector<Apunte*> obtenerApuntesPropios() const;
     std::vector<Apunte*> obtenerApuntesSeguidos() const;
 
@@ -54,8 +55,9 @@ public:
     void asignarConexiones(const std::vector<Usuario*>& conexiones);
     void asignarRoles(const std::vector<Rol>& roles);
     void asignarPopularidad(int popularidad);
+    void asignarPeriodos(const std::vector<Periodo*>& periodos);
     void asignarCorreo(const std::string& correo);
-    void asignarClave(const std::string& clave); // Cambiado a "clave"
+    void asignarClave(const std::string& clave); 
     void asignarApuntesPropios(const std::vector<Apunte*>& apuntesPropios);
     void asignarApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
 
