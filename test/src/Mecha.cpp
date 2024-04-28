@@ -11,6 +11,7 @@
 #include "Usuario.hpp"
 #include "NodoPadre.hpp"
 #include "ArbolPadre.hpp"
+#include "ManejoSqlite.hpp"
 #include <Utilidades.hpp>
 
 template <typename T>
@@ -42,6 +43,7 @@ int main()
     std::vector<Clase*> clasesMateria = {nuevaClase};
     std::vector<Materia*> periodoMateria = {nuevaMateria};
 
+    ManejoSqlite baseDatos("DatosCalientesMecha.db");
    
     NodoPadre* rootTreeFather;
     NodoPadre* periodoTreeFather;
@@ -531,6 +533,32 @@ int main()
 
         bool crearBaseDeDatos = Utilidades::instanciarBaseDeDatos();
         assertEqual(crearBaseDeDatos,true);
+    }
+
+    {
+        std::cout << "Testing Insertar Usuario en la Base de Datos"<< " \n";
+
+
+        std::cout << "ID Usuario "<< nuevoUsuario->getID() <<" \n";
+        nuevoUsuario->setCorreo(std::string("Correounicounico.com"));
+        nuevoUsuario->setNombre(std::string("NOmbre"));
+         nuevoUsuario->setDescripcion(std::string("debe sr por el arroba"));
+
+        baseDatos.insertarUsuario(*nuevoUsuario);
+    }
+
+        {
+        std::cout << "Testing Obtener todo los Usuario de la Base de Datos"<< " \n";
+
+        std::vector<Usuario> todoLosUsuarios=  baseDatos.obtenerTodoLosUsuarios();
+
+         for (const Usuario& usuario : todoLosUsuarios) {
+            std::cout << "Usuario: " << usuario.toString() << "\n";
+        }
+
+       // nuevoUsuario->setCorreo(std::string("Correounico@unico.com"));
+    
+    
     }
 
    std::cout << "\n\n Testing Completados :D onFire"<< " \n\n";

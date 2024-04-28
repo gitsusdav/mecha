@@ -109,7 +109,7 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Clase (
             ID INTEGER PRIMARY KEY,
             id_Clase TEXT NOT NULL,
-            id_Materia INTEGER NOT NULL,
+            id_Materia TEXT NOT NULL,
             Descripcion TEXT,
             Fecha TEXT, 
             Recursos TEXT,
@@ -123,8 +123,8 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Apunte (
             ID INTEGER PRIMARY KEY,
             id_Apunte TEXT NOT NULL,
-            id_Clase INTEGER NOT NULL,
-            id_Usuario INTEGER NOT NULL,
+            id_Clase TEXT NOT NULL,
+            id_Usuario TEXT NOT NULL,
             Contenido TEXT,
             Fecha TEXT,
             Like INTEGER,
@@ -140,8 +140,8 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Comentario (
             ID INTEGER PRIMARY KEY,
             id_Comentario TEXT NOT NULL,
-            id_Apunte INTEGER NOT NULL,
-            id_Usuario INTEGER NOT NULL,
+            id_Apunte TEXT NOT NULL,
+            id_Usuario TEXT NOT NULL,
             Contenido TEXT,
             Fecha TEXT, 
             Like INTEGER,
