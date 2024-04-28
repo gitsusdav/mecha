@@ -6,22 +6,22 @@
 #include <string>
 
 // Define la estructura de un elemento en la tabla hash
-struct HashItem {
-    std::string key;
+struct ItemHash {
+    std::string llave;
     int value;
 };
 
 // Define la tabla hash
-class HashTable {
+class TablaHash {
 private:
-    static const int capacity = 100; // Tamaño de la tabla hash
-    std::vector<std::list<HashItem>> table;
+    static const int capacidad = 100; // Tamaño de la tabla hash
+    std::vector<std::list<ItemHash>> tabla;
 
 public:
-    HashTable();
-    int hashFunction(const std::string& key);
-    void insert(const std::string& key, int value);
-    int search(const std::string& key);
+    TablaHash();
+    int funcionHash(const std::string& llave);
+    void insert(const std::string& llave, int value);
+    int buscar(const std::string& llave);
 };
 
 #endif // HASH_TABLE_HPP
