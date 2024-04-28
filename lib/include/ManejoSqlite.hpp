@@ -22,7 +22,7 @@ public:
     bool insertarUsuario(const Usuario& usuario);
     std::vector<Usuario> obtenerTodoLosUsuarios();
     std::vector<Periodo> obtenerTodoLosPeriodos(); 
-    std::vector<Materia> obtenerTodoLosMaterias(); 
+    std::vector<Materia> obtenerTodasLasMaterias(); 
     std::vector<Clase> obtenerTodoLosClases(); 
     std::vector<Apunte> obtenerTodoLosApuntes(); 
     std::vector<Comentario> obtenerTodoLosComentarios();  

@@ -112,7 +112,6 @@ bool Utilidades::instanciarBaseDeDatos() {
             id_Materia TEXT NOT NULL,
             Descripcion TEXT,
             Fecha TEXT, 
-            Recursos TEXT,
             Tema TEXT,
             FOREIGN KEY (id_Materia) REFERENCES Materia(ID)
         );

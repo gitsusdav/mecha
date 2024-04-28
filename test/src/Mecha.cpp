@@ -556,9 +556,101 @@ int main()
             std::cout << "Usuario: " << usuario.toString() << "\n";
         }
 
-       // nuevoUsuario->setCorreo(std::string("Correounico@unico.com"));
-    
-    
+    }
+    {
+        std::cout << "Testing Insertar Periodo en la Base de Datos"<< " \n";
+
+
+        std::cout << "ID Usuario "<< nuevoUsuario->getID() <<" \n";
+        nuevoUsuario->setCorreo(std::string("Correounicounico.com"));
+        nuevoUsuario->setNombre(std::string("NOmbre"));
+         nuevoUsuario->setDescripcion(std::string("debe sr por el arroba"));
+
+        baseDatos.insertarPeriodo(*nuevoPeriodo);
+    }
+
+        {
+        std::cout << "Testing Obtener todo los Periodo de la Base de Datos"<< " \n";
+
+        std::vector<Periodo> todoLosPeriodos =  baseDatos.obtenerTodoLosPeriodos();
+
+         for (const Periodo& periodo : todoLosPeriodos) {
+            std::cout << "Periodo: " << periodo.toString() << "\n";
+        }
+
+    }
+    {
+        std::cout << "Testing Insertar Materia en la Base de Datos"<< " \n";
+
+
+        std::cout << "Materia: "<< nuevaMateria->toString() <<" \n";
+
+        baseDatos.insertarMateria(*nuevaMateria);
+    }
+
+        {
+        std::cout << "Testing Obtener todo las Materia de la Base de Datos"<< " \n";
+
+        std::vector<Materia> todaLasMaterioas=  baseDatos.obtenerTodasLasMaterias();
+
+         for (const Materia& materia : todaLasMaterioas) {
+            std::cout << "Materia: " << materia.toString() << "\n";
+        }
+
+    }
+    {
+        std::cout << "Testing Insertar Clase en la Base de Datos"<< " \n";
+
+        baseDatos.insertarClase(*nuevaClase);
+    }
+
+        {
+        std::cout << "Testing Obtener todas las Clase de la Base de Datos"<< " \n";
+
+        std::vector<Usuario> todoLosUsuarios=  baseDatos.obtenerTodoLosUsuarios();
+
+         for (const Usuario& usuario : todoLosUsuarios) {
+            std::cout << "Usuario: " << usuario.toString() << "\n";
+        }
+
+    }
+    {
+        std::cout << "Testing Insertar Apunte en la Base de Datos"<< " \n";
+
+
+        std::cout << "Apunte "<< nuevoApunte->toString() <<" \n";
+
+        baseDatos.insertarApunte(*nuevoApunte);
+    }
+
+        {
+        std::cout << "Testing Obtener todo los Apunte de la Base de Datos"<< " \n";
+
+        std::vector<Apunte> todoLosApuntes=  baseDatos.obtenerTodoLosApuntes();
+
+         for (const Apunte& apunte : todoLosApuntes) {
+            std::cout << "Apunte: " << apunte.toString() << "\n";
+        }
+
+    }
+    {
+        std::cout << "Testing Insertar Comentario en la Base de Datos"<< " \n";
+
+
+        std::cout << "Comentario "<< nuevoComentario->toString() <<" \n";
+
+        baseDatos.insertarComentario(*nuevoComentario);
+    }
+
+        {
+        std::cout << "Testing Obtener todo los Comentario de la Base de Datos"<< " \n";
+
+        std::vector<Comentario> todoLosComentarios=  baseDatos.obtenerTodoLosComentarios();
+
+         for (const Comentario& comentario : todoLosComentarios) {
+            std::cout << "Comentario: " << comentario.toString() << "\n";
+        }
+
     }
 
    std::cout << "\n\n Testing Completados :D onFire"<< " \n\n";

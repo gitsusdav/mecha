@@ -19,7 +19,6 @@ void ManejoSqlite::executeQuery(const std::string& query) {
 }
 
 bool ManejoSqlite::insertarUsuario(const Usuario& usuario) {
-        std::cout <<" START USUARIO  insertado" << "\n";
     std::string query = "INSERT INTO Usuario (id_Usuario, Nombre, Descripcion, Popularidad, Correo) "
                         "VALUES (?, ?, ?, ?, ?);";
 
@@ -29,26 +28,21 @@ bool ManejoSqlite::insertarUsuario(const Usuario& usuario) {
     if (resultado != SQLITE_OK) {
         return false;
     }
- std::cout <<" START USUARIO  OK" << "\n";
 
-    sqlite3_bind_text(stmt, 1, usuario.getID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, std::string("03c6c5b585aecfd5090268358b07077dec6422b9a1cb1f2f2a4c8bd200dfcbe3").c_str(), -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 2, usuario.getNombre().c_str(), -1, SQLITE_STATIC);
     sqlite3_bind_text(stmt, 3, usuario.getDescripcion().c_str(), -1, SQLITE_STATIC);
     sqlite3_bind_int(stmt, 4, usuario.getPopularidad());
     sqlite3_bind_text(stmt, 5, usuario.getCorreo().c_str(), -1, SQLITE_STATIC);
- std::cout <<" ID " << usuario.getID().c_str() << "\n";
 
     resultado = sqlite3_step(stmt);
-     std::cout <<" Resultado " << resultado << "\n";
     if (resultado != SQLITE_DONE) {
         return false;
     } 
- std::cout <<" START USUARIO 1 OK" << "\n";
 
     if (resultado != SQLITE_DONE) {
         return false;
     }
- std::cout <<" START USUARIO 2 OK" << "\n";
     sqlite3_int64 idUsuarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
     int idUsuario = static_cast<int>(idUsuarioInsertado);
 
@@ -93,7 +87,7 @@ std::vector<Usuario> ManejoSqlite::obtenerTodoLosUsuarios() {
     if (resultado != SQLITE_OK) {
         return usuarios;
     }
-
+    std::cout <<" OK " << resultado  <<"\n";
     while ((resultado = sqlite3_step(stmt)) == SQLITE_ROW) {
             std::cout <<" ROW "  << sqlite3_column_text(stmt, 1) << "\n"<< sqlite3_column_text(stmt, 2) << "\n" << sqlite3_column_text(stmt, 3) << "\n"<< sqlite3_column_text(stmt, 4) << "\n"<< sqlite3_column_text(stmt, 5) << "\n";
         Usuario usuario;
@@ -184,7 +178,7 @@ bool ManejoSqlite::insertarMateria(const Materia& materia) {
     return true;
 }
 
-std::vector<Materia> ManejoSqlite::obtenerTodoLosMaterias(){
+std::vector<Materia> ManejoSqlite::obtenerTodasLasMaterias(){
     std::vector<Materia> materias;
     return materias;
 }  
