@@ -217,31 +217,6 @@ int main(int argc, char* argv[])
                     std::cout << apunte.obtenerContenido() << "\n";
                 }
 
-<<<<<<< HEAD
-std::cout << "\n\n *Apunte* \n \n";
-    int popularidad = 10; //provicional aun no se define bien la popularidad
-
-    Apunte apunte(&usuario, "Contenido", fechaInicio, popularidad);
-
-    std::cout << "Nombre: " << usuario.getNombre() << std::endl;
-    std::cout << "Contenido: " << apunte.getContenido() << std::endl;
-    std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
-    std::cout << "Popularidad: " << apunte.getPopularidad() << std::endl;
-
-
-std::cout << "\n\n *Comentario* \n \n";
-    
-    std::string contenido = "Este es un comentario de ejemplo";
-    std::tm fecha; 
-
-    // Instanciar un objeto Comentario
-    Comentario comentario(&usuario, "contenido", fechaInicio);
-
-    
-    std::cout << "Nombre: " << usuario.getNombre() << std::endl;
-    std::cout << "Contenido del comentario: " << comentario.getContenido() << std::endl;
-    std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
-=======
                 std::cout << "\n\n********** Comentarios **********\n \n";
                 std::vector<Comentario> comentarios = obtenerComentariosDeLaBaseDeDatos();
                 for (const Comentario& comentario : comentarios) {
@@ -259,7 +234,6 @@ std::cout << "\n\n *Comentario* \n \n";
             }
         }
     } while (accion != 7);
->>>>>>> 4b5cee7e0f54629d74cc7da2e031d9d48e65bee6
 
     return 0;
 }
