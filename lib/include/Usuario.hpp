@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm> 
 #include <iterator>  
-#include "ArbolPadre.hpp"
+#include "BaseMecha.hpp"
 
 class Apunte;
 class Periodo;
@@ -15,7 +15,7 @@ enum class Rol {
     GRADUADO
 };
 
-class Usuario : public ArbolPadre  {
+class Usuario : public BaseMecha  {
 private:
     std::string Nombre;
     std::string ID;

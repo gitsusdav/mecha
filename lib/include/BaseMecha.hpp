@@ -2,13 +2,13 @@
 
 #include <string>
 
-class ArbolPadre {
+class BaseMecha {
 
 private:
     std::string ID;
 public:
     std::string obtenerID() const;
     void asignarID(std::string id);
-    virtual ~ArbolPadre() = default; 
+    virtual ~BaseMecha() = default; 
     virtual std::string toString() const;
 };

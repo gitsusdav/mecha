@@ -1,9 +1,9 @@
 #include <Clase.hpp>
 
 // Constructor
-Clase::Clase(std::string idMateria, const std::string& descripcion,
+Clase::Clase(const std::string& descripcion,
              const std::tm& fecha, const std::string& tema)
-    : ID_Materia(idMateria), Descripcion(descripcion), Fecha(fecha), Tema(tema) {}
+    : Descripcion(descripcion), Fecha(fecha), Tema(tema) {}
 
 Clase::Clase(){};
 // Getters

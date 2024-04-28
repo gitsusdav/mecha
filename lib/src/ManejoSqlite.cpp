@@ -285,7 +285,7 @@ std::vector<Comentario> ManejoSqlite::obtenerTodoLosComentarios(){
 }  
 
 bool ManejoSqlite::insertarCredencialUsuario(const Usuario& credencial) {
-    std::string query = "INSERT INTO Usuario_Crendeciales (id_Usuario, Correo, Clave) "
+    std::string query = "INSERT INTO Usuario_Credenciales (id_Usuario, Correo, Clave) "
                         "VALUES (?, ?, ?);";
 
     sqlite3_stmt* stmt;

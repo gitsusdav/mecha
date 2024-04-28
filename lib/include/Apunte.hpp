@@ -6,11 +6,11 @@
 
 #include "Clase.hpp"
 #include "Usuario.hpp"
-#include "ArbolPadre.hpp"
+#include "BaseMecha.hpp"
 
 
 class Comentario;
-class Apunte : public ArbolPadre {
+class Apunte : public BaseMecha {
 
 private:
     std::string ID;
@@ -24,14 +24,14 @@ private:
     int Popularidad;
 
 public:
-    // Constructor (reducido)
+    // Constructor
     Apunte(Usuario* usuario, const std::string& contenido,
            const std::tm& fecha, int popularidad);
     Apunte();
     // Destructor
     ~Apunte();
 
-    // Métodos de acceso (getters)
+    // Métodos de acceso
     std::string obtenerID() const;
     Clase* obtenerClase() const;
     Usuario* obtenerUsuario() const;
@@ -42,7 +42,7 @@ public:
     int obtenerDislike() const;
     int obtenerPopularidad() const;
 
-
+    // Métodos de asignar
     void asignarID(std::string id);
     void asignarClase(Clase* clase);
     void asignarUsuario(Usuario* usuario);

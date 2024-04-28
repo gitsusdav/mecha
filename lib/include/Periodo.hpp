@@ -3,11 +3,11 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include "ArbolPadre.hpp"
+#include "BaseMecha.hpp"
 
 class Materia;
 
-class Periodo : public ArbolPadre{
+class Periodo : public BaseMecha{
 private:
     std::string ID;
     std::string Nombre;

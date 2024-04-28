@@ -10,7 +10,7 @@
 #include "Periodo.hpp"
 #include "Usuario.hpp"
 #include "NodoPadre.hpp"
-#include "ArbolPadre.hpp"
+#include "BaseMecha.hpp"
 #include "ManejoSqlite.hpp"
 #include <Utilidades.hpp>
 
@@ -464,7 +464,7 @@ int main()
     {
         std::cout << "Testing Crear Raiz con Usuario del Arbol Padre"<< " \n";
        
-        ArbolPadre* controlUsuario = nuevoUsuario;
+        BaseMecha* controlUsuario = nuevoUsuario;
         rootTreeFather = new NodoPadre(controlUsuario, "/");
 
         std::cout << "Valor (root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
@@ -476,12 +476,12 @@ int main()
     {
         std::cout << "Testing Agregar nodos al Arbol Padre"<< " \n";
 
-        ArbolPadre* controlComentario = nuevoComentario;
-        ArbolPadre* controlApunte = nuevoApunte;
-        ArbolPadre* controlClase = nuevaClase;
-        ArbolPadre* controlMateria = nuevaMateria;
-        ArbolPadre* controlPeriodo = nuevoPeriodo;
-        ArbolPadre* controlUsuario = nuevoUsuario;
+        BaseMecha* controlComentario = nuevoComentario;
+        BaseMecha* controlApunte = nuevoApunte;
+        BaseMecha* controlClase = nuevaClase;
+        BaseMecha* controlMateria = nuevaMateria;
+        BaseMecha* controlPeriodo = nuevoPeriodo;
+        BaseMecha* controlUsuario = nuevoUsuario;
 
         apunteTreeFather = new NodoPadre(controlApunte, nuevoApunte->obtenerID());
         comentarioTreeFather = new NodoPadre(controlComentario, nuevoComentario->obtenerID());

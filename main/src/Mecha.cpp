@@ -80,7 +80,7 @@ std::cout << "\n\n *Apunte* \n \n";
 
     Apunte apunte(&usuario, "Contenido", fechaInicio, popularidad);
 
-    std::cout << "Nombre: " << usuario.getNombre() << std::endl;
+    std::cout << "Nombre: " << usuario.obtenerNombre() << std::endl;
     std::cout << "Contenido: " << apunte.obtenerContenido() << std::endl;
     std::cout << "Fecha: " << Utilidades::crearFecha(clase.obtenerFecha()) << std::endl;
     std::cout << "Popularidad: " << apunte.obtenerPopularidad() << std::endl;
@@ -95,7 +95,7 @@ std::cout << "\n\n *Comentario* \n \n";
     Comentario comentario(&usuario, "contenido", fechaInicio);
 
     // Ahora puedes utilizar el objeto comentario como desees
-    std::cout << "Nombre: " << usuario.getNombre() << std::endl;
+    std::cout << "Nombre: " << usuario.obtenerNombre() << std::endl;
     std::cout << "Contenido del comentario: " << comentario.obtenerContenido() << std::endl;
     std::cout << "Fecha: " << Utilidades::crearFecha(clase.obtenerFecha()) << std::endl;
 
