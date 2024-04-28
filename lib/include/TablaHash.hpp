@@ -1,6 +1,3 @@
-#ifndef HASH_TABLE_HPP
-#define HASH_TABLE_HPP
-
 #include <vector>
 #include <list>
 #include <string>
@@ -8,7 +5,7 @@
 // Define la estructura de un elemento en la tabla hash
 struct ItemHash {
     std::string llave;
-    int value;
+    int valor;
 };
 
 // Define la tabla hash
@@ -20,8 +17,8 @@ private:
 public:
     TablaHash();
     int funcionHash(const std::string& llave);
-    void insert(const std::string& llave, int value);
+    void insert(const std::string& llave, int valor);
     int buscar(const std::string& llave);
 };
 
-#endif // HASH_TABLE_HPP
+

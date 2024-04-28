@@ -1,5 +1,5 @@
+![satoshi-group](https://github.com/gitsusdav/mecha/assets/26911843/8ffab5e6-3840-4820-be0c-abeeb7f38293)
 
-![terminado](https://github.com/gitsusdav/mecha/assets/26911843/42d2743e-c222-4589-9a1a-4a8f4525b4db)
 
 Copyright 2024 Satoshi-Group. All rights reserved.
 

@@ -11,56 +11,56 @@ Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
 Usuario::Usuario(){}
 
 // Métodos de acceso (getters)
-std::string Usuario::getNombre() const {
+std::string Usuario::obtenerNombre() const {
     return Nombre;
 }
 
-std::string Usuario::getID() const {
+std::string Usuario::obtenerID() const {
     return ID;
 }
 
-std::string Usuario::getDescripcion() const {
+std::string Usuario::obtenerDescripcion() const {
     return Descripcion;
 }
 
-std::vector<Usuario*> Usuario::getConexiones() const {
+std::vector<Usuario*> Usuario::obtenerConexiones() const {
     return Conexiones;
 }
 
-std::vector<Rol> Usuario::getRoles() const {
+std::vector<Rol> Usuario::obtenerRoles() const {
     return Roles;
 }
 
-int Usuario::getPopularidad() const {
+int Usuario::obtenerPopularidad() const {
     return Popularidad;
 }
 
-std::string Usuario::getCorreo() const {
+std::string Usuario::obtenerCorreo() const {
     return Correo;
 }
 
-std::string Usuario::getClave() const {
+std::string Usuario::obtenerClave() const {
     return Clave;
 }
 
-std::vector<Apunte*> Usuario::getApuntesPropios() const {
+std::vector<Apunte*> Usuario::obtenerApuntesPropios() const {
     return ApuntesPropios;
 }
 
-std::vector<Apunte*> Usuario::getApuntesSeguidos() const {
+std::vector<Apunte*> Usuario::obtenerApuntesSeguidos() const {
     return ApuntesSeguidos;
 }
 
 // Métodos de modificación (setters)
-void Usuario::setNombre(const std::string& nombre) {
+void Usuario::asignarNombre(const std::string& nombre) {
     Nombre = nombre;
 }
 
-void Usuario::setID(const std::string& id) {
+void Usuario::asignarID(const std::string& id) {
     ID = id;
 }
 
-void Usuario::setDescripcion(const std::string& descripcion) {
+void Usuario::asignarDescripcion(const std::string& descripcion) {
     Descripcion = descripcion;
 }
 
@@ -72,7 +72,7 @@ void Usuario::setRoles(const std::vector<Rol>& roles) {
     Roles = roles;
 }
 
-void Usuario::setPopularidad(int popularidad) {
+void Usuario::asignarPopularidad(int popularidad) {
     Popularidad = popularidad;
 }
 
@@ -97,7 +97,7 @@ std::string Usuario::toString() const  {
 } 
 
 bool Usuario::operator==(const Usuario& otro) const {
-    return ID == otro.getID();
+    return ID == otro.obtenerID();
 }
 
 void Usuario::agregarApunteSeguido(Apunte* apunte) {
@@ -108,7 +108,7 @@ void Usuario::agregarApunteSeguido(Apunte* apunte) {
 
 void Usuario::eliminarApunteSeguido(const std::string& idApunte) {
     auto it = std::find_if(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), [&idApunte](Apunte* apunte) {
-        return apunte->getID() == idApunte;
+        return apunte->obtenerID() == idApunte;
     });
     if (it != ApuntesSeguidos.end()) {
         ApuntesSeguidos.erase(it);
@@ -123,7 +123,7 @@ void Usuario::agregarApuntePropio(Apunte* apunte) {
 
 void Usuario::eliminarApuntePropio(const std::string& idApunte) {
     auto it = std::find_if(ApuntesPropios.begin(), ApuntesPropios.end(), [&idApunte](Apunte* apunte) {
-        return apunte->getID() == idApunte;
+        return apunte->obtenerID() == idApunte;
     });
     if (it != ApuntesPropios.end()) {
         ApuntesPropios.erase(it);
@@ -132,7 +132,7 @@ void Usuario::eliminarApuntePropio(const std::string& idApunte) {
 
 Apunte* Usuario::buscarApuntePropiosPorID(const std::string& idApunte) const {
     auto it = std::find_if(ApuntesPropios.begin(), ApuntesPropios.end(), [&idApunte](Apunte* apunte) {
-        return apunte->getID() == idApunte;
+        return apunte->obtenerID() == idApunte;
     });
     if (it != ApuntesPropios.end()) {
         return *it;
@@ -143,7 +143,7 @@ Apunte* Usuario::buscarApuntePropiosPorID(const std::string& idApunte) const {
 
 Apunte* Usuario::buscarApunteSeguidosPorID(const std::string& idApunte) const {
     auto it = std::find_if(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), [&idApunte](Apunte* apunte) {
-        return apunte->getID() == idApunte;
+        return apunte->obtenerID() == idApunte;
     });
     if (it != ApuntesSeguidos.end()) {
         return *it;
@@ -157,7 +157,7 @@ void Usuario::agregarPeriodoActual(Periodo* periodo) {
 
 void Usuario::eliminarPeriodoActual(const std::string& idPeriodo) {
     for (auto it = Periodos.begin(); it != Periodos.end(); ++it) {
-        if ((*it)->getID() == idPeriodo) {
+        if ((*it)->obtenerID() == idPeriodo) {
             delete *it;
             Periodos.erase(it);
             break; 
@@ -167,7 +167,7 @@ void Usuario::eliminarPeriodoActual(const std::string& idPeriodo) {
 
 Periodo* Usuario::buscarPeriodoActualPorID(const std::string& idPeriodo) const {
     for (auto periodo : Periodos) {
-        if (periodo->getID() == idPeriodo) {
+        if (periodo->obtenerID() == idPeriodo) {
             return periodo;
         }
     }

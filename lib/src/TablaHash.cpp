@@ -1,4 +1,4 @@
-#include "HashTable.hpp"
+#include "TablaHash.hpp"
 
 // Constructor
 TablaHash::TablaHash() {

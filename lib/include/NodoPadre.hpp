@@ -7,7 +7,7 @@
 class NodoPadre : public ArbolPadre  {
 private:
     NodoPadre* padre;  
-    ArbolPadre* value;           
+    ArbolPadre* valor;           
     std::string camino; 
 public:
     NodoPadre(ArbolPadre* val, const std::string& path);

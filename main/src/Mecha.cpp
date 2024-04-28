@@ -17,11 +17,11 @@ int main(int argc, char* argv[])
 std::cout << "\n\n *Usuario* \n \n";
     Usuario usuario("Nombre", "Descripción", {}, "correo@example.com", "clave");  //Datos de ejemplo
 
-    std::cout << "Nombre: " << usuario.getNombre() << std::endl;
-    std::cout << "Descripción: " << usuario.getDescripcion() << std::endl;
-    std::cout << "Correo: " << usuario.getCorreo() << std::endl;
+    std::cout << "Nombre: " << usuario.obtenerNombre() << std::endl;
+    std::cout << "Descripción: " << usuario.obtenerDescripcion() << std::endl;
+    std::cout << "Correo: " << usuario.obtenerCorreo() << std::endl;
     std::cout << "Roles: ";
-    for (const auto& rol : usuario.getRoles()) {
+    for (const auto& rol : usuario.obtenerRoles()) {
         switch (rol) {
             case Rol::PROFESOR:
                 std::cout << "Profesor ";
@@ -42,12 +42,12 @@ std::cout << "\n\n *Periodo* \n \n";
 
     Periodo periodo("Semestre 2024", "Descripción del semestre", fechaInicio, fechaFin); //Datos de ejemplo
 
-    std::cout << "Nombre: " << periodo.getNombre() << std::endl;
-    std::cout << "Descripción: " << periodo.getDescripcion() << std::endl;
-    std::cout << "Fecha de inicio: " << Utilidades::crearFecha(periodo.getFechaInicio()) << std::endl;
-    std::cout << "Fecha de fin: " << Utilidades::crearFecha(periodo.getFechaFin()) << std::endl;
+    std::cout << "Nombre: " << periodo.obtenerNombre() << std::endl;
+    std::cout << "Descripción: " << periodo.obtenerDescripcion() << std::endl;
+    std::cout << "Fecha de inicio: " << Utilidades::crearFecha(periodo.obtenerFechaInicio()) << std::endl;
+    std::cout << "Fecha de fin: " << Utilidades::crearFecha(periodo.obtenerFechaFin()) << std::endl;
     std::cout << "Materias: ";
-    for (const auto& materia : periodo.getMaterias()) {
+    for (const auto& materia : periodo.obtenerMaterias()) {
         std::cout << materia << ", ";
     }
     std::cout << std::endl;
@@ -56,11 +56,11 @@ std::cout << "\n\n *Materia* \n \n";
 
     Materia materia( &periodo, "Descripción de la materia", {"Profesor1", "Profesor2"}, "Nombre de la materia", {}, true); //Datos de ejemplo
 
-    std::cout << "Nombre: " << materia.getNombre() << std::endl;
-    std::cout << "Descripción: " << materia.getDescripcion() << std::endl;
-    std::cout << "Periodo: " << periodo.getNombre() << std::endl;
+    std::cout << "Nombre: " << materia.obtenerNombre() << std::endl;
+    std::cout << "Descripción: " << materia.obtenerDescripcion() << std::endl;
+    std::cout << "Periodo: " << periodo.obtenerNombre() << std::endl;
     std::cout << "Profesores: ";
-    for (const auto& profesor : materia.getProfesores()) {
+    for (const auto& profesor : materia.obtenerProfesores()) {
         std::cout << profesor << ", ";
     }
     std::cout << std::endl;
@@ -69,10 +69,10 @@ std::cout << "\n\n *Clases* \n \n";
 
 Clase clase("ID de la materia", "Descripción", fechaInicio, "Tema"); //se usa la fecha de utilidades como ejemplo
 
-std::cout << "ID de la materia: " << clase.getIDMateria() << std::endl;
-std::cout << "Descripción: " << clase.getDescripcion() << std::endl;
-std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
-std::cout << "Tema: " << clase.getTema() << std::endl;
+std::cout << "ID de la materia: " << clase.obtenerIDMateria() << std::endl;
+std::cout << "Descripción: " << clase.obtenerDescripcion() << std::endl;
+std::cout << "Fecha: " << Utilidades::crearFecha(clase.obtenerFecha()) << std::endl;
+std::cout << "Tema: " << clase.obtenerTema() << std::endl;
 
 
 std::cout << "\n\n *Apunte* \n \n";
@@ -81,9 +81,9 @@ std::cout << "\n\n *Apunte* \n \n";
     Apunte apunte(&usuario, "Contenido", fechaInicio, popularidad);
 
     std::cout << "Nombre: " << usuario.getNombre() << std::endl;
-    std::cout << "Contenido: " << apunte.getContenido() << std::endl;
-    std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
-    std::cout << "Popularidad: " << apunte.getPopularidad() << std::endl;
+    std::cout << "Contenido: " << apunte.obtenerContenido() << std::endl;
+    std::cout << "Fecha: " << Utilidades::crearFecha(clase.obtenerFecha()) << std::endl;
+    std::cout << "Popularidad: " << apunte.obtenerPopularidad() << std::endl;
 
 
 std::cout << "\n\n *Comentario* \n \n";
@@ -96,8 +96,8 @@ std::cout << "\n\n *Comentario* \n \n";
 
     // Ahora puedes utilizar el objeto comentario como desees
     std::cout << "Nombre: " << usuario.getNombre() << std::endl;
-    std::cout << "Contenido del comentario: " << comentario.getContenido() << std::endl;
-    std::cout << "Fecha: " << Utilidades::crearFecha(clase.getFecha()) << std::endl;
+    std::cout << "Contenido del comentario: " << comentario.obtenerContenido() << std::endl;
+    std::cout << "Fecha: " << Utilidades::crearFecha(clase.obtenerFecha()) << std::endl;
 
     return 0;
 }
