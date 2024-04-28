@@ -1,17 +1,17 @@
 #include <NodoPadre.hpp>
 
 
-NodoPadre::NodoPadre(ArbolPadre* val, const std::string& path) : padre(nullptr), value(val), camino(path) {}
+NodoPadre::NodoPadre(BaseMecha* val, const std::string& path) : padre(nullptr), valor(val), camino(path) {}
 
 
-void NodoPadre::setPadre(NodoPadre* nodoPadre) {
+void NodoPadre::asignarPadre(NodoPadre* nodoPadre) {
     asignarCamino( nodoPadre->obtenerCamino() + camino + "/");
     padre = nodoPadre;
 }
 
 
-ArbolPadre* NodoPadre::obtenerValor() const {
-    return value;
+BaseMecha* NodoPadre::obtenerValor() const {
+    return valor;
 }
 
 

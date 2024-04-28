@@ -2,11 +2,13 @@
 
 #include <string>
 #include <vector>
-#include "Clase.hpp" 
-#include "ArbolPadre.hpp"
+
+#include "BaseMecha.hpp"
 
 class Periodo;
-class Materia : public ArbolPadre{
+class Clase;
+
+class Materia : public BaseMecha{
 private:
     std::string ID;
     Periodo* periodo;
@@ -23,22 +25,22 @@ public:
             const std::vector<Clase*>& clases, bool periodoActivo);
     Materia();
     // Métodos de acceso (getters)
-    std::string getID() const;
-    Periodo* getPeriodo() const;
-    std::string getDescripcion() const;
-    std::vector<std::string> getProfesores() const;
-    std::string getNombre() const;
-    std::vector<Clase*> getClases() const;
-    bool getPeriodoActivo() const;
+    std::string obtenerID() const;
+    Periodo* obtenerPeriodo() const;
+    std::string obtenerDescripcion() const;
+    std::vector<std::string> obtenerProfesores() const;
+    std::string obtenerNombre() const;
+    std::vector<Clase*> obtenerClases() const;
+    bool obtenerPeriodoActivo() const;
 
     // Métodos de modificación (setters)
-    void setID(std::string id);
-    void setPeriodo(Periodo* periodo);
-    void setDescripcion(const std::string& descripcion);
-    void setProfesores(const std::vector<std::string>& profesores);
-    void setNombre(const std::string& nombre);
-    void setClases(const std::vector<Clase*>& clases);
-    void setPeriodoActivo(bool periodo);
+    void asignarID(std::string id);
+    void asignarPeriodo(Periodo* periodo);
+    void asignarDescripcion(const std::string& descripcion);
+    void asignarProfesores(const std::vector<std::string>& profesores);
+    void asignarNombre(const std::string& nombre);
+    void asignarClases(const std::vector<Clase*>& clases);
+    void asignarPeriodoActivo(bool periodo);
     void agregarClase(Clase *clase);
     std::vector<Clase*> buscarTemaEnClases(const std::string& tema);
     // Método para convertir Materia en cadena

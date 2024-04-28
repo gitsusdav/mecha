@@ -6,7 +6,7 @@
 /app Flutter/windows/flutter/ephemeral
 /app Flutter/.dart_tool
 /app Flutter/.idea
-
+DatosCalientesMecha.db
 
 # Miscellaneous
 /app Flutter/*.class

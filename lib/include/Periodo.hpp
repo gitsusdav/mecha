@@ -3,11 +3,12 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include "ArbolPadre.hpp"
+
+#include "BaseMecha.hpp"
 
 class Materia;
 
-class Periodo : public ArbolPadre{
+class Periodo : public BaseMecha{
 private:
     std::string ID;
     std::string Nombre;
@@ -22,20 +23,20 @@ public:
             const std::tm& fechaInicio, const std::tm& fechaFin);
     Periodo();
     // Métodos de acceso (getters)
-    std::string getID() const;
-    std::string getNombre() const;
-    std::string getDescripcion() const;
-    std::tm getFechaInicio() const;
-    std::tm getFechaFin() const;
-    std::vector<Materia *> getMaterias() const;
+    std::string obtenerID() const;
+    std::string obtenerNombre() const;
+    std::string obtenerDescripcion() const;
+    std::tm obtenerFechaInicio() const;
+    std::tm obtenerFechaFin() const;
+    std::vector<Materia *> obtenerMaterias() const;
 
     // Métodos de modificación (setters)
-    void setID(std::string id);
-    void setNombre(const std::string& nombre);
-    void setDescripcion(const std::string& descripcion);
-    void setFechaInicio(const std::tm& fechaInicio);
-    void setFechaFin(const std::tm& fechaFin);
-    void setMaterias(const std::vector<Materia *>& materias);
+    void asignarID(std::string id);
+    void asignarNombre(const std::string& nombre);
+    void asignarDescripcion(const std::string& descripcion);
+    void asignarFechaInicio(const std::tm& fechaInicio);
+    void asignarFechaFin(const std::tm& fechaFin);
+    void asignarMaterias(const std::vector<Materia *>& materias);
     void agregarMateria(Materia* materia);
 
     // Método para convertir Periodo en cadena
