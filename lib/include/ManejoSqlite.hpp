@@ -2,6 +2,11 @@
 #include <string>
 #include <sqlite3.h>
 #include "Usuario.hpp"
+#include "Periodo.hpp"
+#include "Materia.hpp"
+#include "Clase.hpp"
+#include "Apunte.hpp"
+#include "Comentario.hpp"
 
 class ManejoSqlite {
 private:
@@ -12,5 +17,5 @@ public:
     ~ManejoSqlite();
 
     void executeQuery(const std::string& query);
-    bool insertUsuario(const Usuario& usuario);
+    bool insertarUsuario(const Usuario& usuario);
 };
