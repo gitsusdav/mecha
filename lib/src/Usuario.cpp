@@ -1,13 +1,14 @@
 #include <Usuario.hpp>
+#include "Apunte.hpp"
+#include "Periodo.hpp"
 
 // Constructor
 Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
-        const std::vector<Usuario*>& conexiones, const std::vector<Rol>& roles,
-        int popularidad, const std::string& correo, const std::string& clave,
-        const std::vector<Apunte*>& apuntesPropios, const std::vector<Apunte*>& apuntesSeguidos)
-    : Nombre(nombre), Descripcion(descripcion), Conexiones(conexiones),
-      Roles(roles), Popularidad(popularidad), Correo(correo), Clave(clave),
-      ApuntesPropios(apuntesPropios), ApuntesSeguidos(apuntesSeguidos) {}
+        const std::vector<Rol>& roles,
+        const std::string& correo, const std::string& clave)
+    : Nombre(nombre), Descripcion(descripcion), Roles(roles),
+      Correo(correo), Clave(clave) {}
+Usuario::Usuario(){}
 
 // Métodos de acceso (getters)
 std::string Usuario::getNombre() const {
@@ -91,6 +92,84 @@ void Usuario::setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos) {
     ApuntesSeguidos = apuntesSeguidos;
 }
 
-std::string Usuario::toString() const {
+std::string Usuario::toString() const  {
     return Nombre +" "+ Descripcion +" "+  Correo;
 } 
+
+bool Usuario::operator==(const Usuario& otro) const {
+    return ID == otro.getID();
+}
+
+void Usuario::agregarApunteSeguido(Apunte* apunte) {
+    if (std::find(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), apunte) == ApuntesSeguidos.end()) {
+        ApuntesSeguidos.push_back(apunte);
+    }
+}
+
+void Usuario::eliminarApunteSeguido(const std::string& idApunte) {
+    auto it = std::find_if(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesSeguidos.end()) {
+        ApuntesSeguidos.erase(it);
+    }
+}
+
+void Usuario::agregarApuntePropio(Apunte* apunte) {
+    if (std::find(ApuntesPropios.begin(), ApuntesPropios.end(), apunte) == ApuntesPropios.end()) {
+        ApuntesPropios.push_back(apunte);
+    }
+}
+
+void Usuario::eliminarApuntePropio(const std::string& idApunte) {
+    auto it = std::find_if(ApuntesPropios.begin(), ApuntesPropios.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesPropios.end()) {
+        ApuntesPropios.erase(it);
+    }
+}
+
+Apunte* Usuario::buscarApuntePropiosPorID(const std::string& idApunte) const {
+    auto it = std::find_if(ApuntesPropios.begin(), ApuntesPropios.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesPropios.end()) {
+        return *it;
+    } else {
+        return nullptr;
+    }
+}
+
+Apunte* Usuario::buscarApunteSeguidosPorID(const std::string& idApunte) const {
+    auto it = std::find_if(ApuntesSeguidos.begin(), ApuntesSeguidos.end(), [&idApunte](Apunte* apunte) {
+        return apunte->getID() == idApunte;
+    });
+    if (it != ApuntesSeguidos.end()) {
+        return *it;
+    } else {
+        return nullptr;
+    }
+}
+void Usuario::agregarPeriodoActual(Periodo* periodo) {
+    PeriodoActual.push_back(periodo);
+}
+
+void Usuario::eliminarPeriodoActual(const std::string& idPeriodo) {
+    for (auto it = PeriodoActual.begin(); it != PeriodoActual.end(); ++it) {
+        if ((*it)->getID() == idPeriodo) {
+            delete *it;
+            PeriodoActual.erase(it);
+            break; 
+        }
+    }
+}
+
+Periodo* Usuario::buscarPeriodoActualPorID(const std::string& idPeriodo) const {
+    for (auto periodo : PeriodoActual) {
+        if (periodo->getID() == idPeriodo) {
+            return periodo;
+        }
+    }
+    return nullptr;
+}

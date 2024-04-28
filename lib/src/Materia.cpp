@@ -1,14 +1,14 @@
 #include "Materia.hpp"
-
+#include "Periodo.hpp"
 // Constructor
-Materia::Materia(int id, Periodo* periodo, const std::string& descripcion,
+Materia::Materia( Periodo* periodo, const std::string& descripcion,
         const std::vector<std::string>& profesores, const std::string& nombre,
         const std::vector<Clase*>& clases, bool periodoActivo)
-    : ID(id), periodo(periodo), Descripcion(descripcion), Profesores(profesores),
+    :  periodo(periodo), Descripcion(descripcion), Profesores(profesores),
       Nombre(nombre), Clases(clases), PeriodoActivo(periodoActivo) {}
-
+Materia::Materia(){}
 // Métodos de acceso (getters)
-int Materia::getID() const {
+std::string Materia::getID() const {
     return ID;
 }
 
@@ -37,7 +37,7 @@ bool Materia::getPeriodoActivo() const {
 }
 
 // Métodos de modificación (setters)
-void Materia::setID(int id) {
+void Materia::setID(std::string id) {
     ID = id;
 }
 
@@ -67,3 +67,20 @@ void Materia::setPeriodoActivo(bool periodo) {
 std::string Materia::toString() const {
         return Nombre +" "+ Descripcion;
 } 
+
+// agregar clase a materia
+
+void Materia::agregarClase(Clase* clase) {
+    clase->setIDMateria(ID);
+    Clases.push_back(clase);
+}
+
+std::vector<Clase*> Materia::buscarTemaEnClases(const std::string& tema) {
+    std::vector<Clase*> clasesEncontradas;
+    for (Clase* clase : Clases) {
+        if (clase->getTema().find(tema) != std::string::npos) {
+            clasesEncontradas.push_back(clase);
+        }
+    }
+    return clasesEncontradas; 
+}

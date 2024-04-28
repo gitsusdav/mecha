@@ -1,18 +1,14 @@
 #include <Apunte.hpp>
+#include "Comentario.hpp"
 
 // Constructor
-Apunte::Apunte( Clase* clase, Usuario* usuario, const std::string& contenido,
-               const std::tm& fecha, const std::vector<Comentario*>& comentarios,
-               int like, int dislike, int popularidad)
-    : clase(clase), usuario(usuario), Contenido(contenido),
-      Fecha(fecha), Comentarios(comentarios), Like(like), Dislike(dislike), Popularidad(popularidad) {}
-
+Apunte::Apunte(Usuario* usuario, const std::string& contenido, const std::tm& fecha, int popularidad) :usuario(usuario), Contenido(contenido), Fecha(fecha), Popularidad(popularidad) {}
+Apunte::Apunte(){}
 // Destructor
 Apunte::~Apunte() {
-    // Implement any necessary cleanup here
+    
 }
 
-// Métodos de acceso (getters)
 std::string Apunte::getID() const { return ID; }
 Clase* Apunte::getClase() const { return clase; }
 Usuario* Apunte::getUsuario() const { return usuario; }
@@ -29,14 +25,22 @@ void Apunte::setClase(Clase* clase) { this->clase = clase; }
 void Apunte::setUsuario(Usuario* usuario) { this->usuario = usuario; }
 void Apunte::setContenido(const std::string& contenido) { Contenido = contenido; }
 void Apunte::setFecha(const std::tm& fecha) { Fecha = fecha; }
-void Apunte::setComentarios(const std::vector<Comentario*>& comentarios) { Comentarios = comentarios; }
+void Apunte::setComentarios(const std::vector<Comentario*> comentarios) { Comentarios = comentarios; }
 void Apunte::setLike(int like) { Like = like; }
 void Apunte::setDislike(int dislike) { Dislike = dislike; }
-void Apunte::setPopularidad(int popularidad) { Popularidad = popularidad; }
+void Apunte::setPopularidad(int popularidad) { Popularidad = getLike() - getDislike(); }
+
+void Apunte::agregarComentario(Comentario *nuevoComentario){
+    Comentarios.push_back(nuevoComentario);
+}
 
 // Método para convertir Apunte en cadena
-std::string Apunte::toString() {
+std::string Apunte::toString() const{
     std::ostringstream oss;
     oss << Contenido << " " << std::put_time(&Fecha, "%Y-%m-%d %H:%M:%S");
     return oss.str();
+}
+
+bool Apunte::operator==(const Apunte& otro) const {
+    return ID == otro.getID();
 }

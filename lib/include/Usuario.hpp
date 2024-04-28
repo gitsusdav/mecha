@@ -2,9 +2,12 @@
 
 #include <string>
 #include <vector>
+#include <algorithm> 
+#include <iterator>  
+#include "ArbolPadre.hpp"
 
 class Apunte;
-
+class Periodo;
 
 enum class Rol {
     PROFESOR,
@@ -12,7 +15,7 @@ enum class Rol {
     GRADUADO
 };
 
-class Usuario {
+class Usuario : public ArbolPadre  {
 private:
     std::string Nombre;
     std::string ID;
@@ -21,17 +24,17 @@ private:
     std::vector<Rol> Roles;
     int Popularidad;
     std::string Correo;
-    std::string Clave; // Cambiado a "clave"
+    std::string Clave; 
+    std::vector<Periodo*> PeriodoActual;
     std::vector<Apunte*> ApuntesPropios;
     std::vector<Apunte*> ApuntesSeguidos;
 
 public:
     // Constructor sin ID
-    Usuario(const std::string& nombre, const std::string& descripcion,
-            const std::vector<Usuario*>& conexiones, const std::vector<Rol>& roles,
-            int popularidad, const std::string& correo, const std::string& clave, // Cambiado a "clave"
-            const std::vector<Apunte*>& apuntesPropios, const std::vector<Apunte*>& apuntesSeguidos);
-
+     Usuario(const std::string& nombre, const std::string& descripcion,
+       const std::vector<Rol>& roles,
+       const std::string& correo, const std::string& clave);
+    Usuario();
     // Métodos de acceso (getters)
     std::string getNombre() const;
     std::string getID() const;
@@ -57,6 +60,20 @@ public:
     void setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
 
     // Método para convertir Usuario en cadena
-    std::string toString() const;
+    std::string toString() const override ;
+    
+    // Sobrecargamos el operador de igualdad
+    bool operator==(const Usuario& otro) const;
+
+    void agregarApunteSeguido(Apunte* apunte);
+    void eliminarApunteSeguido(const std::string& idApunte);
+    void agregarApuntePropio(Apunte* apunte);
+    void eliminarApuntePropio(const std::string& idApunte);
+    Apunte* buscarApuntePropiosPorID(const std::string& idApunte) const;
+    Apunte* buscarApunteSeguidosPorID(const std::string& idApunte) const;
+
+    void agregarPeriodoActual(Periodo* periodo);
+    void eliminarPeriodoActual(const std::string& idPeriodo);
+    Periodo* buscarPeriodoActualPorID(const std::string& idPeriodo) const;
 };
 
