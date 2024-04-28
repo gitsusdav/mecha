@@ -6,11 +6,14 @@
 
 #include "Clase.hpp"
 #include "Usuario.hpp"
-#include "ArbolPadre.hpp"
-
+#include "BaseMecha.hpp"
 
 class Comentario;
-class Apunte : public ArbolPadre {
+
+/// Esta clase representa el objetivo principal de Mecha
+/// El cual es crear y guarda apuntes de cada clase para luego
+/// ser compartidos esos apuntes con los participantes de la Clase en la Materia
+class Apunte : public BaseMecha {
 
 private:
     std::string ID;
@@ -24,7 +27,7 @@ private:
     int Popularidad;
 
 public:
-    // Constructor (reducido)
+    // Constructor
     Apunte(Usuario* usuario, const std::string& contenido,
            const std::tm& fecha, int popularidad);
     Apunte();
@@ -32,26 +35,26 @@ public:
     ~Apunte();
 
     // Métodos de acceso (getters)
-    std::string getID() const;
-    Clase* getClase() const;
-    Usuario* getUsuario() const;
-    std::string getContenido() const;
-    std::tm getFecha() const;
-    std::vector<Comentario*> getComentarios() const;
-    int getLike() const;
-    int getDislike() const;
-    int getPopularidad() const;
+    std::string obtenerID() const;
+    Clase* obtenerClase() const;
+    Usuario* obtenerUsuario() const;
+    std::string obtenerContenido() const;
+    std::tm obtenerFecha() const;
+    std::vector<Comentario*> obtenerComentarios() const;
+    int obtenerLike() const;
+    int obtenerDislike() const;
+    int obtenerPopularidad() const;
 
-
-    void setID(std::string id);
-    void setClase(Clase* clase);
-    void setUsuario(Usuario* usuario);
-    void setContenido(const std::string& contenido);
-    void setFecha(const std::tm& fecha);
-    void setComentarios(const std::vector<Comentario*> comentarios);
-    void setLike(int like);
-    void setDislike(int dislike);
-    void setPopularidad(int popularidad);
+    // Métodos de modificación (setters)
+    void asignarID(std::string id);
+    void asignarClase(Clase* clase);
+    void asignarUsuario(Usuario* usuario);
+    void asignarContenido(const std::string& contenido);
+    void asignarFecha(const std::tm& fecha);
+    void asignarComentarios(const std::vector<Comentario*> comentarios);
+    void asignarLike(int like);
+    void asignarDislike(int dislike);
+    void asignarPopularidad(int popularidad);
     void agregarComentario(Comentario *comentario);
 
     // Método para convertir Apunte en cadena

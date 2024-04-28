@@ -1,4 +1,4 @@
-#include "HashTable.hpp"
+#include "TablaHash.hpp"
 
 // Constructor
 TablaHash::TablaHash() {
@@ -17,23 +17,23 @@ int TablaHash::funcionHash(const std::string& llave) {
 // Insertar un elemento en la tabla hash
 void TablaHash::insert(const std::string& llave, int valor) {
     int index = funcionHash(llave);
-    auto& items = tabla[index];
-    for (auto& item : items) {
-        if (item.llave == llave) {
-            item.valor = valor;
+    auto& elementos = tabla[index];
+    for (auto& elemento : elementos) {
+        if (elemento.llave == llave) {
+            elemento.valor = valor;
             return;
         }
     }
-    items.push_back({llave, valor});
+    elementos.push_back({llave, valor});
 }
 
 // Buscar un elemento en la tabla hash
 int TablaHash::buscar(const std::string& llave) {
     int index = funcionHash(llave);
-    for (const ItemHash& item : tabla[index]) {
-        if (item.llave == llave) {
-            return item.valor;
+    for (const ElementoHash& elemento : tabla[index]) {
+        if (elemento.llave == llave) {
+            return elemento.valor;
         }
     }
-    return -1; // No se encontró la clave
+    return -1;
 }
