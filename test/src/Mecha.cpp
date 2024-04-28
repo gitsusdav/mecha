@@ -496,7 +496,7 @@ int main()
         apunteTreeFather->setPadre(claseTreeFather);
 
         comentarioTreeFather->setPadre(apunteTreeFather);
-    /*
+    
         std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
         
         std::cout << "Valor (Periodo): " << periodoTreeFather->obtenerValor()->toString() << " Camino (path): " << periodoTreeFather->obtenerCamino()  << " \n\n";
@@ -508,7 +508,7 @@ int main()
         std::cout << "Valor (Apunte): " << apunteTreeFather->obtenerValor()->toString() << " Camino (path): " << apunteTreeFather->obtenerCamino()  << " \n\n";
 
         std::cout << "Valor (Comentario): " << comentarioTreeFather->obtenerValor()->toString() << " Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n\n";
-    */
+    
         assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString());
         assertEqual(periodoTreeFather->obtenerValor()->toString(), nuevoPeriodo->toString());
         assertEqual(materiaTreeFather->obtenerValor()->toString(), nuevaMateria->toString());
