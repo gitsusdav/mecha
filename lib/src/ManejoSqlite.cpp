@@ -63,12 +63,23 @@ int ManejoSqlite::insertarUsuario(const Usuario& usuario) {
         insertarUsuarioApunte(idUsuario,idApunte, true);
     }
 
-    for (std::string rol : usuario.obtenerRoles()) {
-        int idApunte = insertarApunte(*apunteSeguidos);
-        insertarUsuarioApunte(idUsuario,idApunte, true);
+    for (Rol rol : usuario.obtenerRoles()) {
+            std::string rolToString;
+
+    switch (rol) {
+        case Rol::PROFESOR:
+            rolToString = "PROFESOR";
+            break;
+        case Rol::ESTUDIANTE:
+            rolToString = "ESTUDIANTE";
+            break;
+        case Rol::GRADUADO:
+            rolToString = "GRADUADO";
+            break;
     }
 
-
+        insertarUsuarioRol(idUsuario, rolToString);
+    }
 
     sqlite3_finalize(stmt);
     return idUsuario;

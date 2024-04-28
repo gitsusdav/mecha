@@ -19,7 +19,7 @@ public:
     ~ManejoSqlite();
 
     void executeQuery(const std::string& query);
-    bool insertarUsuario(const Usuario& usuario);
+    int insertarUsuario(const Usuario& usuario);
     std::vector<Usuario> obtenerTodoLosUsuarios();
     std::vector<Periodo> obtenerTodoLosPeriodos(); 
     std::vector<Materia> obtenerTodasLasMaterias(); 
