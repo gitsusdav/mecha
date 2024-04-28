@@ -25,7 +25,7 @@ private:
     int Popularidad;
     std::string Correo;
     std::string Clave; 
-    std::vector<Periodo*> PeriodoActual;
+    std::vector<Periodo*> Periodos;
     std::vector<Apunte*> ApuntesPropios;
     std::vector<Apunte*> ApuntesSeguidos;
 

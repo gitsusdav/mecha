@@ -20,12 +20,12 @@ MKMAIN      = $(MAIN:$(MAINDIR)/src/%.cpp=$(MAINDIR)/bin/%)
 INCLUDEPATH = -I$(LIB)/include
 
 FLAGS       = -DDEBUG -g -O0
-LIBLINK     = $(OBJECTS) -lcrypto
+LIBLINK     = $(OBJECTS) -lcrypto -lsqlite3
 
 all: main test
 
 $(LIB)/obj/%.o : $(LIB)/src/%.cpp
-	$(CXX) $(FLAGS) $(INCLUDEPATH) -c $< -o $@
+	$(CXX) $(FLAGS) $(INCLUDEPATH) -c $< -o $@ 
 
 $(TESTDIR)/bin/%: $(TESTDIR)/src/%.cpp $(OBJECTS)
 	$(CXX) $(FLAGS) $(INCLUDEPATH) $< -o $@ $(LIBLINK)
