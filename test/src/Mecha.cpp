@@ -527,7 +527,7 @@ int main()
     }
 
     {
-        std::cout << "Testing Creando Base de Datos"<< " \n";
+        std::cout << "Testing Creando o Abriendo Base de Datos"<< " \n";
 
         bool crearBaseDeDatos = Utilidades::instanciarBaseDeDatos();
         assertEqual(crearBaseDeDatos,true);
