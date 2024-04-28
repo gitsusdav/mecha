@@ -497,7 +497,9 @@ int main()
 
         apunteTreeFather->asignarPadre(claseTreeFather);
 
+
         comentarioTreeFather->asignarPadre(apunteTreeFather);
+
     
         std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
         
