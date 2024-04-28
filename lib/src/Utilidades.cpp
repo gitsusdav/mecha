@@ -99,7 +99,7 @@ bool Utilidades::instanciarBaseDeDatos() {
             id_Periodo INTEGER NOT NULL,
             Descripcion TEXT,
             Nombre TEXT,
-            PeriodoActivo BOOLEAN,
+            obtenerPeriodoActivo BOOLEAN,
             FOREIGN KEY (id_Periodo) REFERENCES Periodo(ID) 
         );
     )";

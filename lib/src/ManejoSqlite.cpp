@@ -28,11 +28,11 @@ bool ManejoSqlite::insertUsuario(const Usuario& usuario) {
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, usuario.getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, usuario.getNombre().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, usuario.getDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 4, usuario.getPopularidad());
-    sqlite3_bind_text(stmt, 5, usuario.getCorreo().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, usuario.obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, usuario.obtenerNombre().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, usuario.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 4, usuario.obtenerPopularidad());
+    sqlite3_bind_text(stmt, 5, usuario.obtenerCorreo().c_str(), -1, SQLITE_STATIC);
 
 
     resultado = sqlite3_step(stmt);

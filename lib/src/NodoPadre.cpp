@@ -1,7 +1,7 @@
 #include <NodoPadre.hpp>
 
 
-NodoPadre::NodoPadre(ArbolPadre* val, const std::string& path) : padre(nullptr), value(val), camino(path) {}
+NodoPadre::NodoPadre(ArbolPadre* val, const std::string& path) : padre(nullptr), valor(val), camino(path) {}
 
 
 void NodoPadre::setPadre(NodoPadre* nodoPadre) {
@@ -11,7 +11,7 @@ void NodoPadre::setPadre(NodoPadre* nodoPadre) {
 
 
 ArbolPadre* NodoPadre::obtenerValor() const {
-    return value;
+    return valor;
 }
 
 

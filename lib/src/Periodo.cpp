@@ -8,52 +8,52 @@ Periodo::Periodo( const std::string& nombre, const std::string& descripcion,
       FechaFin(fechaFin) {}
 Periodo::Periodo(){}
 // Métodos de acceso (getters)
-std::string Periodo::getID() const {
+std::string Periodo::obtenerID() const {
     return ID;
 }
 
-std::string Periodo::getNombre() const {
+std::string Periodo::obtenerNombre() const {
     return Nombre;
 }
 
-std::string Periodo::getDescripcion() const {
+std::string Periodo::obtenerDescripcion() const {
     return Descripcion;
 }
 
-std::tm Periodo::getFechaInicio() const {
+std::tm Periodo::obtenerFechaInicio() const {
     return FechaInicio;
 }
 
-std::tm Periodo::getFechaFin() const {
+std::tm Periodo::obtenerFechaFin() const {
     return FechaFin;
 }
 
-std::vector<Materia *> Periodo::getMaterias() const {
+std::vector<Materia *> Periodo::obtenerMaterias() const {
     return Materias;
 }
 
 // Métodos de modificación (setters)
-void Periodo::setID(std::string id) {
+void Periodo::asignarID(std::string id) {
     ID = id;
 }
 
-void Periodo::setNombre(const std::string& nombre) {
+void Periodo::asignarNombre(const std::string& nombre) {
     Nombre = nombre;
 }
 
-void Periodo::setDescripcion(const std::string& descripcion) {
+void Periodo::asignarDescripcion(const std::string& descripcion) {
     Descripcion = descripcion;
 }
 
-void Periodo::setFechaInicio(const std::tm& fechaInicio) {
+void Periodo::asignarFechaInicio(const std::tm& fechaInicio) {
     FechaInicio = fechaInicio;
 }
 
-void Periodo::setFechaFin(const std::tm& fechaFin) {
+void Periodo::asignarFechaFin(const std::tm& fechaFin) {
     FechaFin = fechaFin;
 }
 
-void Periodo::setMaterias(const std::vector<Materia *>& materias) {
+void Periodo::asignarMaterias(const std::vector<Materia *>& materias) {
     Materias = materias;
 }
 

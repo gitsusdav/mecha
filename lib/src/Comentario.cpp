@@ -5,61 +5,61 @@ Comentario::Comentario(Usuario* usuario, const std::string& contenido, const std
 Comentario::Comentario(){}
 // Métodos de acceso (getters)
 
-Apunte* Comentario::getApunte() const {
+Apunte* Comentario::obtenerApunte() const {
     return apunte;
 }
 
-Usuario* Comentario::getUsuario() const {
+Usuario* Comentario::obtenerUsuario() const {
     return usuario;
 }
 
-std::string Comentario::getContenido() const {
+std::string Comentario::obtenerContenido() const {
     return Contenido;
 }
 
-std::string Comentario::getID() const {
+std::string Comentario::obtenerID() const {
     return id;
 }
 
 
-std::tm Comentario::getFecha() const {
+std::tm Comentario::obtenerFecha() const {
     return Fecha;
 }
 
-int Comentario::getLikes() const {
+int Comentario::obtenerLikes() const {
     return Like;
 }
 
-int Comentario::getDislikes() const {
+int Comentario::obtenerDislikes() const {
     return Dislikes;
 }
 
 // Métodos de modificación (setters)
-void Comentario::setApunte(Apunte* apunte) {
+void Comentario::asignarApunte(Apunte* apunte) {
     this->apunte = apunte;
 }
 
-void Comentario::setUsuario(Usuario* usuario) {
+void Comentario::asignarUsuario(Usuario* usuario) {
     this->usuario = usuario;
 }
 
-void Comentario::setContenido(const std::string& contenido) {
+void Comentario::asignarContenido(const std::string& contenido) {
     Contenido = contenido;
 }
 
-void Comentario::setFecha(const std::tm& fecha) {
+void Comentario::asignarFecha(const std::tm& fecha) {
     Fecha = fecha;
 }
 
-void Comentario::setID(const std::string& ID) {
+void Comentario::asignarID(const std::string& ID) {
     id = ID;
 }
 
-void Comentario::setLikes(int like) {
+void Comentario::asignarLikes(int like) {
     Like = like;
 }
 
-void Comentario::setDislikes(int dislike) {
+void Comentario::asignarDislikes(int dislike) {
     Dislikes = dislike;
 }
 std::string Comentario::toString() const {

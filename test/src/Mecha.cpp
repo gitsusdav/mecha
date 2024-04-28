@@ -85,18 +85,18 @@ int main()
 
         std::tm* local_time = std::localtime(&time);
         
-        nuevoApunte->setContenido(contenido);
-        nuevoApunte->setFecha(*local_time);
-        nuevoApunte->setUsuario(nuevoUsuario);
-        nuevoApunte->setClase(nuevaClase);
+        nuevoApunte->asignarContenido(contenido);
+        nuevoApunte->asignarFecha(*local_time);
+        nuevoApunte->asignarUsuario(nuevoUsuario);
+        nuevoApunte->asignarClase(nuevaClase);
 
-        nuevoApunteDos->setContenido(contenido);
+        nuevoApunteDos->asignarContenido(contenido);
 
-        std::string obtenerContenido = nuevoApunte->getContenido();
+        std::string obtenerContenido = nuevoApunte->obtenerContenido();
 
         assertEqual(obtenerContenido, contenido);
         
-        obtenerContenido= nuevoApunteDos->getContenido();
+        obtenerContenido= nuevoApunteDos->obtenerContenido();
         assertEqual(obtenerContenido, contenido);
     }
 
@@ -116,7 +116,7 @@ int main()
 
         nuevoUsuario->setCorreo(correo);
         nuevoUsuario->setClave(clave);
-        nuevoUsuario->setNombre(nombre);
+        nuevoUsuario->asignarNombre(nombre);
         nuevoUsuario->setRoles(roles);
         nuevoUsuario->setConexiones(conexions);
 
@@ -132,8 +132,8 @@ int main()
         nuevoUsuario->setApuntesSeguidos(seguidos);
 
 
-        assertEqual(correo, nuevoUsuario->getCorreo());
-        assertEqual(clave, nuevoUsuario->getClave());
+        assertEqual(correo, nuevoUsuario->obtenerCorreo());
+        assertEqual(clave, nuevoUsuario->obtenerClave());
 
 
         // Constructor full
@@ -156,23 +156,23 @@ int main()
         std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", local_time);
         std::string fechaString(buffer);
 
-        nuevoComentario->setContenido("contenido");
-        nuevoComentario->setDislikes(1);
-        nuevoComentario->setFecha(*local_time);
-        nuevoComentario->setLikes(1);
-        nuevoComentario->setUsuario(nuevoUsuario);
-        nuevoComentario->setApunte(nuevoApunte);
+        nuevoComentario->asignarContenido("contenido");
+        nuevoComentario->asignarDislikes(1);
+        nuevoComentario->asignarFecha(*local_time);
+        nuevoComentario->asignarLikes(1);
+        nuevoComentario->asignarUsuario(nuevoUsuario);
+        nuevoComentario->asignarApunte(nuevoApunte);
 
-        std::tm fechaComentario = nuevoComentario->getFecha();
+        std::tm fechaComentario = nuevoComentario->obtenerFecha();
         std::strftime(buffer, sizeof(buffer), "%Y-%m-%d %H:%M:%S", &fechaComentario);
         std::string fechaAsignada(buffer);
 
-        assertEqual(std::string ("contenido"), nuevoComentario->getContenido());
-        assertEqual(1, nuevoComentario->getDislikes());
-        assertEqual(1, nuevoComentario->getLikes());
+        assertEqual(std::string ("contenido"), nuevoComentario->obtenerContenido());
+        assertEqual(1, nuevoComentario->obtenerDislikes());
+        assertEqual(1, nuevoComentario->obtenerLikes());
         assertEqual(local_time->tm_yday,fechaComentario.tm_yday);
-        assertEqual(std::string ("usurario"), nuevoUsuario->getNombre());
-        assertEqual(std::string ("Apunte Nuevo"), nuevoApunte->getContenido());
+        assertEqual(std::string ("usurario"), nuevoUsuario->obtenerNombre());
+        assertEqual(std::string ("Apunte Nuevo"), nuevoApunte->obtenerContenido());
         assertEqual(fechaString, fechaAsignada);
         std::cout << "Testing Fecha to String: " << fechaAsignada << "\n";
 
@@ -192,19 +192,19 @@ int main()
 
         std::vector<std::string> misRecursos = {"urlRecuerso1", "urlRecuerso2", "urlRecuerso3"};
 
-        nuevaClase->setApuntes(misApuntes);
-        nuevaClase->setDescripcion("descrip");
-        nuevaClase->setFecha(*local_time);
-        nuevaClase->setIDMateria("string");
-        nuevaClase->setRecursos(misRecursos);
-        nuevaClase->setTema("tema principal");
+        nuevaClase->asignarApuntes(misApuntes);
+        nuevaClase->asignarDescripcion("descrip");
+        nuevaClase->asignarFecha(*local_time);
+        nuevaClase->asignarIDMateria("string");
+        nuevaClase->asignarRecursos(misRecursos);
+        nuevaClase->asignarTema("tema principal");
 
-        assertEqual(nuevoApunte->getContenido(), nuevaClase->getApuntes().at(0)->getContenido());
-        assertEqual(std::string("descrip"), nuevaClase->getDescripcion());
-        assertEqual(local_time->tm_yday,nuevaClase->getFecha().tm_yday);
-        assertEqual(std::string("string"),nuevaClase->getIDMateria());
-        assertEqual(std::string("tema principal"), nuevaClase->getTema());
-        assertEqual(misApuntes.at(0),nuevaClase->getApuntes().at(0));
+        assertEqual(nuevoApunte->obtenerContenido(), nuevaClase->obtenerApuntes().at(0)->obtenerContenido());
+        assertEqual(std::string("descrip"), nuevaClase->obtenerDescripcion());
+        assertEqual(local_time->tm_yday,nuevaClase->obtenerFecha().tm_yday);
+        assertEqual(std::string("string"),nuevaClase->obtenerIDMateria());
+        assertEqual(std::string("tema principal"), nuevaClase->obtenerTema());
+        assertEqual(misApuntes.at(0),nuevaClase->obtenerApuntes().at(0));
 
         // Constructor full
 
@@ -216,19 +216,19 @@ int main()
 
         std::vector<std::string> profesoresMateria = {"Profesor1", "Profesor2", "Profesor3"};
 
-        nuevaMateria->setClases(clasesMateria);
-        nuevaMateria->setDescripcion("descrip");
-        nuevaMateria->setNombre("Materia");
-        nuevaMateria->setPeriodo(nuevoPeriodo);
-        nuevaMateria->setPeriodoActivo(true);
-        nuevaMateria->setProfesores(profesoresMateria);
+        nuevaMateria->asignarClases(clasesMateria);
+        nuevaMateria->asignarDescripcion("descrip");
+        nuevaMateria->asignarNombre("Materia");
+        nuevaMateria->asignarPeriodo(nuevoPeriodo);
+        nuevaMateria->asignarPeriodoActivo(true);
+        nuevaMateria->asignarProfesores(profesoresMateria);
 
-        assertEqual(nuevaClase->getDescripcion() ,nuevaMateria->getClases().at(0)->getDescripcion());
-        assertEqual(std::string("descrip") ,nuevaMateria->getDescripcion());
-        assertEqual(nuevoPeriodo->getDescripcion() ,nuevaMateria->getPeriodo()->getDescripcion());
-        assertEqual(std::string("Materia") ,nuevaMateria->getNombre());
-        assertEqual(true ,nuevaMateria->getPeriodoActivo());
-        assertEqual(profesoresMateria.at(0) ,nuevaMateria->getProfesores().at(0));
+        assertEqual(nuevaClase->obtenerDescripcion() ,nuevaMateria->obtenerClases().at(0)->obtenerDescripcion());
+        assertEqual(std::string("descrip") ,nuevaMateria->obtenerDescripcion());
+        assertEqual(nuevoPeriodo->obtenerDescripcion() ,nuevaMateria->obtenerPeriodo()->obtenerDescripcion());
+        assertEqual(std::string("Materia") ,nuevaMateria->obtenerNombre());
+        assertEqual(true ,nuevaMateria->obtenerPeriodoActivo());
+        assertEqual(profesoresMateria.at(0) ,nuevaMateria->obtenerProfesores().at(0));
     
     }
 
@@ -242,11 +242,11 @@ int main()
 
         std::tm* local_time = std::localtime(&time);
 
-        nuevoPeriodo->setDescripcion("descr");
-        nuevoPeriodo->setFechaFin(*local_time);
-        nuevoPeriodo->setFechaInicio(*local_time);
-        nuevoPeriodo->setMaterias(periodoMateria);
-        nuevoPeriodo->setNombre("A2024");
+        nuevoPeriodo->asignarDescripcion("descr");
+        nuevoPeriodo->asignarFechaFin(*local_time);
+        nuevoPeriodo->asignarFechaInicio(*local_time);
+        nuevoPeriodo->asignarMaterias(periodoMateria);
+        nuevoPeriodo->asignarNombre("A2024");
     
     }
 
@@ -254,9 +254,9 @@ int main()
         std::cout << "Testing Asignar ID Usuario" << "\n";
 
         std::string idUsuario =  Utilidades::generarId(nuevoUsuario->toString());
-        nuevoUsuario->setID(idUsuario);
+        nuevoUsuario->asignarID(idUsuario);
 
-        assertEqual(idUsuario, nuevoUsuario->getID());
+        assertEqual(idUsuario, nuevoUsuario->obtenerID());
 
     }
 
@@ -264,9 +264,9 @@ int main()
         std::cout << "Testing Asignar ID Apunte" << "\n";
 
         std::string idApunte =  Utilidades::generarId(nuevoApunte->toString());
-        nuevoApunte->setID(idApunte);
+        nuevoApunte->asignarID(idApunte);
 
-        assertEqual(idApunte, nuevoApunte->getID());
+        assertEqual(idApunte, nuevoApunte->obtenerID());
 
     }
 
@@ -274,9 +274,9 @@ int main()
         std::cout << "Testing Asignar ID Clase" << "\n";
 
         std::string idClase =  Utilidades::generarId(nuevaClase->toString());
-        nuevaClase->setID(idClase);
+        nuevaClase->asignarID(idClase);
 
-        assertEqual(idClase, nuevaClase->getID());
+        assertEqual(idClase, nuevaClase->obtenerID());
 
     }
 
@@ -284,9 +284,9 @@ int main()
         std::cout << "Testing Asignar ID Materia" << "\n";
 
         std::string idMateria =  Utilidades::generarId(nuevaMateria->toString());
-        nuevaMateria->setID(idMateria);
+        nuevaMateria->asignarID(idMateria);
 
-        assertEqual(idMateria, nuevaMateria->getID());
+        assertEqual(idMateria, nuevaMateria->obtenerID());
 
     }
 
@@ -294,9 +294,9 @@ int main()
         std::cout << "Testing Asignar ID Periodo" << "\n";
 
         std::string idPeriodo =  Utilidades::generarId(nuevoPeriodo->toString());
-        nuevoPeriodo->setID(idPeriodo);
+        nuevoPeriodo->asignarID(idPeriodo);
 
-        assertEqual(idPeriodo, nuevoPeriodo->getID());
+        assertEqual(idPeriodo, nuevoPeriodo->obtenerID());
 
     }
     
@@ -304,9 +304,9 @@ int main()
         std::cout << "Testing Asignar ID Comentario" << "\n";
 
         std::string idComentario =  Utilidades::generarId(nuevoComentario->toString());
-        nuevoComentario->setID(idComentario);
+        nuevoComentario->asignarID(idComentario);
 
-        assertEqual(idComentario, nuevoComentario->getID());
+        assertEqual(idComentario, nuevoComentario->obtenerID());
 
     }
 
@@ -314,8 +314,8 @@ int main()
     {
         std::cout << "Testing Agregar Apunte a Clase"<< "\n";
 
-        auto idClase = nuevaClase->getIDMateria();
-        auto id = nuevoApunte->getClase()->getID();
+        auto idClase = nuevaClase->obtenerIDMateria();
+        auto id = nuevoApunte->obtenerClase()->obtenerID();
 
 
         std::cout << "idClase: " << idClase << " \n";
@@ -325,26 +325,26 @@ int main()
         std::cout << "Despues de los cambios: " << " \n";
 
         nuevaClase->agregarApunte(nuevoApunte);
-        nuevoApunte->setClase(nuevaClase);
+        nuevoApunte->asignarClase(nuevaClase);
 
-        idClase = nuevaClase->getIDMateria();
-        id = nuevoApunte->getClase()->getID();
+        idClase = nuevaClase->obtenerIDMateria();
+        id = nuevoApunte->obtenerClase()->obtenerID();
 
         std::cout << "idClase: " << idClase << " \n";
         std::cout << "id: " << id << " \n";
 
-        auto idMateria = nuevaClase->getIDMateria();
-        id = nuevaMateria->getID();
+        auto idMateria = nuevaClase->obtenerIDMateria();
+        id = nuevaMateria->obtenerID();
    
-        assertEqual(nuevoApunte->getClase()->getID(), nuevaClase->getID());
-        assertEqual(nuevoApunte->getContenido(), nuevaClase->getApuntes().back()->getContenido());
+        assertEqual(nuevoApunte->obtenerClase()->obtenerID(), nuevaClase->obtenerID());
+        assertEqual(nuevoApunte->obtenerContenido(), nuevaClase->obtenerApuntes().back()->obtenerContenido());
     }
     
     {
         std::cout << "Testing Agregar Clase a Materia" << " \n";
 
-        auto idMateria = nuevaClase->getIDMateria();
-        auto id = nuevaMateria->getID();
+        auto idMateria = nuevaClase->obtenerIDMateria();
+        auto id = nuevaMateria->obtenerID();
 
         std::cout << "idMateria: " << idMateria << " \n";
         std::cout << "id: " << id << " \n";
@@ -353,38 +353,38 @@ int main()
 
         std::cout << "Despues de los cambios:" << " \n";
 
-        idMateria = nuevaClase->getIDMateria();
-        id = nuevaMateria->getID();
+        idMateria = nuevaClase->obtenerIDMateria();
+        id = nuevaMateria->obtenerID();
 
         std::cout << "idMateria: " << idMateria << " \n";
         std::cout << "id: " << id << " \n";
          //  esperamos que la materia tenga esa clase
-        assertEqual(nuevaClase->getIDMateria(), nuevaMateria->getID());
+        assertEqual(nuevaClase->obtenerIDMateria(), nuevaMateria->obtenerID());
 
         // revisamos que la ultima clase, sea la ultima de el vector de clases
-        assertEqual(nuevaClase->getDescripcion(), nuevaMateria->getClases().back()->getDescripcion());
+        assertEqual(nuevaClase->obtenerDescripcion(), nuevaMateria->obtenerClases().back()->obtenerDescripcion());
        // assert_equal(actual, esperado);
     }
 
     {
         std::cout << "Testing Agregar Materia a Periodo" << " \n";
-        auto idMateria = nuevaMateria->getPeriodo()->getID();
-        auto idPeriodo = nuevoPeriodo->getID();
+        auto idMateria = nuevaMateria->obtenerPeriodo()->obtenerID();
+        auto idPeriodo = nuevoPeriodo->obtenerID();
 
         std::cout << "ID materia: " << idMateria << " \n";
         std::cout << "ID periodo: " << idPeriodo << " \n";
 
         nuevoPeriodo->agregarMateria(nuevaMateria);
-        nuevaMateria->setPeriodo(nuevoPeriodo);
+        nuevaMateria->asignarPeriodo(nuevoPeriodo);
 
-        idMateria = nuevaMateria->getPeriodo()->getID();
-        idPeriodo = nuevoPeriodo->getID();
+        idMateria = nuevaMateria->obtenerPeriodo()->obtenerID();
+        idPeriodo = nuevoPeriodo->obtenerID();
 
         std::cout << "Despues\n" << "ID materia: " << idMateria << " \n";
         std::cout << "ID periodo: " << idPeriodo << " \n";
 
         assertEqual(idMateria, idPeriodo);
-        assertEqual(nuevaMateria->getDescripcion(), nuevoPeriodo->getMaterias().back()->getDescripcion());
+        assertEqual(nuevaMateria->obtenerDescripcion(), nuevoPeriodo->obtenerMaterias().back()->obtenerDescripcion());
     }
 
     {
@@ -396,20 +396,20 @@ int main()
 
     {
         std::cout << "Testing Agregar Comentario a Apunte" << " \n";
-        auto idComentario = nuevoComentario->getApunte()->getID();
-        auto idApunte = nuevoApunte->getID();
+        auto idComentario = nuevoComentario->obtenerApunte()->obtenerID();
+        auto idApunte = nuevoApunte->obtenerID();
 
         std::cout << "id comentario: " << idComentario << " \n";
         std::cout << "id apunte: " << idApunte << " \n";
 
-        nuevoComentario->setApunte(nuevoApunte);
+        nuevoComentario->asignarApunte(nuevoApunte);
         nuevoApunte->agregarComentario(nuevoComentario);
 
-        idComentario = nuevoComentario->getApunte()->getID();
-        idApunte = nuevoApunte->getID();
+        idComentario = nuevoComentario->obtenerApunte()->obtenerID();
+        idApunte = nuevoApunte->obtenerID();
 
         assertEqual(idComentario, idApunte);
-        assertEqual(nuevoComentario->getID(), nuevoApunte->getComentarios().back()->getID());
+        assertEqual(nuevoComentario->obtenerID(), nuevoApunte->obtenerComentarios().back()->obtenerID());
     } 
 
     {
@@ -425,7 +425,7 @@ int main()
         std::vector<Clase *> resultado =  nuevaMateria->buscarTemaEnClases("principal");
 
         assertEqual(false,resultado.empty());
-        assertEqual(resultado.at(0)->getID(), nuevaMateria->getClases().at(0)->getID());
+        assertEqual(resultado.at(0)->obtenerID(), nuevaMateria->obtenerClases().at(0)->obtenerID());
         
     }
 
@@ -481,11 +481,11 @@ int main()
         ArbolPadre* controlPeriodo = nuevoPeriodo;
         ArbolPadre* controlUsuario = nuevoUsuario;
 
-        apunteTreeFather = new NodoPadre(controlApunte, nuevoApunte->getID());
-        comentarioTreeFather = new NodoPadre(controlComentario, nuevoComentario->getID());
-        periodoTreeFather = new NodoPadre(controlPeriodo, nuevoPeriodo->getID());
-        materiaTreeFather = new NodoPadre(controlMateria, nuevaMateria->getID());
-        claseTreeFather =  new NodoPadre(controlClase, nuevaClase->getID());
+        apunteTreeFather = new NodoPadre(controlApunte, nuevoApunte->obtenerID());
+        comentarioTreeFather = new NodoPadre(controlComentario, nuevoComentario->obtenerID());
+        periodoTreeFather = new NodoPadre(controlPeriodo, nuevoPeriodo->obtenerID());
+        materiaTreeFather = new NodoPadre(controlMateria, nuevaMateria->obtenerID());
+        claseTreeFather =  new NodoPadre(controlClase, nuevaClase->obtenerID());
 
         periodoTreeFather->setPadre(rootTreeFather);
 
@@ -518,11 +518,11 @@ int main()
 
         // Testing de path 
         assertEqual(rootTreeFather->obtenerCamino(),       std::string("/"));
-        assertEqual(periodoTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/"));
-        assertEqual(materiaTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/"));
-        assertEqual(claseTreeFather->obtenerCamino(),      std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/"));
-        assertEqual(apunteTreeFather->obtenerCamino(),     std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/"));
-        assertEqual(comentarioTreeFather->obtenerCamino(), std::string("/")+nuevoPeriodo->getID()+std::string("/")+nuevaMateria->getID()+std::string("/")+nuevaClase->getID()+std::string("/")+nuevoApunte->getID()+std::string("/")+nuevoComentario->getID()+std::string("/"));
+        assertEqual(periodoTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->obtenerID()+std::string("/"));
+        assertEqual(materiaTreeFather->obtenerCamino(),    std::string("/")+nuevoPeriodo->obtenerID()+std::string("/")+nuevaMateria->obtenerID()+std::string("/"));
+        assertEqual(claseTreeFather->obtenerCamino(),      std::string("/")+nuevoPeriodo->obtenerID()+std::string("/")+nuevaMateria->obtenerID()+std::string("/")+nuevaClase->obtenerID()+std::string("/"));
+        assertEqual(apunteTreeFather->obtenerCamino(),     std::string("/")+nuevoPeriodo->obtenerID()+std::string("/")+nuevaMateria->obtenerID()+std::string("/")+nuevaClase->obtenerID()+std::string("/")+nuevoApunte->obtenerID()+std::string("/"));
+        assertEqual(comentarioTreeFather->obtenerCamino(), std::string("/")+nuevoPeriodo->obtenerID()+std::string("/")+nuevaMateria->obtenerID()+std::string("/")+nuevaClase->obtenerID()+std::string("/")+nuevoApunte->obtenerID()+std::string("/")+nuevoComentario->obtenerID()+std::string("/"));
 
     }
 
