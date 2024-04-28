@@ -4,7 +4,7 @@
 #include <vector>
 #include <algorithm> 
 #include <iterator>  
-#include "ArbolPadre.hpp"
+#include "BaseMecha.hpp"
 
 class Apunte;
 class Periodo;
@@ -15,7 +15,7 @@ enum class Rol {
     GRADUADO
 };
 
-class Usuario : public ArbolPadre  {
+class Usuario : public BaseMecha  {
 private:
     std::string Nombre;
     std::string ID;
@@ -35,29 +35,29 @@ public:
        const std::vector<Rol>& roles,
        const std::string& correo, const std::string& clave);
     Usuario();
-    // Métodos de acceso (getters)
-    std::string getNombre() const;
-    std::string getID() const;
-    std::string getDescripcion() const;
-    std::vector<Usuario*> getConexiones() const;
-    std::vector<Rol> getRoles() const;
-    int getPopularidad() const;
-    std::string getCorreo() const;
-    std::string getClave() const; // Cambiado a "clave"
-    std::vector<Apunte*> getApuntesPropios() const;
-    std::vector<Apunte*> getApuntesSeguidos() const;
+    // Métodos de acceso
+    std::string obtenerNombre() const;
+    std::string obtenerID() const;
+    std::string obtenerDescripcion() const;
+    std::vector<Usuario*> obtenerConexiones() const;
+    std::vector<Rol> obtenerRoles() const;
+    int obtenerPopularidad() const;
+    std::string obtenerCorreo() const;
+    std::string obtenerClave() const; // Cambiado a "clave"
+    std::vector<Apunte*> obtenerApuntesPropios() const;
+    std::vector<Apunte*> obtenerApuntesSeguidos() const;
 
-    // Métodos de modificación (setters)
-    void setNombre(const std::string& nombre);
-    void setID(const std::string& id);
-    void setDescripcion(const std::string& descripcion);
-    void setConexiones(const std::vector<Usuario*>& conexiones);
-    void setRoles(const std::vector<Rol>& roles);
-    void setPopularidad(int popularidad);
-    void setCorreo(const std::string& correo);
-    void setClave(const std::string& clave); // Cambiado a "clave"
-    void setApuntesPropios(const std::vector<Apunte*>& apuntesPropios);
-    void setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
+    // Métodos de modificación
+    void asignarNombre(const std::string& nombre);
+    void asignarID(const std::string& id);
+    void asignarDescripcion(const std::string& descripcion);
+    void asignarConexiones(const std::vector<Usuario*>& conexiones);
+    void asignarRoles(const std::vector<Rol>& roles);
+    void asignarPopularidad(int popularidad);
+    void asignarCorreo(const std::string& correo);
+    void asignarClave(const std::string& clave); // Cambiado a "clave"
+    void asignarApuntesPropios(const std::vector<Apunte*>& apuntesPropios);
+    void asignarApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
 
     // Método para convertir Usuario en cadena
     std::string toString() const override ;

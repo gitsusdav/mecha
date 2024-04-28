@@ -42,3 +42,7 @@ El ejecutable se encuentra en la carpeta desde la raíz main/bin/Mecha o tambié
 ## Licencia
 
 Este código es público bajo la licencia BSD (Berkeley Software Distribution) 
+
+## Colaboradores
+
+Este proyecto es realizado por estudiantes de ingeniería de sistema de la ULA (Universidad de los Andes Mérida Venezuela) como proyecto para la materia programación 3 Profesor Alejandro Mujica. Abril 2024.  

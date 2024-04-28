@@ -99,7 +99,7 @@ bool Utilidades::instanciarBaseDeDatos() {
             id_Periodo INTEGER NOT NULL,
             Descripcion TEXT,
             Nombre TEXT,
-            PeriodoActivo BOOLEAN,
+            obtenerPeriodoActivo BOOLEAN,
             FOREIGN KEY (id_Periodo) REFERENCES Periodo(ID) 
         );
     )";
@@ -152,7 +152,7 @@ bool Utilidades::instanciarBaseDeDatos() {
     resultado = sqlite3_exec(baseDeDatos, crearTablaComentario, nullptr, nullptr, nullptr);
 
     const char* crearTablaUsuarioCredenciales = R"(
-        CREATE TABLE Usuario_Crendeciales (
+        CREATE TABLE Usuario_Credenciales (
             ID INTEGER PRIMARY KEY,
             id_Usuario TEXT NOT NULL,
             Correo TEXT NOT NULL,

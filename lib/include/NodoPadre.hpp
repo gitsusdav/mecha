@@ -2,17 +2,18 @@
 
 #include <string>
 #include <memory>
-#include <ArbolPadre.hpp>
 
-class NodoPadre : public ArbolPadre  {
+#include "BaseMecha.hpp"
+
+class NodoPadre : public BaseMecha  {
 private:
     NodoPadre* padre;  
-    ArbolPadre* value;           
+    BaseMecha* valor;           
     std::string camino; 
 public:
-    NodoPadre(ArbolPadre* val, const std::string& path);
-    void setPadre(NodoPadre* nodoPadre);
-    ArbolPadre* obtenerValor() const;
+    NodoPadre(BaseMecha* val, const std::string& path);
+    void asignarPadre(NodoPadre* nodoPadre);
+    BaseMecha* obtenerValor() const;
     void asignarCamino(const std::string& nuevoCamino);
     std::string obtenerCamino() const; 
 };

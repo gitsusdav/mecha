@@ -3,11 +3,12 @@
 #include <string>
 #include <vector>
 #include <iomanip>
-#include "ArbolPadre.hpp"
+
+#include "BaseMecha.hpp"
 
 class Apunte;
 
-class Clase : public ArbolPadre {
+class Clase : public BaseMecha {
 private:
     std::string ID;
     std::string ID_Materia;
@@ -24,22 +25,22 @@ public:
     Clase();
 
     // Métodos de acceso (getters)    
-    std::string getID() const;
-    std::string getIDMateria() const;
-    std::string getDescripcion() const;
-    std::tm getFecha() const;
-    std::vector<std::string> getRecursos() const;
-    std::vector<Apunte*> getApuntes() const; 
-    std::string getTema() const;
+    std::string obtenerID() const;
+    std::string obtenerIDMateria() const;
+    std::string obtenerDescripcion() const;
+    std::tm obtenerFecha() const;
+    std::vector<std::string> obtenerRecursos() const;
+    std::vector<Apunte*> obtenerApuntes() const; 
+    std::string obtenerTema() const;
 
     // Métodos de modificación (setters)
-    void setID(std::string id);
-    void setIDMateria(const std::string& idMateria );
-    void setDescripcion(const std::string& descripcion);
-    void setFecha(const std::tm& fecha);
-    void setRecursos(const std::vector<std::string>& recursos);
-    void setApuntes(const std::vector<Apunte*>& apuntes); 
-    void setTema(const std::string& tema);
+    void asignarID(std::string id);
+    void asignarIDMateria(const std::string& idMateria );
+    void asignarDescripcion(const std::string& descripcion);
+    void asignarFecha(const std::tm& fecha);
+    void asignarRecursos(const std::vector<std::string>& recursos);
+    void asignarApuntes(const std::vector<Apunte*>& apuntes); 
+    void asignarTema(const std::string& tema);
     void agregarApunte(Apunte *apunte);
 
     // Método para convertir Clase en cadena

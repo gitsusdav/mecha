@@ -4,9 +4,9 @@
 #include <iomanip>
 #include "Apunte.hpp"
 #include "Usuario.hpp"
-#include "ArbolPadre.hpp"
+#include "BaseMecha.hpp"
 
-class Comentario : public ArbolPadre {
+class Comentario : public BaseMecha {
 private:
     std::string id;
     Apunte* apunte;
@@ -22,22 +22,22 @@ public:
                const std::tm& fecha);
     Comentario();
     // Métodos de acceso (getters)
-    Apunte* getApunte() const;
-    Usuario* getUsuario() const;
-    std::string getContenido() const;
-    std::tm getFecha() const;
-    std::string getID() const;
-    int getLikes() const;
-    int getDislikes() const;
+    Apunte* obtenerApunte() const;
+    Usuario* obtenerUsuario() const;
+    std::string obtenerContenido() const;
+    std::tm obtenerFecha() const;
+    std::string obtenerID() const;
+    int obtenerLikes() const;
+    int obtenerDislikes() const;
 
     // Métodos de modificación (setters)
-    void setApunte(Apunte* apunte);
-    void setUsuario(Usuario* usuario);
-    void setContenido(const std::string& contenido);
-    void setFecha(const std::tm& fecha);
-    void setLikes(int like);
-    void setID(const std::string& ID);
-    void setDislikes(int dislike);
+    void asignarApunte(Apunte* apunte);
+    void asignarUsuario(Usuario* usuario);
+    void asignarContenido(const std::string& contenido);
+    void asignarFecha(const std::tm& fecha);
+    void asignarLikes(int like);
+    void asignarID(const std::string& ID);
+    void asignarDislikes(int dislike);
 
     // Método para convertir Comentario en cadena
     std::string toString() const;

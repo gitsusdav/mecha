@@ -9,26 +9,26 @@ Apunte::~Apunte() {
     
 }
 
-std::string Apunte::getID() const { return ID; }
-Clase* Apunte::getClase() const { return clase; }
-Usuario* Apunte::getUsuario() const { return usuario; }
-std::string Apunte::getContenido() const { return Contenido; }
-std::tm Apunte::getFecha() const { return Fecha; }
-std::vector<Comentario*> Apunte::getComentarios() const { return Comentarios; }
-int Apunte::getLike() const { return Like; }
-int Apunte::getDislike() const { return Dislike; }
-int Apunte::getPopularidad() const { return Popularidad; }
+std::string Apunte::obtenerID() const { return ID; }
+Clase* Apunte::obtenerClase() const { return clase; }
+Usuario* Apunte::obtenerUsuario() const { return usuario; }
+std::string Apunte::obtenerContenido() const { return Contenido; }
+std::tm Apunte::obtenerFecha() const { return Fecha; }
+std::vector<Comentario*> Apunte::obtenerComentarios() const { return Comentarios; }
+int Apunte::obtenerLike() const { return Like; }
+int Apunte::obtenerDislike() const { return Dislike; }
+int Apunte::obtenerPopularidad() const { return Popularidad; }
 
 // Métodos de modificación (setters)
-void Apunte::setID(std::string id) { ID = id; }
-void Apunte::setClase(Clase* clase) { this->clase = clase; }
-void Apunte::setUsuario(Usuario* usuario) { this->usuario = usuario; }
-void Apunte::setContenido(const std::string& contenido) { Contenido = contenido; }
-void Apunte::setFecha(const std::tm& fecha) { Fecha = fecha; }
-void Apunte::setComentarios(const std::vector<Comentario*> comentarios) { Comentarios = comentarios; }
-void Apunte::setLike(int like) { Like = like; }
-void Apunte::setDislike(int dislike) { Dislike = dislike; }
-void Apunte::setPopularidad(int popularidad) { Popularidad = getLike() - getDislike(); }
+void Apunte::asignarID(std::string id) { ID = id; }
+void Apunte::asignarClase(Clase* clase) { this->clase = clase; }
+void Apunte::asignarUsuario(Usuario* usuario) { this->usuario = usuario; }
+void Apunte::asignarContenido(const std::string& contenido) { Contenido = contenido; }
+void Apunte::asignarFecha(const std::tm& fecha) { Fecha = fecha; }
+void Apunte::asignarComentarios(const std::vector<Comentario*> comentarios) { Comentarios = comentarios; }
+void Apunte::asignarLike(int like) { Like = like; }
+void Apunte::asignarDislike(int dislike) { Dislike = dislike; }
+void Apunte::asignarPopularidad(int popularidad) { Popularidad = obtenerLike() - obtenerDislike(); }
 
 void Apunte::agregarComentario(Comentario *nuevoComentario){
     Comentarios.push_back(nuevoComentario);
@@ -42,5 +42,5 @@ std::string Apunte::toString() const{
 }
 
 bool Apunte::operator==(const Apunte& otro) const {
-    return ID == otro.getID();
+    return ID == otro.obtenerID();
 }
