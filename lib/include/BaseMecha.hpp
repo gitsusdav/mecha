@@ -2,6 +2,9 @@
 
 #include <string>
 
+/// Esta es una clase de la cual heredan las siguientes clases
+/// Comentario Apunte Clase Materia Periodo Usuario
+/// Es así para introducir objetos de esas clases en un Nodo Padre 
 class BaseMecha {
 
 private:

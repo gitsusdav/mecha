@@ -1,5 +1,7 @@
 #include "Materia.hpp"
 #include "Periodo.hpp"
+#include "Clase.hpp" 
+
 // Constructor
 Materia::Materia( Periodo* periodo, const std::string& descripcion,
         const std::vector<std::string>& profesores, const std::string& nombre,

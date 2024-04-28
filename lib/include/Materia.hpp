@@ -2,10 +2,12 @@
 
 #include <string>
 #include <vector>
-#include "Clase.hpp" 
+
 #include "BaseMecha.hpp"
 
 class Periodo;
+class Clase;
+
 class Materia : public BaseMecha{
 private:
     std::string ID;

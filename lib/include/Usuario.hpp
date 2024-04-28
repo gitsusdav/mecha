@@ -35,7 +35,7 @@ public:
        const std::vector<Rol>& roles,
        const std::string& correo, const std::string& clave);
     Usuario();
-    // Métodos de acceso (getters)
+    // Métodos de acceso
     std::string obtenerNombre() const;
     std::string obtenerID() const;
     std::string obtenerDescripcion() const;
@@ -47,17 +47,17 @@ public:
     std::vector<Apunte*> obtenerApuntesPropios() const;
     std::vector<Apunte*> obtenerApuntesSeguidos() const;
 
-    // Métodos de modificación (setters)
+    // Métodos de modificación
     void asignarNombre(const std::string& nombre);
     void asignarID(const std::string& id);
     void asignarDescripcion(const std::string& descripcion);
-    void setConexiones(const std::vector<Usuario*>& conexiones);
-    void setRoles(const std::vector<Rol>& roles);
+    void asignarConexiones(const std::vector<Usuario*>& conexiones);
+    void asignarRoles(const std::vector<Rol>& roles);
     void asignarPopularidad(int popularidad);
-    void setCorreo(const std::string& correo);
-    void setClave(const std::string& clave); // Cambiado a "clave"
-    void setApuntesPropios(const std::vector<Apunte*>& apuntesPropios);
-    void setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
+    void asignarCorreo(const std::string& correo);
+    void asignarClave(const std::string& clave); // Cambiado a "clave"
+    void asignarApuntesPropios(const std::vector<Apunte*>& apuntesPropios);
+    void asignarApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos);
 
     // Método para convertir Usuario en cadena
     std::string toString() const override ;

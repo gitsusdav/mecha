@@ -8,8 +8,11 @@
 #include "Usuario.hpp"
 #include "BaseMecha.hpp"
 
-
 class Comentario;
+
+/// Esta clase representa el objetivo principal de Mecha
+/// El cual es crear y guarda apuntes de cada clase para luego
+/// ser compartidos esos apuntes con los participantes de la Clase en la Materia
 class Apunte : public BaseMecha {
 
 private:
@@ -31,7 +34,7 @@ public:
     // Destructor
     ~Apunte();
 
-    // Métodos de acceso
+    // Métodos de acceso (getters)
     std::string obtenerID() const;
     Clase* obtenerClase() const;
     Usuario* obtenerUsuario() const;
@@ -42,7 +45,7 @@ public:
     int obtenerDislike() const;
     int obtenerPopularidad() const;
 
-    // Métodos de asignar
+    // Métodos de modificación (setters)
     void asignarID(std::string id);
     void asignarClase(Clase* clase);
     void asignarUsuario(Usuario* usuario);

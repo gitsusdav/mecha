@@ -178,7 +178,7 @@ int main(int argc, char* argv[])
                 std::cout << "\n\n********** Usuario **********\n \n";  
                 std::vector<Usuario> usuarios = obtenerUsuariosDeLaBaseDeDatos();
                 for (const Usuario& usuario : usuarios) {
-                    std::cout << "Nombre: " << usuario.getNombre() << "\n";
+                    std::cout << "Nombre: " << usuario.obtenerNombre() << "\n";
                     std::cout << "Rol: ";
                     switch (usuario.getRoles()[0]) {  
                         case Rol::PROFESOR:
@@ -196,31 +196,31 @@ int main(int argc, char* argv[])
                 std::cout << "\n\n********** Periodos **********\n \n";  //obtener x DeLaBaseDeDatos seria la funcion de sqlite aun no implementada
                 std::vector<Periodo> periodos = obtenerPeriodosDeLaBaseDeDatos();
                 for (const Periodo& periodo : periodos) {
-                    std::cout << periodo.getNombre() << "\n";
+                    std::cout << periodo.obtenerNombre() << "\n";
                 }
 
                 std::cout << "\n\n********** Materias **********\n \n";
                 std::vector<Materia> materias = obtenerMateriasDeLaBaseDeDatos();
                 for (const Materia& materia : materias) {
-                    std::cout << materia.getNombre() << "\n";
+                    std::cout << materia.obtenerNombre() << "\n";
                 }
 
                 std::cout << "\n\n********** Clases **********\n \n";
                 std::vector<Clase> clases = obtenerClasesDeLaBaseDeDatos();
                 for (const Clase& clase : clases) {
-                    std::cout << clase.getTema() << "\n";
+                    std::cout << clase.obtenerTema() << "\n";
                 }
 
                 std::cout << "\n\n********** Apuntes **********\n \n";
                 std::vector<Apunte> apuntes = obtenerApuntesDeLaBaseDeDatos();
                 for (const Apunte& apunte : apuntes) {
-                    std::cout << apunte.getContenido() << "\n";
+                    std::cout << apunte.obtenerContenido() << "\n";
                 }
 
                 std::cout << "\n\n********** Comentarios **********\n \n";
                 std::vector<Comentario> comentarios = obtenerComentariosDeLaBaseDeDatos();
                 for (const Comentario& comentario : comentarios) {
-                    std::cout << comentario.getContenido() << "\n";
+                    std::cout << comentario.obtenerContenido() << "\n";
                 }
                 break;
             }

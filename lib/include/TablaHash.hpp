@@ -3,7 +3,7 @@
 #include <string>
 
 // Define la estructura de un elemento en la tabla hash
-struct ItemHash {
+struct ElementoHash {
     std::string llave;
     int valor;
 };
@@ -12,7 +12,7 @@ struct ItemHash {
 class TablaHash {
 private:
     static const int capacidad = 100; // Tamaño de la tabla hash
-    std::vector<std::list<ItemHash>> tabla;
+    std::vector<std::list<ElementoHash>> tabla;
 
 public:
     TablaHash();

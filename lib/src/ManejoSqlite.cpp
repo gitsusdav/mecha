@@ -97,19 +97,19 @@ std::vector<Usuario> ManejoSqlite::obtenerTodoLosUsuarios() {
             const int popularidad = sqlite3_column_int(stmt, 4);
              const char* correo = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
              if (id) {
-            usuario.setID(id);
+            usuario.asignarID(id);
         } 
              if (nombre) {
-            usuario.setNombre(nombre);
+            usuario.asignarNombre(nombre);
         } 
         if (descripcion) {
-            usuario.setDescripcion(descripcion);
+            usuario.asignarDescripcion(descripcion);
         }
                   if (popularidad) {
-            usuario.setPopularidad(popularidad);
+            usuario.asignarPopularidad(popularidad);
         } 
              if (correo) {
-            usuario.setCorreo(correo);
+            usuario.asignarCorreo(correo);
         } 
    
     
@@ -132,11 +132,11 @@ bool ManejoSqlite::insertarPeriodo(const Periodo& periodo) {
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, periodo.getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, periodo.getNombre().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, periodo.getDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(periodo.getFechaInicio()).c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(periodo.getFechaFin()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, periodo.obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, periodo.obtenerNombre().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, periodo.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(periodo.obtenerFechaInicio()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(periodo.obtenerFechaFin()).c_str(), -1, SQLITE_STATIC);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
@@ -163,11 +163,11 @@ bool ManejoSqlite::insertarMateria(const Materia& materia) {
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, materia.getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, materia.getPeriodo()->getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, materia.getDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, materia.getNombre().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 5, materia.getPeriodoActivo() ? 1 : 0);
+    sqlite3_bind_text(stmt, 1, materia.obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, materia.obtenerPeriodo()->obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, materia.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, materia.obtenerNombre().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 5, materia.obtenerPeriodoActivo() ? 1 : 0);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
@@ -195,11 +195,11 @@ bool ManejoSqlite::insertarClase(const Clase& clase) {
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, clase.getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, clase.getIDMateria().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, clase.getDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(clase.getFecha()).c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 6, clase.getTema().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, clase.obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, clase.obtenerIDMateria().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, clase.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(clase.obtenerFecha()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 6, clase.obtenerTema().c_str(), -1, SQLITE_STATIC);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
@@ -226,14 +226,14 @@ bool ManejoSqlite::insertarApunte(const Apunte& apunte ) {
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, apunte.getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, apunte.getClase()->getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, apunte.getUsuario()->getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, apunte.getContenido().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(apunte.getFecha()).c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 6, apunte.getLike());
-    sqlite3_bind_int(stmt, 7, apunte.getDislike());
-    sqlite3_bind_int(stmt, 8, apunte.getPopularidad());
+    sqlite3_bind_text(stmt, 1, apunte.obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, apunte.obtenerClase()->obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, apunte.obtenerUsuario()->obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, apunte.obtenerContenido().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(apunte.obtenerFecha()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 6, apunte.obtenerLike());
+    sqlite3_bind_int(stmt, 7, apunte.obtenerDislike());
+    sqlite3_bind_int(stmt, 8, apunte.obtenerPopularidad());
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
@@ -261,13 +261,13 @@ bool ManejoSqlite::insertarComentario(const Comentario& comentario) {
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, comentario.getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, comentario.getApunte()->getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, comentario.getUsuario()->getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, comentario.getContenido().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha( comentario.getFecha()).c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_int(stmt, 6, comentario.getLikes());
-    sqlite3_bind_int(stmt, 7, comentario.getDislikes());
+    sqlite3_bind_text(stmt, 1, comentario.obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, comentario.obtenerApunte()->obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, comentario.obtenerUsuario()->obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, comentario.obtenerContenido().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha( comentario.obtenerFecha()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_int(stmt, 6, comentario.obtenerLikes());
+    sqlite3_bind_int(stmt, 7, comentario.obtenerDislikes());
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
@@ -295,9 +295,9 @@ bool ManejoSqlite::insertarCredencialUsuario(const Usuario& credencial) {
         return false;
     }
 
-    sqlite3_bind_text(stmt, 1, credencial.getID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, credencial.getCorreo().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, credencial.getClave().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, credencial.obtenerID().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, credencial.obtenerCorreo().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, credencial.obtenerClave().c_str(), -1, SQLITE_STATIC);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {

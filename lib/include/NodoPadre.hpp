@@ -2,7 +2,8 @@
 
 #include <string>
 #include <memory>
-#include <BaseMecha.hpp>
+
+#include "BaseMecha.hpp"
 
 class NodoPadre : public BaseMecha  {
 private:
@@ -11,7 +12,7 @@ private:
     std::string camino; 
 public:
     NodoPadre(BaseMecha* val, const std::string& path);
-    void setPadre(NodoPadre* nodoPadre);
+    void asignarPadre(NodoPadre* nodoPadre);
     BaseMecha* obtenerValor() const;
     void asignarCamino(const std::string& nuevoCamino);
     std::string obtenerCamino() const; 

@@ -116,11 +116,11 @@ int main()
         std::string correo = "correo@mail.com";
         std::string clave = "123456"; 
 
-        nuevoUsuario->setCorreo(correo);
-        nuevoUsuario->setClave(clave);
+        nuevoUsuario->asignarCorreo(correo);
+        nuevoUsuario->asignarClave(clave);
         nuevoUsuario->asignarNombre(nombre);
-        nuevoUsuario->setRoles(roles);
-        nuevoUsuario->setConexiones(conexions);
+        nuevoUsuario->asignarRoles(roles);
+        nuevoUsuario->asignarConexiones(conexions);
 
 
         std::vector<Apunte*> propios;
@@ -130,8 +130,8 @@ int main()
         propios.push_back(nuevoApunte);
         seguidos.push_back(nuevoApunteDos);
 
-        nuevoUsuario->setApuntesPropios(propios);
-        nuevoUsuario->setApuntesSeguidos(seguidos);
+        nuevoUsuario->asignarApuntesPropios(propios);
+        nuevoUsuario->asignarApuntesSeguidos(seguidos);
 
 
         assertEqual(correo, nuevoUsuario->obtenerCorreo());
@@ -489,15 +489,15 @@ int main()
         materiaTreeFather = new NodoPadre(controlMateria, nuevaMateria->obtenerID());
         claseTreeFather =  new NodoPadre(controlClase, nuevaClase->obtenerID());
 
-        periodoTreeFather->setPadre(rootTreeFather);
+        periodoTreeFather->asignarPadre(rootTreeFather);
 
-        materiaTreeFather->setPadre(periodoTreeFather);
+        materiaTreeFather->asignarPadre(periodoTreeFather);
 
-        claseTreeFather->setPadre(materiaTreeFather);
+        claseTreeFather->asignarPadre(materiaTreeFather);
 
-        apunteTreeFather->setPadre(claseTreeFather);
+        apunteTreeFather->asignarPadre(claseTreeFather);
 
-        comentarioTreeFather->setPadre(apunteTreeFather);
+        comentarioTreeFather->asignarPadre(apunteTreeFather);
     
         std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
         
@@ -539,10 +539,10 @@ int main()
         std::cout << "Testing Insertar Usuario en la Base de Datos"<< " \n";
 
 
-        std::cout << "ID Usuario "<< nuevoUsuario->getID() <<" \n";
-        nuevoUsuario->setCorreo(std::string("Correounicounico.com"));
-        nuevoUsuario->setNombre(std::string("NOmbre"));
-         nuevoUsuario->setDescripcion(std::string("debe sr por el arroba"));
+        std::cout << "ID Usuario "<< nuevoUsuario->obtenerID() <<" \n";
+        nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
+        nuevoUsuario->asignarNombre(std::string("NOmbre"));
+         nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
 
         baseDatos.insertarUsuario(*nuevoUsuario);
     }
@@ -561,10 +561,10 @@ int main()
         std::cout << "Testing Insertar Periodo en la Base de Datos"<< " \n";
 
 
-        std::cout << "ID Usuario "<< nuevoUsuario->getID() <<" \n";
-        nuevoUsuario->setCorreo(std::string("Correounicounico.com"));
-        nuevoUsuario->setNombre(std::string("NOmbre"));
-         nuevoUsuario->setDescripcion(std::string("debe sr por el arroba"));
+        std::cout << "ID Usuario "<< nuevoUsuario->obtenerID() <<" \n";
+        nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
+        nuevoUsuario->asignarNombre(std::string("NOmbre"));
+         nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
 
         baseDatos.insertarPeriodo(*nuevoPeriodo);
     }

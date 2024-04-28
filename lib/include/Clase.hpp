@@ -3,15 +3,15 @@
 #include <string>
 #include <vector>
 #include <iomanip>
+
 #include "BaseMecha.hpp"
-#include "Materia.hpp"
 
 class Apunte;
 
 class Clase : public BaseMecha {
 private:
     std::string ID;
-    Materia* MateriaClase;
+    std::string ID_Materia;
     std::string Descripcion;
     std::tm Fecha;
     std::vector<std::string> Recursos;
@@ -20,7 +20,7 @@ private:
 
 public:
     // Constructor 
-    Clase( const std::string& descripcion,
+    Clase( std::string idMateria, const std::string& descripcion,
           const std::tm& fecha, const std::string& tema);
     Clase();
 

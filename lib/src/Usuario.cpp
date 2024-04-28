@@ -51,7 +51,7 @@ std::vector<Apunte*> Usuario::obtenerApuntesSeguidos() const {
     return ApuntesSeguidos;
 }
 
-// Métodos de modificación (setters)
+// Métodos de modificación 
 void Usuario::asignarNombre(const std::string& nombre) {
     Nombre = nombre;
 }
@@ -64,11 +64,11 @@ void Usuario::asignarDescripcion(const std::string& descripcion) {
     Descripcion = descripcion;
 }
 
-void Usuario::setConexiones(const std::vector<Usuario*>& conexiones) {
+void Usuario::asignarConexiones(const std::vector<Usuario*>& conexiones) {
     Conexiones = conexiones;
 }
 
-void Usuario::setRoles(const std::vector<Rol>& roles) {
+void Usuario::asignarRoles(const std::vector<Rol>& roles) {
     Roles = roles;
 }
 
@@ -76,19 +76,19 @@ void Usuario::asignarPopularidad(int popularidad) {
     Popularidad = popularidad;
 }
 
-void Usuario::setCorreo(const std::string& correo) {
+void Usuario::asignarCorreo(const std::string& correo) {
     Correo = correo;
 }
 
-void Usuario::setClave(const std::string& clave) {
+void Usuario::asignarClave(const std::string& clave) {
     Clave = clave;
 }
 
-void Usuario::setApuntesPropios(const std::vector<Apunte*>& apuntesPropios) {
+void Usuario::asignarApuntesPropios(const std::vector<Apunte*>& apuntesPropios) {
     ApuntesPropios = apuntesPropios;
 }
 
-void Usuario::setApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos) {
+void Usuario::asignarApuntesSeguidos(const std::vector<Apunte*>& apuntesSeguidos) {
     ApuntesSeguidos = apuntesSeguidos;
 }
 
