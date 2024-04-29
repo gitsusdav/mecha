@@ -11,7 +11,7 @@
         delete izquierdaMenor;
     }
     // Métodos para obtener y asignar valores
-    std::vector<BaseMecha> NodoFuego::obtenerValor() {
+    std::vector<BaseMecha *> NodoFuego::obtenerValor() {
         return valor;
     }
 
@@ -27,7 +27,7 @@
         derechaMayor = mayor;
     }
 
-    void NodoFuego::asignarValor(std::vector<BaseMecha> nuevoValor) {
+    void NodoFuego::asignarValor(std::vector<BaseMecha *> nuevoValor) {
         valor = nuevoValor;
     }
 
