@@ -10,6 +10,8 @@
 #include "Periodo.hpp"
 #include "Usuario.hpp"
 #include "NodoPadre.hpp"
+#include "NodoFuego.hpp"
+#include "TablaHash.hpp"
 #include "BaseMecha.hpp"
 #include "ManejoSqlite.hpp"
 #include <Utilidades.hpp>
@@ -46,7 +48,8 @@ int main()
     std::vector<Periodo*> periodoUsuario = {nuevoPeriodo};
 
     ManejoSqlite baseDatos("DatosCalientesMecha.db");
-   
+    TablaHash hijosArbol = TablaHash();
+
     NodoPadre* rootTreeFather;
     NodoPadre* periodoTreeFather;
     NodoPadre* materiaTreeFather;
