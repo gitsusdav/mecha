@@ -55,7 +55,13 @@ std::string Utilidades::crearFecha(const std::tm& fecha) {
     oss << std::put_time(&fecha, "%Y-%m-%d");
     return oss.str();
 }
+std::tm Utilidades::crearTmDesdeString(const std::string& fechaStr) {
+    std::tm fecha = {}; 
+    std::istringstream iss(fechaStr);
+    iss >> std::get_time(&fecha, "%Y-%m-%d");
 
+    return fecha;
+}
 std::tm Utilidades::obtenerFecha(int year, int month, int day) {
     std::tm fecha = {0, 0, 0, day, month - 1, year - 1900}; 
     return fecha;
@@ -157,7 +163,7 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Usuario_Credenciales (
             ID INTEGER PRIMARY KEY,
             id_Usuario TEXT NOT NULL,
-            Correo TEXT NOT NULL,
+            Correo TEXT NOT NULL UNIQUE,
             Clave TEXT NOT NULL
         );
     )";
@@ -199,9 +205,9 @@ bool Utilidades::instanciarBaseDeDatos() {
     const char* crearTablaUsuarioConexiones = R"(
         CREATE TABLE Usuario_Conexiones (
             UsuarioID INTEGER,
-            UsuarioConectadoID INTEGER,
-            FOREIGN KEY (UsuarioID) REFERENCES Usuarios(ID),
-            FOREIGN KEY (UsuarioConectadoID) REFERENCES Usuarios(ID),
+            UsuarioConectadoID TEXT,
+            FOREIGN KEY (UsuarioID) REFERENCES Usuario(ID),
+            FOREIGN KEY (UsuarioConectadoID) REFERENCES Usuario(id_Usuario),
             PRIMARY KEY (UsuarioID, UsuarioConectadoID)
         );
     )";
