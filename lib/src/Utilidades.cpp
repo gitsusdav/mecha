@@ -53,7 +53,13 @@ std::string Utilidades::crearFecha(const std::tm& fecha) {
     oss << std::put_time(&fecha, "%Y-%m-%d");
     return oss.str();
 }
+std::tm Utilidades::crearTmDesdeString(const std::string& fechaStr) {
+    std::tm fecha = {}; 
+    std::istringstream iss(fechaStr);
+    iss >> std::get_time(&fecha, "%Y-%m-%d");
 
+    return fecha;
+}
 std::tm Utilidades::obtenerFecha(int year, int month, int day) {
     std::tm fecha = {0, 0, 0, day, month - 1, year - 1900}; 
     return fecha;

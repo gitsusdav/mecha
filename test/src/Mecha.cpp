@@ -324,13 +324,13 @@ int main()
         auto idClase = nuevaClase->obtenerIDMateria();
         auto id = nuevoApunte->obtenerClase()->obtenerID();
 
-
+/*
         std::cout << "idClase: " << idClase << " \n";
         std::cout << "id: " << id << " \n";
 
 
         std::cout << "Despues de los cambios: " << " \n";
-
+*/
         nuevaClase->agregarApunte(nuevoApunte);
         nuevoApunte->asignarClase(nuevaClase);
 
@@ -352,20 +352,21 @@ int main()
 
         auto idMateria = nuevaClase->obtenerIDMateria();
         auto id = nuevaMateria->obtenerID();
-
+/*
         std::cout << "idMateria: " << idMateria << " \n";
         std::cout << "id: " << id << " \n";
 
-        nuevaMateria->agregarClase(nuevaClase);
 
         std::cout << "Despues de los cambios:" << " \n";
+*/
+        nuevaMateria->agregarClase(nuevaClase);
 
         idMateria = nuevaClase->obtenerIDMateria();
         id = nuevaMateria->obtenerID();
-
+/*
         std::cout << "idMateria: " << idMateria << " \n";
         std::cout << "id: " << id << " \n";
-         //  esperamos que la materia tenga esa clase
+*/         //  esperamos que la materia tenga esa clase
         assertEqual(nuevaClase->obtenerIDMateria(), nuevaMateria->obtenerID());
 
         // revisamos que la ultima clase, sea la ultima de el vector de clases
@@ -377,10 +378,10 @@ int main()
         std::cout << "Testing Agregar Materia a Periodo" << " \n";
         auto idMateria = nuevaMateria->obtenerPeriodo()->obtenerID();
         auto idPeriodo = nuevoPeriodo->obtenerID();
-
+/*
         std::cout << "ID materia: " << idMateria << " \n";
         std::cout << "ID periodo: " << idPeriodo << " \n";
-
+*/
         nuevoPeriodo->agregarMateria(nuevaMateria);
         nuevaMateria->asignarPeriodo(nuevoPeriodo);
 
@@ -577,8 +578,6 @@ int main()
     {
         std::cout << "Testing Insertar Materia en la Base de Datos"<< " \n";
 
-
-        std::cout << "Materia: "<< nuevaMateria->toString() <<" \n";
         nuevaMateria->asignarPeriodoActivo(true);
 
         baseDatos.insertarMateria(*nuevaMateria);
@@ -603,23 +602,20 @@ int main()
         {
         std::cout << "Testing Obtener todas las Clase de la Base de Datos"<< " \n";
 
-        std::vector<Usuario> todoLosUsuarios=  baseDatos.obtenerTodoLosUsuarios();
+        std::vector<Clase> todaLasClases=  baseDatos.obtenerTodoLosClases();
 
-         for (const Usuario& usuario : todoLosUsuarios) {
-            std::cout << "Usuario: " << usuario.toString() << "\n";
+         for (const Clase& clase : todaLasClases) {
+            std::cout << "Clases: " << clase.toString() << "\n";
         }
 
     }
     {
         std::cout << "Testing Insertar Apunte en la Base de Datos"<< " \n";
 
-
-        std::cout << "Apunte "<< nuevoApunte->toString() <<" \n";
-
         baseDatos.insertarApunte(*nuevoApunte);
     }
 
-        {
+    {
         std::cout << "Testing Obtener todo los Apunte de la Base de Datos"<< " \n";
 
         std::vector<Apunte> todoLosApuntes=  baseDatos.obtenerTodoLosApuntes();
@@ -631,9 +627,6 @@ int main()
     }
     {
         std::cout << "Testing Insertar Comentario en la Base de Datos"<< " \n";
-
-
-        std::cout << "Comentario "<< nuevoComentario->toString() <<" \n";
 
         baseDatos.insertarComentario(*nuevoComentario);
     }
