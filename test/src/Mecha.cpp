@@ -54,6 +54,7 @@ int main()
     NodoPadre* claseTreeFather;
     NodoPadre* apunteTreeFather;
     NodoPadre* comentarioTreeFather;
+    NodoPadre* usuarioTreeFather;
 
     TablaHash hijosArbol = TablaHash();
 
@@ -573,6 +574,58 @@ int main()
 
         std::cout << "Encontrado  "<< nodo->valor.obtenerValor().at(0)->toString()<< " \n";
     }
+
+    {
+        std::cout << "Testing Tabla Hash Clase Materia"<< " \n";
+        std::vector<BaseMecha *> clasesMateria;
+        for( Clase * clase : nuevaMateria->obtenerClases()){
+            clasesMateria.push_back(clase);
+        }
+
+        NodoFuego clases = NodoFuego();
+        clases.asignarValor(clasesMateria);
+        hijosArbol.insert(materiaTreeFather->obtenerCamino(),clases);
+        ElementoHash * nodo = hijosArbol.buscar(materiaTreeFather->obtenerCamino());
+
+
+        std::cout << "Encontrado  "<< nodo->valor.obtenerValor().at(0)->toString()<< " \n";
+    }
+
+    {
+        std::cout << "Testing Tabla Hash Materia Periodo"<< " \n";
+        std::vector<BaseMecha *> materiasPeriodo;
+        for( Materia * materias : nuevoPeriodo->obtenerMaterias()){
+            materiasPeriodo.push_back(materias);
+        }
+
+        NodoFuego materias = NodoFuego();
+        materias.asignarValor(materiasPeriodo);
+        hijosArbol.insert(periodoTreeFather->obtenerCamino(),materias);
+        ElementoHash * nodo = hijosArbol.buscar(periodoTreeFather->obtenerCamino());
+
+
+        std::cout << "Encontrado  "<< nodo->valor.obtenerValor().at(0)->toString()<< " \n";
+    }
+
+    {
+        std::cout << "Testing Tabla Hash Periodo Usuario"<< " \n";
+        std::vector<BaseMecha *> periodosUsuario;
+        std::cout << "fafa\n"; 
+        for( Periodo * periodos : nuevoUsuario->obtenerPeriodos()){
+            periodosUsuario.push_back(periodos);
+        }
+        std::cout << "fafa1\n"; 
+
+        NodoFuego periodos = NodoFuego();
+        periodos.asignarValor(periodosUsuario);
+        hijosArbol.insert(rootTreeFather->obtenerCamino(),periodos);
+        ElementoHash * nodo = hijosArbol.buscar(rootTreeFather->obtenerCamino());
+
+
+        std::cout << "Encontrado  "<< nodo->valor.obtenerValor().at(0)->toString()<< " \n";
+    }
+
+    
     
     {
         std::cout << "Testing Creando o Abriendo Base de Datos"<< " \n";
