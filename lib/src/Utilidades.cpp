@@ -1,5 +1,7 @@
 #include <sstream>
 #include <iomanip>
+#include <string>
+#include <cctype>
 #include <chrono>
 #include <ctime>
 #include <openssl/evp.h>
@@ -273,4 +275,48 @@ bool Utilidades::instanciarBaseDeDatos() {
 
     return true;
 
+}
+
+bool Utilidades::esDigito(char c) {
+    return c >= '0' && c <= '9';
+}
+bool Utilidades::esLetra(char c) {
+    return std::isalpha(c);
+}
+
+int Utilidades::sumarNumeros(const std::string& cadena) {
+    int sumaTotal = 1;
+    int i = 0;
+
+    while (i < cadena.size()) {
+        while (i < cadena.size() && cadena[i] != '/') {
+            i++;
+        }
+
+        if (i + 1 < cadena.size()) {
+            int j = i + 1;
+            while (j < cadena.size() && cadena[j] != '/') {
+                j++;
+            }
+
+            int sumaGrupo = 0;
+            int multiplicador = 1;
+
+            for (int k = i + 1; k < j; k++) {
+                if (esDigito(cadena[k])) {
+                    sumaGrupo += (cadena[k] - '0') * multiplicador;
+                } else if (esLetra(cadena[k])) {
+                    int valorLetra = std::toupper(cadena[k]) - 'A' + 1;
+                    sumaGrupo += valorLetra;
+                }
+            }
+
+            sumaTotal += sumaGrupo;
+            i = j; 
+        } else {
+            break; 
+        }
+    }
+
+    return sumaTotal;
 }

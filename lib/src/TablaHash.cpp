@@ -1,39 +1,38 @@
 #include "TablaHash.hpp"
+#include "Utilidades.hpp"
 
-// Constructor
+// Constructor de la tabla hash
 TablaHash::TablaHash() {
-    tabla.resize(capacidad);
+    for (int i = 0; i < capacidad; ++i) {
+        tabla[i].llave = ""; 
+    }
 }
 
-// Función hash simple (puede ser mejorada)
+// La llave es el camino 
 int TablaHash::funcionHash(const std::string& llave) {
-    int hash = 0;
-    for (char c : llave) {
-        hash += c;
-    }
-    return hash % capacidad;
+    int posicion = Utilidades::sumarNumeros(llave);
+    return posicion % capacidad;
 }
 
-// Insertar un elemento en la tabla hash
-void TablaHash::insert(const std::string& llave, int valor) {
-    int index = funcionHash(llave);
-    auto& elementos = tabla[index];
-    for (auto& elemento : elementos) {
-        if (elemento.llave == llave) {
-            elemento.valor = valor;
-            return;
-        }
+void TablaHash::insert(const std::string& llave, NodoFuego valor) {
+     std::cout << "INSERTAR vacio?  " <<valor.obtenerValor().at(0)->toString()<< " \n";
+
+    int indice = funcionHash(llave);
+        std::cout << "INdice IF  " <<indice<< " \n";
+    // colisiones 
+    if(!tabla[indice].valor.obtenerValor().empty()){
+        std::cout << "COLISION" << std::endl;
+        return;
     }
-    elementos.push_back({llave, valor});
+    std::cout << "No es el If " << " \n";
+    tabla[indice].llave = llave;
+    tabla[indice].valor = valor;
 }
 
-// Buscar un elemento en la tabla hash
-int TablaHash::buscar(const std::string& llave) {
-    int index = funcionHash(llave);
-    for (const ElementoHash& elemento : tabla[index]) {
-        if (elemento.llave == llave) {
-            return elemento.valor;
-        }
+ElementoHash* TablaHash::buscar(const std::string& llave) {
+    int indice = funcionHash(llave);
+    if (tabla[indice].llave == llave) {
+        return &tabla[indice];
     }
-    return -1;
+    return nullptr; 
 }
