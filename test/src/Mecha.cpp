@@ -610,12 +610,9 @@ int main()
     {
         std::cout << "Testing Tabla Hash Periodo Usuario"<< " \n";
         std::vector<BaseMecha *> periodosUsuario;
-        std::cout << "fafa\n"; 
         for( Periodo * periodos : nuevoUsuario->obtenerPeriodos()){
             periodosUsuario.push_back(periodos);
         }
-        std::cout << "fafa1\n"; 
-
         NodoFuego periodos = NodoFuego();
         periodos.asignarValor(periodosUsuario);
         hijosArbol.insert(rootTreeFather->obtenerCamino(),periodos);
