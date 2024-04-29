@@ -18,7 +18,7 @@ void ManejoSqlite::executeQuery(const std::string& query) {
     }
 }
 
-bool ManejoSqlite::insertarUsuario(const Usuario& usuario) {
+int ManejoSqlite::insertarUsuario(const Usuario& usuario) {
     std::string query = "INSERT INTO Usuario (id_Usuario, Nombre, Descripcion, Popularidad, Correo) "
                         "VALUES (?, ?, ?, ?, ?);";
 
@@ -26,30 +26,63 @@ bool ManejoSqlite::insertarUsuario(const Usuario& usuario) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
-    sqlite3_bind_text(stmt, 1, usuario.obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, usuario.obtenerNombre().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, usuario.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, usuario.obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, usuario.obtenerNombre().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, usuario.obtenerDescripcion().c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_int(stmt, 4, usuario.obtenerPopularidad());
-    sqlite3_bind_text(stmt, 5, usuario.obtenerCorreo().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 5, usuario.obtenerCorreo().c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     } 
 
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
     sqlite3_int64 idUsuarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
     int idUsuario = static_cast<int>(idUsuarioInsertado);
 
-    std::cout <<" ID USUARIO  insertado" << idUsuario << "\n";
+    std::cout <<" ID USUARIO  insertado" << idUsuario << "\n\n";
+
+    for (Periodo *periodo : usuario.obtenerPeriodos()) {
+        int idPeriodo = insertarPeriodo(*periodo);
+        insertarUsuarioPeriodo(idUsuario,idPeriodo);
+    }
+    
+    for (Apunte *apunte : usuario.obtenerApuntesPropios()) {
+        int idApunte = insertarApunte(*apunte);
+        insertarUsuarioApunte(idUsuario,idApunte, false);
+    }
+
+    for (Apunte *apunteSeguidos : usuario.obtenerApuntesSeguidos()) {
+        int idApunte = insertarApunte(*apunteSeguidos);
+        insertarUsuarioApunte(idUsuario,idApunte, true);
+    }
+
+    for (Rol rol : usuario.obtenerRoles()) {
+            std::string rolToString;
+
+    switch (rol) {
+        case Rol::PROFESOR:
+            rolToString = "PROFESOR";
+            break;
+        case Rol::ESTUDIANTE:
+            rolToString = "ESTUDIANTE";
+            break;
+        case Rol::GRADUADO:
+            rolToString = "GRADUADO";
+            break;
+    }
+
+        insertarUsuarioRol(idUsuario, rolToString);
+    }
 
     sqlite3_finalize(stmt);
-    return true;
+    return idUsuario;
 }
 
 std::vector<Usuario> ManejoSqlite::obtenerTodoLosUsuarios() {
@@ -83,32 +116,31 @@ std::vector<Usuario> ManejoSqlite::obtenerTodoLosUsuarios() {
     sqlite3_stmt* stmt;
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
-    std::cout <<" SREsultado " << resultado  <<"\n";
     if (resultado != SQLITE_OK) {
         return usuarios;
     }
-    std::cout <<" OK " << resultado  <<"\n";
+
     while ((resultado = sqlite3_step(stmt)) == SQLITE_ROW) {
-            std::cout <<" ROW "  << sqlite3_column_text(stmt, 1) << "\n"<< sqlite3_column_text(stmt, 2) << "\n" << sqlite3_column_text(stmt, 3) << "\n"<< sqlite3_column_text(stmt, 4) << "\n"<< sqlite3_column_text(stmt, 5) << "\n";
         Usuario usuario;
-         const char* id = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
-          const char* nombre = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
-           const char* descripcion = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
-            const int popularidad = sqlite3_column_int(stmt, 4);
-             const char* correo = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
-             if (id) {
+        const char* id = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+        const char* nombre = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+        const char* descripcion = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+        const int popularidad = sqlite3_column_int(stmt, 4);
+        const char* correo = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
+
+        if (id) {
             usuario.asignarID(id);
         } 
-             if (nombre) {
+        if (nombre) {
             usuario.asignarNombre(nombre);
         } 
         if (descripcion) {
             usuario.asignarDescripcion(descripcion);
         }
-                  if (popularidad) {
+        if (popularidad) {
             usuario.asignarPopularidad(popularidad);
         } 
-             if (correo) {
+        if (correo) {
             usuario.asignarCorreo(correo);
         } 
    
@@ -121,7 +153,7 @@ std::vector<Usuario> ManejoSqlite::obtenerTodoLosUsuarios() {
     return usuarios;
 }
 
-bool ManejoSqlite::insertarPeriodo(const Periodo& periodo) {
+int ManejoSqlite::insertarPeriodo(const Periodo& periodo) {
     std::string query = "INSERT INTO Periodo (id_Periodo, Nombre, Descripcion, FechaInicio, FechaFin) "
                         "VALUES (?, ?, ?, ?, ?);";
 
@@ -129,22 +161,24 @@ bool ManejoSqlite::insertarPeriodo(const Periodo& periodo) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
-    sqlite3_bind_text(stmt, 1, periodo.obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, periodo.obtenerNombre().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, periodo.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(periodo.obtenerFechaInicio()).c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(periodo.obtenerFechaFin()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, periodo.obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, periodo.obtenerNombre().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, periodo.obtenerDescripcion().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(periodo.obtenerFechaInicio()).c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(periodo.obtenerFechaFin()).c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     } 
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idPeriodoInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idPeriodoInsertado);
 }
 
 std::vector<Periodo> ManejoSqlite::obtenerTodoLosPeriodos(){
@@ -152,30 +186,31 @@ std::vector<Periodo> ManejoSqlite::obtenerTodoLosPeriodos(){
     return periodos;
 } 
   
-bool ManejoSqlite::insertarMateria(const Materia& materia) {
+int ManejoSqlite::insertarMateria(const Materia& materia) {
     std::string query = "INSERT INTO Materia (id_Materia, id_Periodo, Descripcion, Nombre, PeriodoActivo) "
                         "VALUES (?, ?, ?, ?, ?);";
-
     sqlite3_stmt* stmt;
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
-    sqlite3_bind_text(stmt, 1, materia.obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, materia.obtenerPeriodo()->obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, materia.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, materia.obtenerNombre().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, materia.obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, materia.obtenerPeriodo()->obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, materia.obtenerDescripcion().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, materia.obtenerNombre().c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_int(stmt, 5, materia.obtenerPeriodoActivo() ? 1 : 0);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idMateriaInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idMateriaInsertado);
 }
 
 std::vector<Materia> ManejoSqlite::obtenerTodasLasMaterias(){
@@ -184,7 +219,7 @@ std::vector<Materia> ManejoSqlite::obtenerTodasLasMaterias(){
 }  
  
 
-bool ManejoSqlite::insertarClase(const Clase& clase) {
+int ManejoSqlite::insertarClase(const Clase& clase) {
     std::string query = "INSERT INTO Clase (id_Clase, id_Materia, Descripcion, Fecha, Tema) "
                         "VALUES (?, ?, ?, ?, ?);";
 
@@ -192,22 +227,24 @@ bool ManejoSqlite::insertarClase(const Clase& clase) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
-    sqlite3_bind_text(stmt, 1, clase.obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, clase.obtenerIDMateria().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, clase.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(clase.obtenerFecha()).c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 6, clase.obtenerTema().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, clase.obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, clase.obtenerIDMateria().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, clase.obtenerDescripcion().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(clase.obtenerFecha()).c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 6, clase.obtenerTema().c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idClaseInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idClaseInsertado);
 }
 
 std::vector<Clase> ManejoSqlite::obtenerTodoLosClases(){
@@ -215,7 +252,7 @@ std::vector<Clase> ManejoSqlite::obtenerTodoLosClases(){
     return clases;
 }  
  
-bool ManejoSqlite::insertarApunte(const Apunte& apunte ) {
+int ManejoSqlite::insertarApunte(const Apunte& apunte ) {
     std::string query = "INSERT INTO Apunte (id_Apunte, id_Clase, id_Usuario, Contenido, Fecha, Like, Dislike, Popularidad) "
                         "VALUES (?, ?, ?, ?, ?, ?, ?, ?);";
 
@@ -223,21 +260,21 @@ bool ManejoSqlite::insertarApunte(const Apunte& apunte ) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
-    sqlite3_bind_text(stmt, 1, apunte.obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, apunte.obtenerClase()->obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, apunte.obtenerUsuario()->obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, apunte.obtenerContenido().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(apunte.obtenerFecha()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, apunte.obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, apunte.obtenerClase()->obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, apunte.obtenerUsuario()->obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, apunte.obtenerContenido().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha(apunte.obtenerFecha()).c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_int(stmt, 6, apunte.obtenerLike());
     sqlite3_bind_int(stmt, 7, apunte.obtenerDislike());
     sqlite3_bind_int(stmt, 8, apunte.obtenerPopularidad());
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
@@ -250,7 +287,7 @@ std::vector<Apunte> ManejoSqlite::obtenerTodoLosApuntes(){
 }  
     
 
-bool ManejoSqlite::insertarComentario(const Comentario& comentario) {
+int ManejoSqlite::insertarComentario(const Comentario& comentario) {
     std::string query = "INSERT INTO Comentario (id_Comentario, id_Apunte, id_Usuario, Contenido, Fecha, Like, Dislikes) "
                         "VALUES (?, ?, ?, ?, ?, ?, ?);";
 
@@ -258,20 +295,20 @@ bool ManejoSqlite::insertarComentario(const Comentario& comentario) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
-    sqlite3_bind_text(stmt, 1, comentario.obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, comentario.obtenerApunte()->obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, comentario.obtenerUsuario()->obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, comentario.obtenerContenido().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha( comentario.obtenerFecha()).c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, comentario.obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, comentario.obtenerApunte()->obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, comentario.obtenerUsuario()->obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 4, comentario.obtenerContenido().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 5, Utilidades::crearFecha( comentario.obtenerFecha()).c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_int(stmt, 6, comentario.obtenerLikes());
     sqlite3_bind_int(stmt, 7, comentario.obtenerDislikes());
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
@@ -284,7 +321,7 @@ std::vector<Comentario> ManejoSqlite::obtenerTodoLosComentarios(){
     return comentarios;
 }  
 
-bool ManejoSqlite::insertarCredencialUsuario(const Usuario& credencial) {
+int ManejoSqlite::insertarCredencialUsuario(const Usuario& credencial) {
     std::string query = "INSERT INTO Usuario_Credenciales (id_Usuario, Correo, Clave) "
                         "VALUES (?, ?, ?);";
 
@@ -292,23 +329,23 @@ bool ManejoSqlite::insertarCredencialUsuario(const Usuario& credencial) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
-    sqlite3_bind_text(stmt, 1, credencial.obtenerID().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, credencial.obtenerCorreo().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, credencial.obtenerClave().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 1, credencial.obtenerID().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, credencial.obtenerCorreo().c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 3, credencial.obtenerClave().c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarUsuarioPeriodo(int usuarioID, int periodoID) {
+int ManejoSqlite::insertarUsuarioPeriodo(int usuarioID, int periodoID) {
     std::string query = "INSERT INTO Usuario_Periodos (UsuarioID, PeriodoID) "
                         "VALUES (?, ?);";
 
@@ -316,7 +353,7 @@ bool ManejoSqlite::insertarUsuarioPeriodo(int usuarioID, int periodoID) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, usuarioID);
@@ -324,14 +361,14 @@ bool ManejoSqlite::insertarUsuarioPeriodo(int usuarioID, int periodoID) {
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarUsuarioRol(int usuarioID, const std::string& rol) {
+int ManejoSqlite::insertarUsuarioRol(int usuarioID, const std::string& rol) {
     std::string query = "INSERT INTO Usuario_Roles (UsuarioID, Rol) "
                         "VALUES (?, ?);";
 
@@ -339,22 +376,22 @@ bool ManejoSqlite::insertarUsuarioRol(int usuarioID, const std::string& rol) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, usuarioID);
-    sqlite3_bind_text(stmt, 2, rol.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, rol.c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarUsuarioApunte(int usuarioID, int apunteID, bool seguido) {
+int ManejoSqlite::insertarUsuarioApunte(int usuarioID, int apunteID, bool seguido) {
     std::string query = "INSERT INTO Usuario_Apuntes (UsuarioID, ApunteID, Seguido) "
                         "VALUES (?, ?, ?);";
 
@@ -362,7 +399,7 @@ bool ManejoSqlite::insertarUsuarioApunte(int usuarioID, int apunteID, bool segui
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, usuarioID);
@@ -371,14 +408,14 @@ bool ManejoSqlite::insertarUsuarioApunte(int usuarioID, int apunteID, bool segui
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarConexionUsuario(int usuarioID, int usuarioConectadoID) {
+int ManejoSqlite::insertarConexionUsuario(int usuarioID, int usuarioConectadoID) {
     std::string query = "INSERT INTO Usuario_Conexiones (UsuarioID, UsuarioConectadoID) "
                         "VALUES (?, ?);";
 
@@ -386,7 +423,7 @@ bool ManejoSqlite::insertarConexionUsuario(int usuarioID, int usuarioConectadoID
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, usuarioID);
@@ -394,14 +431,14 @@ bool ManejoSqlite::insertarConexionUsuario(int usuarioID, int usuarioConectadoID
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarPeriodoMateria(int periodoID, int materiaID) {
+int ManejoSqlite::insertarPeriodoMateria(int periodoID, int materiaID) {
     std::string query = "INSERT INTO Periodo_Materias (PeriodoID, MateriaID) "
                         "VALUES (?, ?);";
 
@@ -409,7 +446,7 @@ bool ManejoSqlite::insertarPeriodoMateria(int periodoID, int materiaID) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, periodoID);
@@ -417,14 +454,14 @@ bool ManejoSqlite::insertarPeriodoMateria(int periodoID, int materiaID) {
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarMateriaClase(int materiaID, int claseID) {
+int ManejoSqlite::insertarMateriaClase(int materiaID, int claseID) {
     std::string query = "INSERT INTO Materia_Clases (MateriaID, ClaseID) "
                         "VALUES (?, ?);";
 
@@ -432,7 +469,7 @@ bool ManejoSqlite::insertarMateriaClase(int materiaID, int claseID) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, materiaID);
@@ -440,14 +477,14 @@ bool ManejoSqlite::insertarMateriaClase(int materiaID, int claseID) {
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarMateriaProfesor(int materiaID, const std::string& profesor) {
+int ManejoSqlite::insertarMateriaProfesor(int materiaID, const std::string& profesor) {
     std::string query = "INSERT INTO Materia_Profesores (MateriaID, Profesor) "
                         "VALUES (?, ?);";
 
@@ -455,22 +492,22 @@ bool ManejoSqlite::insertarMateriaProfesor(int materiaID, const std::string& pro
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, materiaID);
-    sqlite3_bind_text(stmt, 2, profesor.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, profesor.c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarClaseApunte(int claseID, int apunteID) {
+int ManejoSqlite::insertarClaseApunte(int claseID, int apunteID) {
     std::string query = "INSERT INTO Clase_Apuntes (ClaseID, ApunteID) "
                         "VALUES (?, ?);";
 
@@ -478,7 +515,7 @@ bool ManejoSqlite::insertarClaseApunte(int claseID, int apunteID) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, claseID);
@@ -486,14 +523,14 @@ bool ManejoSqlite::insertarClaseApunte(int claseID, int apunteID) {
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarRecursoClase(int claseID, const std::string& recurso) {
+int ManejoSqlite::insertarRecursoClase(int claseID, const std::string& recurso) {
     std::string query = "INSERT INTO Clase_Recursos (ClaseID, Recurso) "
                         "VALUES (?, ?);";
 
@@ -501,22 +538,22 @@ bool ManejoSqlite::insertarRecursoClase(int claseID, const std::string& recurso)
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, claseID);
-    sqlite3_bind_text(stmt, 2, recurso.c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, recurso.c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
     return true;
 }
 
-bool ManejoSqlite::insertarApunteComentario(int apunteID, int comentarioID) {
+int ManejoSqlite::insertarApunteComentario(int apunteID, int comentarioID) {
     std::string query = "INSERT INTO Apunte_Comentarios (ApunteID, ComentarioID) "
                         "VALUES (?, ?);";
 
@@ -524,7 +561,7 @@ bool ManejoSqlite::insertarApunteComentario(int apunteID, int comentarioID) {
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
-        return false;
+        return -1;
     }
 
     sqlite3_bind_int(stmt, 1, apunteID);
@@ -532,7 +569,7 @@ bool ManejoSqlite::insertarApunteComentario(int apunteID, int comentarioID) {
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
-        return false;
+        return -1;
     }
 
     sqlite3_finalize(stmt);
