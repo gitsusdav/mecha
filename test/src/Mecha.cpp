@@ -12,8 +12,7 @@
 #include "NodoPadre.hpp"
 #include "BaseMecha.hpp"
 #include "ManejoSqlite.hpp"
-#include "TablaHash.hpp"
-#include "Utilidades.hpp"
+#include <Utilidades.hpp>
 
 template <typename T>
 void assertEqual(const T& current, const T& expected) noexcept
@@ -54,8 +53,6 @@ int main()
     NodoPadre* claseTreeFather;
     NodoPadre* apunteTreeFather;
     NodoPadre* comentarioTreeFather;
-
-    TablaHash hijosArbol = TablaHash();
 
     // paso 2 hacemos los test como esperamos que funcione los metodos 
     std::cout << "Start Testing Mecha app" << "\n";
@@ -98,6 +95,9 @@ int main()
         nuevoApunte->asignarClase(nuevaClase);
 
         nuevoApunteDos->asignarContenido(contenido);
+        nuevoApunteDos->asignarFecha(*local_time);
+        nuevoApunteDos->asignarUsuario(nuevoUsuario);
+        nuevoApunteDos->asignarClase(nuevaClase);
 
         std::string obtenerContenido = nuevoApunte->obtenerContenido();
 
@@ -324,22 +324,22 @@ int main()
         auto idClase = nuevaClase->obtenerIDMateria();
         auto id = nuevoApunte->obtenerClase()->obtenerID();
 
-
+/*
         std::cout << "idClase: " << idClase << " \n";
         std::cout << "id: " << id << " \n";
 
 
         std::cout << "Despues de los cambios: " << " \n";
-
+*/
         nuevaClase->agregarApunte(nuevoApunte);
         nuevoApunte->asignarClase(nuevaClase);
 
         idClase = nuevaClase->obtenerIDMateria();
         id = nuevoApunte->obtenerClase()->obtenerID();
-
+/*
         std::cout << "idClase: " << idClase << " \n";
         std::cout << "id: " << id << " \n";
-
+*/
         auto idMateria = nuevaClase->obtenerIDMateria();
         id = nuevaMateria->obtenerID();
    
@@ -352,20 +352,21 @@ int main()
 
         auto idMateria = nuevaClase->obtenerIDMateria();
         auto id = nuevaMateria->obtenerID();
-
+/*
         std::cout << "idMateria: " << idMateria << " \n";
         std::cout << "id: " << id << " \n";
 
-        nuevaMateria->agregarClase(nuevaClase);
 
         std::cout << "Despues de los cambios:" << " \n";
+*/
+        nuevaMateria->agregarClase(nuevaClase);
 
         idMateria = nuevaClase->obtenerIDMateria();
         id = nuevaMateria->obtenerID();
-
+/*
         std::cout << "idMateria: " << idMateria << " \n";
         std::cout << "id: " << id << " \n";
-         //  esperamos que la materia tenga esa clase
+*/         //  esperamos que la materia tenga esa clase
         assertEqual(nuevaClase->obtenerIDMateria(), nuevaMateria->obtenerID());
 
         // revisamos que la ultima clase, sea la ultima de el vector de clases
@@ -377,19 +378,19 @@ int main()
         std::cout << "Testing Agregar Materia a Periodo" << " \n";
         auto idMateria = nuevaMateria->obtenerPeriodo()->obtenerID();
         auto idPeriodo = nuevoPeriodo->obtenerID();
-
+/*
         std::cout << "ID materia: " << idMateria << " \n";
         std::cout << "ID periodo: " << idPeriodo << " \n";
-
+*/
         nuevoPeriodo->agregarMateria(nuevaMateria);
         nuevaMateria->asignarPeriodo(nuevoPeriodo);
 
         idMateria = nuevaMateria->obtenerPeriodo()->obtenerID();
         idPeriodo = nuevoPeriodo->obtenerID();
-
+/*
         std::cout << "Despues\n" << "ID materia: " << idMateria << " \n";
         std::cout << "ID periodo: " << idPeriodo << " \n";
-
+*/
         assertEqual(idMateria, idPeriodo);
         assertEqual(nuevaMateria->obtenerDescripcion(), nuevoPeriodo->obtenerMaterias().back()->obtenerDescripcion());
     }
@@ -399,10 +400,10 @@ int main()
         std::cout << "Testing Agregar Comentario a Apunte" << " \n";
         auto idComentario = nuevoComentario->obtenerApunte()->obtenerID();
         auto idApunte = nuevoApunte->obtenerID();
-
+/*
         std::cout << "id comentario: " << idComentario << " \n";
         std::cout << "id apunte: " << idApunte << " \n";
-
+*/
         nuevoComentario->asignarApunte(nuevoApunte);
         nuevoApunte->agregarComentario(nuevoComentario);
 
@@ -460,7 +461,7 @@ int main()
         BaseMecha* controlUsuario = nuevoUsuario;
         rootTreeFather = new NodoPadre(controlUsuario, "/");
 
-        std::cout << "Valor (root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
+        //std::cout << "Valor (root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
 
         assertEqual(std::string("/"), rootTreeFather->obtenerCamino());
         assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString() );
@@ -490,9 +491,8 @@ int main()
 
         apunteTreeFather->asignarPadre(claseTreeFather);
 
-
         comentarioTreeFather->asignarPadre(apunteTreeFather);
- /*   
+    /*
         std::cout << "Valor (Usuario root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n\n";
         
         std::cout << "Valor (Periodo): " << periodoTreeFather->obtenerValor()->toString() << " Camino (path): " << periodoTreeFather->obtenerCamino()  << " \n\n";
@@ -502,8 +502,9 @@ int main()
         std::cout << "Valor (Clase): " << claseTreeFather->obtenerValor()->toString() << " Camino (path): " << claseTreeFather->obtenerCamino()  << " \n\n";
         
         std::cout << "Valor (Apunte): " << apunteTreeFather->obtenerValor()->toString() << " Camino (path): " << apunteTreeFather->obtenerCamino()  << " \n\n";
- */
-   
+
+        std::cout << "Valor (Comentario): " << comentarioTreeFather->obtenerValor()->toString() << " Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n\n";
+    */
         assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString());
         assertEqual(periodoTreeFather->obtenerValor()->toString(), nuevoPeriodo->toString());
         assertEqual(materiaTreeFather->obtenerValor()->toString(), nuevaMateria->toString());
@@ -519,61 +520,8 @@ int main()
         assertEqual(apunteTreeFather->obtenerCamino(),     std::string("/")+nuevoPeriodo->obtenerID()+std::string("/")+nuevaMateria->obtenerID()+std::string("/")+nuevaClase->obtenerID()+std::string("/")+nuevoApunte->obtenerID()+std::string("/"));
         assertEqual(comentarioTreeFather->obtenerCamino(), std::string("/")+nuevoPeriodo->obtenerID()+std::string("/")+nuevaMateria->obtenerID()+std::string("/")+nuevaClase->obtenerID()+std::string("/")+nuevoApunte->obtenerID()+std::string("/")+nuevoComentario->obtenerID()+std::string("/"));
 
-        std::cout << "Valor (Comentario): " << comentarioTreeFather->obtenerValor()->toString() << " Camino (path): " << comentarioTreeFather->obtenerCamino()  << " \n\n";
-    }
-    {
-        std::cout << "Testing obtener numero del camino"<< " \n";
-
-        std::cout << "Camino Comentario: " << comentarioTreeFather->obtenerCamino()  << " \n\n";
-
-        int res = Utilidades::sumarNumeros(comentarioTreeFather->obtenerCamino());
-        std::cout << "Numero del camino Comentario " << res << "\n\n";
-
-        res = Utilidades::sumarNumeros(apunteTreeFather->obtenerCamino());
-        std::cout << "Numero del camino Apunte " << res << "\n\n";
-         res = Utilidades::sumarNumeros(claseTreeFather->obtenerCamino());
-        std::cout << "Numero del camino Clase " << res << "\n\n";
-        res = Utilidades::sumarNumeros(materiaTreeFather->obtenerCamino());
-        std::cout << "Numero del camino Materia " << res << "\n\n";
-        res = Utilidades::sumarNumeros(periodoTreeFather->obtenerCamino());
-        std::cout << "Numero del camino Periodo " << res << "\n\n";
-        res = Utilidades::sumarNumeros(rootTreeFather->obtenerCamino());
-        std::cout << "Numero del camino Usuario " << res << "\n\n";
-
-    }
-    {
-        std::cout << "Testing Tabla Hash Comentarios Apunte"<< " \n";
-        std::vector<BaseMecha *> comentariosApuntes;
-         for( Comentario * comentario : nuevoApunte->obtenerComentarios()){
-            comentariosApuntes.push_back(comentario);
-         }
-       
-        
-        NodoFuego comentarios = NodoFuego();
-        comentarios.asignarValor(comentariosApuntes);
-        hijosArbol.insert(apunteTreeFather->obtenerCamino(),comentarios);
-        ElementoHash * nodo = hijosArbol.buscar(apunteTreeFather->obtenerCamino());
-        std::cout << "Encontrado  "<< nodo->valor.obtenerValor().at(0)->toString()<< " \n";
-         
     }
 
-
-    {
-        std::cout << "Testing Tabla Hash Apuntes Clase"<< " \n";
-        std::vector<BaseMecha *> apuntesClase;
-        for( Apunte * apunte : nuevaClase->obtenerApuntes()){
-            apuntesClase.push_back(apunte);
-        }
-
-        NodoFuego apuntes = NodoFuego();
-        apuntes.asignarValor(apuntesClase);
-        hijosArbol.insert(claseTreeFather->obtenerCamino(),apuntes);
-        ElementoHash * nodo = hijosArbol.buscar(claseTreeFather->obtenerCamino());
-
-
-        std::cout << "Encontrado  "<< nodo->valor.obtenerValor().at(0)->toString()<< " \n";
-    }
-    
     {
         std::cout << "Testing Creando o Abriendo Base de Datos"<< " \n";
 
@@ -585,15 +533,14 @@ int main()
         std::cout << "Testing Insertar Usuario en la Base de Datos"<< " \n";
 
 
-        std::cout << "ID Usuario "<< nuevoUsuario->obtenerID() <<" \n";
-        nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
-        nuevoUsuario->asignarNombre(std::string("NOmbre"));
-         nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
-      //  nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
-      //  nuevoUsuario->asignarNombre(std::string("NOmbre"));
-      //   nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
+        nuevoUsuario->asignarCorreo(std::string(nuevoUsuario->obtenerID()));
+        nuevoUsuario->asignarNombre(std::string("Nombre"));
+        nuevoUsuario->asignarDescripcion(std::string("Descripcion Apuntes Seguidos"));
+        nuevoUsuario->asignarRoles({Rol::ESTUDIANTE});
+        nuevoUsuario->asignarPopularidad(1);
 
-        baseDatos.insertarUsuario(*nuevoUsuario);
+        int resultado = baseDatos.insertarUsuario(*nuevoUsuario);
+        assertEqual(resultado != -1, true);
     }
 
     {
@@ -615,12 +562,6 @@ int main()
     {
         std::cout << "Testing Insertar Periodo en la Base de Datos"<< " \n";
 
-
-        std::cout << "ID Usuario "<< nuevoUsuario->obtenerPeriodos().at(0)->obtenerNombre() <<" \n";
-        nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
-        nuevoUsuario->asignarNombre(std::string("NOmbre"));
-         nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
-
         baseDatos.insertarPeriodo(*nuevoPeriodo);
     }
 
@@ -637,8 +578,6 @@ int main()
     {
         std::cout << "Testing Insertar Materia en la Base de Datos"<< " \n";
 
-
-        std::cout << "Materia: "<< nuevaMateria->toString() <<" \n";
         nuevaMateria->asignarPeriodoActivo(true);
 
         baseDatos.insertarMateria(*nuevaMateria);
@@ -663,23 +602,20 @@ int main()
         {
         std::cout << "Testing Obtener todas las Clase de la Base de Datos"<< " \n";
 
-        std::vector<Usuario> todoLosUsuarios=  baseDatos.obtenerTodoLosUsuarios();
+        std::vector<Clase> todaLasClases=  baseDatos.obtenerTodoLosClases();
 
-         for (const Usuario& usuario : todoLosUsuarios) {
-            std::cout << "Usuario: " << usuario.toString() << "\n";
+         for (const Clase& clase : todaLasClases) {
+            std::cout << "Clases: " << clase.toString() << "\n";
         }
 
     }
     {
         std::cout << "Testing Insertar Apunte en la Base de Datos"<< " \n";
 
-
-        std::cout << "Apunte "<< nuevoApunte->toString() <<" \n";
-
         baseDatos.insertarApunte(*nuevoApunte);
     }
 
-        {
+    {
         std::cout << "Testing Obtener todo los Apunte de la Base de Datos"<< " \n";
 
         std::vector<Apunte> todoLosApuntes=  baseDatos.obtenerTodoLosApuntes();
@@ -691,9 +627,6 @@ int main()
     }
     {
         std::cout << "Testing Insertar Comentario en la Base de Datos"<< " \n";
-
-
-        std::cout << "Comentario "<< nuevoComentario->toString() <<" \n";
 
         baseDatos.insertarComentario(*nuevoComentario);
     }
