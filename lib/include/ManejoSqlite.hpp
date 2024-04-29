@@ -35,7 +35,7 @@ public:
     int insertarUsuarioPeriodo(int usuarioID, int periodoID);
     int insertarUsuarioRol(int usuarioID, const std::string& rol); 
     int insertarUsuarioApunte(int usuarioID, int apunteID, bool seguido); 
-    int insertarConexionUsuario(int usuarioID, int usuarioConectadoID);
+    int insertarConexionUsuario(int usuarioID, std::string usuarioConectadoID);
     int insertarPeriodoMateria(int periodoID, int materiaID); 
     int insertarMateriaClase(int materiaID, int claseID);
     int insertarMateriaProfesor(int materiaID, const std::string& profesor);

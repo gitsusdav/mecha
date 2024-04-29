@@ -155,7 +155,7 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Usuario_Credenciales (
             ID INTEGER PRIMARY KEY,
             id_Usuario TEXT NOT NULL,
-            Correo TEXT NOT NULL,
+            Correo TEXT NOT NULL UNIQUE,
             Clave TEXT NOT NULL
         );
     )";
@@ -197,9 +197,9 @@ bool Utilidades::instanciarBaseDeDatos() {
     const char* crearTablaUsuarioConexiones = R"(
         CREATE TABLE Usuario_Conexiones (
             UsuarioID INTEGER,
-            UsuarioConectadoID INTEGER,
-            FOREIGN KEY (UsuarioID) REFERENCES Usuarios(ID),
-            FOREIGN KEY (UsuarioConectadoID) REFERENCES Usuarios(ID),
+            UsuarioConectadoID TEXT,
+            FOREIGN KEY (UsuarioID) REFERENCES Usuario(ID),
+            FOREIGN KEY (UsuarioConectadoID) REFERENCES Usuario(id_Usuario),
             PRIMARY KEY (UsuarioID, UsuarioConectadoID)
         );
     )";

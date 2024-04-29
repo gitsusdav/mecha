@@ -2,6 +2,7 @@
 
 #include <string>
 #include <vector>
+#include <map>
 #include <algorithm> 
 #include <iterator>  
 #include "BaseMecha.hpp"
@@ -35,6 +36,7 @@ public:
        const std::vector<Rol>& roles,
        const std::string& correo, const std::string& clave);
     Usuario();
+    std::map<Rol, std::string> seleccionRoles;
     // Métodos de acceso
     std::string obtenerNombre() const;
     std::string obtenerID() const;

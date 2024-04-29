@@ -46,8 +46,6 @@ int ManejoSqlite::insertarUsuario(const Usuario& usuario) {
     sqlite3_int64 idUsuarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
     int idUsuario = static_cast<int>(idUsuarioInsertado);
 
-    std::cout <<" ID USUARIO  insertado" << idUsuario << "\n\n";
-
     for (Periodo *periodo : usuario.obtenerPeriodos()) {
         int idPeriodo = insertarPeriodo(*periodo);
         insertarUsuarioPeriodo(idUsuario,idPeriodo);
@@ -55,32 +53,24 @@ int ManejoSqlite::insertarUsuario(const Usuario& usuario) {
     
     for (Apunte *apunte : usuario.obtenerApuntesPropios()) {
         int idApunte = insertarApunte(*apunte);
+          std::cout <<" APUNTE Propio " << apunte->toString() << "\n";
         insertarUsuarioApunte(idUsuario,idApunte, false);
     }
 
-    for (Apunte *apunteSeguidos : usuario.obtenerApuntesSeguidos()) {
-        int idApunte = insertarApunte(*apunteSeguidos);
-        insertarUsuarioApunte(idUsuario,idApunte, true);
+   for (Apunte *apunteSeguidos : usuario.obtenerApuntesSeguidos()) {
+       int idApunteSeguido = insertarApunte(*apunteSeguidos);
+        std::cout <<" APUNTE SEGUIDO " << apunteSeguidos->toString() << "\n";
+       insertarUsuarioApunte(idUsuario,idApunteSeguido, true);
+   }
+
+    for (Rol rol : usuario.obtenerRoles()) { 
+        insertarUsuarioRol(idUsuario, usuario.seleccionRoles.at(rol));
     }
 
-    for (Rol rol : usuario.obtenerRoles()) {
-            std::string rolToString;
+    for( Usuario *conexion : usuario.obtenerConexiones()){
 
-    switch (rol) {
-        case Rol::PROFESOR:
-            rolToString = "PROFESOR";
-            break;
-        case Rol::ESTUDIANTE:
-            rolToString = "ESTUDIANTE";
-            break;
-        case Rol::GRADUADO:
-            rolToString = "GRADUADO";
-            break;
+        insertarConexionUsuario(idUsuario, conexion->obtenerID());
     }
-
-        insertarUsuarioRol(idUsuario, rolToString);
-    }
-
     sqlite3_finalize(stmt);
     return idUsuario;
 }
@@ -175,10 +165,17 @@ int ManejoSqlite::insertarPeriodo(const Periodo& periodo) {
         return -1;
     } 
 
+    sqlite3_int64 idPeriodoInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    int idPeriodo = static_cast<int>(idPeriodoInsertado);
+
+    for (Materia *materia : periodo.obtenerMaterias()) {
+       int idMateria = insertarMateria(*materia);
+       insertarPeriodoMateria(idPeriodo,idMateria);
+   }
+
     sqlite3_finalize(stmt);
 
-    sqlite3_int64 idPeriodoInsertado = sqlite3_last_insert_rowid(baseDeDatos);
-    return static_cast<int>(idPeriodoInsertado);
+    return idPeriodo;
 }
 
 std::vector<Periodo> ManejoSqlite::obtenerTodoLosPeriodos(){
@@ -207,10 +204,21 @@ int ManejoSqlite::insertarMateria(const Materia& materia) {
         return -1;
     }
 
+    sqlite3_int64 idMateriaInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    int idMateria = static_cast<int>(idMateriaInsertado);
+
+    for (Clase *clase : materia.obtenerClases()) {
+       int idClase = insertarClase(*clase);
+       insertarMateriaClase(idMateria,idClase);
+    }
+
+    for (std::string profesor : materia.obtenerProfesores()) {
+       insertarMateriaProfesor(idMateria,profesor);
+    }
+
     sqlite3_finalize(stmt);
 
-    sqlite3_int64 idMateriaInsertado = sqlite3_last_insert_rowid(baseDeDatos);
-    return static_cast<int>(idMateriaInsertado);
+    return idMateria;
 }
 
 std::vector<Materia> ManejoSqlite::obtenerTodasLasMaterias(){
@@ -241,10 +249,21 @@ int ManejoSqlite::insertarClase(const Clase& clase) {
         return -1;
     }
 
+    sqlite3_int64 idClaseInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    int idClase = static_cast<int>(idClaseInsertado);
+
+    for (Apunte *apunte : clase.obtenerApuntes()) {
+       int idApunte = insertarApunte(*apunte);
+       insertarClaseApunte(idClase,idApunte);
+    }
+
+    for (std::string profesor : clase.obtenerRecursos()) {
+        insertarRecursoClase(idClase,profesor);
+    }
+
     sqlite3_finalize(stmt);
 
-    sqlite3_int64 idClaseInsertado = sqlite3_last_insert_rowid(baseDeDatos);
-    return static_cast<int>(idClaseInsertado);
+    return idClase;
 }
 
 std::vector<Clase> ManejoSqlite::obtenerTodoLosClases(){
@@ -277,8 +296,17 @@ int ManejoSqlite::insertarApunte(const Apunte& apunte ) {
         return -1;
     }
 
+    sqlite3_int64 idApunteInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    int idApunte = static_cast<int>(idApunteInsertado);
+
+    for (Comentario *comentario : apunte.obtenerComentarios()) {
+       int idComentario = insertarComentario(*comentario);
+       insertarApunteComentario(idApunte,idComentario);
+    }
+
     sqlite3_finalize(stmt);
-    return true;
+
+    return idApunte;
 }
 
 std::vector<Apunte> ManejoSqlite::obtenerTodoLosApuntes(){
@@ -312,7 +340,8 @@ int ManejoSqlite::insertarComentario(const Comentario& comentario) {
     }
 
     sqlite3_finalize(stmt);
-    return true;
+    sqlite3_int64 idComentarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idComentarioInsertado);
 }
 
 std::vector<Comentario> ManejoSqlite::obtenerTodoLosComentarios(){
@@ -342,7 +371,9 @@ int ManejoSqlite::insertarCredencialUsuario(const Usuario& credencial) {
     }
 
     sqlite3_finalize(stmt);
-    return true;
+    
+    sqlite3_int64 idCredencialUsuarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idCredencialUsuarioInsertado);
 }
 
 int ManejoSqlite::insertarUsuarioPeriodo(int usuarioID, int periodoID) {
@@ -365,20 +396,21 @@ int ManejoSqlite::insertarUsuarioPeriodo(int usuarioID, int periodoID) {
     }
 
     sqlite3_finalize(stmt);
-    return true;
+    sqlite3_int64 idUsuarioPeriodosInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idUsuarioPeriodosInsertado);
 }
 
 int ManejoSqlite::insertarUsuarioRol(int usuarioID, const std::string& rol) {
     std::string query = "INSERT INTO Usuario_Roles (UsuarioID, Rol) "
                         "VALUES (?, ?);";
-
+    std::cout <<" INSERTAR ROl " <<  rol << "\n";
     sqlite3_stmt* stmt;
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
         return -1;
     }
-
+ std::cout <<" OK " <<  resultado << "\n";
     sqlite3_bind_int(stmt, 1, usuarioID);
     sqlite3_bind_text(stmt, 2, rol.c_str(), -1, SQLITE_TRANSIENT);
 
@@ -386,36 +418,41 @@ int ManejoSqlite::insertarUsuarioRol(int usuarioID, const std::string& rol) {
     if (resultado != SQLITE_DONE) {
         return -1;
     }
-
+ std::cout <<"2 OK " <<  resultado << "\n";
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idRolInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idRolInsertado);
 }
 
 int ManejoSqlite::insertarUsuarioApunte(int usuarioID, int apunteID, bool seguido) {
     std::string query = "INSERT INTO Usuario_Apuntes (UsuarioID, ApunteID, Seguido) "
                         "VALUES (?, ?, ?);";
-
+   std::cout <<" APUNTE Propio " << seguido << "\n";
     sqlite3_stmt* stmt;
     int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
 
     if (resultado != SQLITE_OK) {
         return -1;
     }
-
+ std::cout <<" APUNTE Ok 1 " << resultado << "\n";
     sqlite3_bind_int(stmt, 1, usuarioID);
     sqlite3_bind_int(stmt, 2, apunteID);
     sqlite3_bind_int(stmt, 3, seguido ? 1 : 0);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
+         std::cout <<" ERROR codigo " << resultado << "\n";
         return -1;
     }
-
+ std::cout <<" APUNTE Ok 2 " << resultado << "\n";
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idApunteInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idApunteInsertado);
 }
 
-int ManejoSqlite::insertarConexionUsuario(int usuarioID, int usuarioConectadoID) {
+int ManejoSqlite::insertarConexionUsuario(int usuarioID, std::string usuarioConectadoID) {
     std::string query = "INSERT INTO Usuario_Conexiones (UsuarioID, UsuarioConectadoID) "
                         "VALUES (?, ?);";
 
@@ -427,7 +464,7 @@ int ManejoSqlite::insertarConexionUsuario(int usuarioID, int usuarioConectadoID)
     }
 
     sqlite3_bind_int(stmt, 1, usuarioID);
-    sqlite3_bind_int(stmt, 2, usuarioConectadoID);
+    sqlite3_bind_text(stmt, 2, (usuarioConectadoID).c_str(), -1, SQLITE_TRANSIENT);
 
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
@@ -435,7 +472,9 @@ int ManejoSqlite::insertarConexionUsuario(int usuarioID, int usuarioConectadoID)
     }
 
     sqlite3_finalize(stmt);
-    return true;
+    
+    sqlite3_int64 idUsuarioConexionesInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idUsuarioConexionesInsertado);
 }
 
 int ManejoSqlite::insertarPeriodoMateria(int periodoID, int materiaID) {
@@ -458,7 +497,9 @@ int ManejoSqlite::insertarPeriodoMateria(int periodoID, int materiaID) {
     }
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idPeriodoMateriasInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idPeriodoMateriasInsertado);
 }
 
 int ManejoSqlite::insertarMateriaClase(int materiaID, int claseID) {
@@ -481,7 +522,9 @@ int ManejoSqlite::insertarMateriaClase(int materiaID, int claseID) {
     }
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idMateriaClasesInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idMateriaClasesInsertado);
 }
 
 int ManejoSqlite::insertarMateriaProfesor(int materiaID, const std::string& profesor) {
@@ -504,7 +547,9 @@ int ManejoSqlite::insertarMateriaProfesor(int materiaID, const std::string& prof
     }
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idMateriaProfesorInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idMateriaProfesorInsertado);
 }
 
 int ManejoSqlite::insertarClaseApunte(int claseID, int apunteID) {
@@ -527,7 +572,9 @@ int ManejoSqlite::insertarClaseApunte(int claseID, int apunteID) {
     }
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idClaseApunteInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idClaseApunteInsertado);
 }
 
 int ManejoSqlite::insertarRecursoClase(int claseID, const std::string& recurso) {
@@ -550,7 +597,9 @@ int ManejoSqlite::insertarRecursoClase(int claseID, const std::string& recurso) 
     }
 
     sqlite3_finalize(stmt);
-    return true;
+    
+    sqlite3_int64 idRecursoClaseInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idRecursoClaseInsertado);
 }
 
 int ManejoSqlite::insertarApunteComentario(int apunteID, int comentarioID) {
@@ -573,5 +622,7 @@ int ManejoSqlite::insertarApunteComentario(int apunteID, int comentarioID) {
     }
 
     sqlite3_finalize(stmt);
-    return true;
+
+    sqlite3_int64 idApunteComentarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    return static_cast<int>(idApunteComentarioInsertado);
 }

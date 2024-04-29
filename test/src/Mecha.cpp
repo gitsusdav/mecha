@@ -95,6 +95,9 @@ int main()
         nuevoApunte->asignarClase(nuevaClase);
 
         nuevoApunteDos->asignarContenido(contenido);
+        nuevoApunteDos->asignarFecha(*local_time);
+        nuevoApunteDos->asignarUsuario(nuevoUsuario);
+        nuevoApunteDos->asignarClase(nuevaClase);
 
         std::string obtenerContenido = nuevoApunte->obtenerContenido();
 
@@ -333,10 +336,10 @@ int main()
 
         idClase = nuevaClase->obtenerIDMateria();
         id = nuevoApunte->obtenerClase()->obtenerID();
-
+/*
         std::cout << "idClase: " << idClase << " \n";
         std::cout << "id: " << id << " \n";
-
+*/
         auto idMateria = nuevaClase->obtenerIDMateria();
         id = nuevaMateria->obtenerID();
    
@@ -383,10 +386,10 @@ int main()
 
         idMateria = nuevaMateria->obtenerPeriodo()->obtenerID();
         idPeriodo = nuevoPeriodo->obtenerID();
-
+/*
         std::cout << "Despues\n" << "ID materia: " << idMateria << " \n";
         std::cout << "ID periodo: " << idPeriodo << " \n";
-
+*/
         assertEqual(idMateria, idPeriodo);
         assertEqual(nuevaMateria->obtenerDescripcion(), nuevoPeriodo->obtenerMaterias().back()->obtenerDescripcion());
     }
@@ -396,10 +399,10 @@ int main()
         std::cout << "Testing Agregar Comentario a Apunte" << " \n";
         auto idComentario = nuevoComentario->obtenerApunte()->obtenerID();
         auto idApunte = nuevoApunte->obtenerID();
-
+/*
         std::cout << "id comentario: " << idComentario << " \n";
         std::cout << "id apunte: " << idApunte << " \n";
-
+*/
         nuevoComentario->asignarApunte(nuevoApunte);
         nuevoApunte->agregarComentario(nuevoComentario);
 
@@ -457,7 +460,7 @@ int main()
         BaseMecha* controlUsuario = nuevoUsuario;
         rootTreeFather = new NodoPadre(controlUsuario, "/");
 
-        std::cout << "Valor (root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
+        //std::cout << "Valor (root): " << rootTreeFather->obtenerValor()->toString() << " Camino (path): " << rootTreeFather->obtenerCamino()  << " \n";
 
         assertEqual(std::string("/"), rootTreeFather->obtenerCamino());
         assertEqual(rootTreeFather->obtenerValor()->toString(), nuevoUsuario->toString() );
@@ -529,12 +532,14 @@ int main()
         std::cout << "Testing Insertar Usuario en la Base de Datos"<< " \n";
 
 
-        std::cout << "ID Usuario "<< nuevoUsuario->obtenerID() <<" \n";
-        nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
-        nuevoUsuario->asignarNombre(std::string("NOmbre"));
-         nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
+        nuevoUsuario->asignarCorreo(std::string(nuevoUsuario->obtenerID()));
+        nuevoUsuario->asignarNombre(std::string("Nombre"));
+        nuevoUsuario->asignarDescripcion(std::string("Descripcion Apuntes Seguidos"));
+        nuevoUsuario->asignarRoles({Rol::ESTUDIANTE});
+        nuevoUsuario->asignarPopularidad(1);
 
-        baseDatos.insertarUsuario(*nuevoUsuario);
+        int resultado = baseDatos.insertarUsuario(*nuevoUsuario);
+        assertEqual(resultado != -1, true);
     }
 
     {
@@ -555,12 +560,6 @@ int main()
     }
     {
         std::cout << "Testing Insertar Periodo en la Base de Datos"<< " \n";
-
-
-        std::cout << "ID Usuario "<< nuevoUsuario->obtenerPeriodos().at(0)->obtenerNombre() <<" \n";
-        nuevoUsuario->asignarCorreo(std::string("Correounicounico.com"));
-        nuevoUsuario->asignarNombre(std::string("NOmbre"));
-         nuevoUsuario->asignarDescripcion(std::string("debe sr por el arroba"));
 
         baseDatos.insertarPeriodo(*nuevoPeriodo);
     }
