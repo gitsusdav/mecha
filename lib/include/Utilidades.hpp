@@ -12,5 +12,9 @@ public:
     static std::string crearFecha(int year, int month, int day);
     static std::string crearFecha(const std::tm& fecha);
     static std::tm obtenerFecha(int year, int month, int day);
+    static std::tm crearTmDesdeString(const std::string& fechaStr);
     static bool instanciarBaseDeDatos();
+    static int sumarNumeros(const std::string& cadena);
+    static bool esDigito(char c);
+    static bool esLetra(char c);
 };

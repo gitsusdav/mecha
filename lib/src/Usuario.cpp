@@ -7,8 +7,20 @@ Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
         const std::vector<Rol>& roles,
         const std::string& correo, const std::string& clave)
     : Nombre(nombre), Descripcion(descripcion), Roles(roles),
-      Correo(correo), Clave(clave) {}
-Usuario::Usuario(){}
+      Correo(correo), Clave(clave) {
+        seleccionRoles[Rol::PROFESOR] = "PROFESOR";
+        seleccionRoles[Rol::ESTUDIANTE] = "ESTUDIANTE";
+        seleccionRoles[Rol::GRADUADO] = "GRADUADO";
+        ApuntesPropios = {};
+        ApuntesSeguidos = {};
+    }
+Usuario::Usuario(){
+    seleccionRoles[Rol::PROFESOR] = "PROFESOR";
+    seleccionRoles[Rol::ESTUDIANTE] = "ESTUDIANTE";
+    seleccionRoles[Rol::GRADUADO] = "GRADUADO";
+    ApuntesPropios = {};
+    ApuntesSeguidos = {};
+}
 
 // Métodos de acceso (getters)
 std::string Usuario::obtenerNombre() const {
@@ -26,7 +38,9 @@ std::string Usuario::obtenerDescripcion() const {
 std::vector<Usuario*> Usuario::obtenerConexiones() const {
     return Conexiones;
 }
-
+std::vector<Periodo*> Usuario::obtenerPeriodos () const {
+    return Periodos;
+}
 std::vector<Rol> Usuario::obtenerRoles() const {
     return Roles;
 }
@@ -67,7 +81,9 @@ void Usuario::asignarDescripcion(const std::string& descripcion) {
 void Usuario::asignarConexiones(const std::vector<Usuario*>& conexiones) {
     Conexiones = conexiones;
 }
-
+void Usuario::asignarPeriodos(const std::vector<Periodo*>& periodos) {
+    Periodos = periodos;
+}
 void Usuario::asignarRoles(const std::vector<Rol>& roles) {
     Roles = roles;
 }

@@ -1,5 +1,7 @@
 #include <sstream>
 #include <iomanip>
+#include <string>
+#include <cctype>
 #include <chrono>
 #include <ctime>
 #include <openssl/evp.h>
@@ -53,7 +55,13 @@ std::string Utilidades::crearFecha(const std::tm& fecha) {
     oss << std::put_time(&fecha, "%Y-%m-%d");
     return oss.str();
 }
+std::tm Utilidades::crearTmDesdeString(const std::string& fechaStr) {
+    std::tm fecha = {}; 
+    std::istringstream iss(fechaStr);
+    iss >> std::get_time(&fecha, "%Y-%m-%d");
 
+    return fecha;
+}
 std::tm Utilidades::obtenerFecha(int year, int month, int day) {
     std::tm fecha = {0, 0, 0, day, month - 1, year - 1900}; 
     return fecha;
@@ -99,7 +107,7 @@ bool Utilidades::instanciarBaseDeDatos() {
             id_Periodo INTEGER NOT NULL,
             Descripcion TEXT,
             Nombre TEXT,
-            obtenerPeriodoActivo BOOLEAN,
+            PeriodoActivo INTEGER,
             FOREIGN KEY (id_Periodo) REFERENCES Periodo(ID) 
         );
     )";
@@ -155,7 +163,7 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Usuario_Credenciales (
             ID INTEGER PRIMARY KEY,
             id_Usuario TEXT NOT NULL,
-            Correo TEXT NOT NULL,
+            Correo TEXT NOT NULL UNIQUE,
             Clave TEXT NOT NULL
         );
     )";
@@ -186,7 +194,7 @@ bool Utilidades::instanciarBaseDeDatos() {
         CREATE TABLE Usuario_Apuntes (
             UsuarioID INTEGER,
             ApunteID INTEGER,
-            Seguido BOOLEAN,
+            Seguido INTEGER,
             FOREIGN KEY (UsuarioID) REFERENCES Usuario(ID),
             FOREIGN KEY (ApunteID) REFERENCES Apunte(ID),
             PRIMARY KEY (UsuarioID, ApunteID)
@@ -197,9 +205,9 @@ bool Utilidades::instanciarBaseDeDatos() {
     const char* crearTablaUsuarioConexiones = R"(
         CREATE TABLE Usuario_Conexiones (
             UsuarioID INTEGER,
-            UsuarioConectadoID INTEGER,
-            FOREIGN KEY (UsuarioID) REFERENCES Usuarios(ID),
-            FOREIGN KEY (UsuarioConectadoID) REFERENCES Usuarios(ID),
+            UsuarioConectadoID TEXT,
+            FOREIGN KEY (UsuarioID) REFERENCES Usuario(ID),
+            FOREIGN KEY (UsuarioConectadoID) REFERENCES Usuario(id_Usuario),
             PRIMARY KEY (UsuarioID, UsuarioConectadoID)
         );
     )";
@@ -273,4 +281,48 @@ bool Utilidades::instanciarBaseDeDatos() {
 
     return true;
 
+}
+
+bool Utilidades::esDigito(char c) {
+    return c >= '0' && c <= '9';
+}
+bool Utilidades::esLetra(char c) {
+    return std::isalpha(c);
+}
+
+int Utilidades::sumarNumeros(const std::string& cadena) {
+    int sumaTotal = 1;
+    int i = 0;
+
+    while (i < cadena.size()) {
+        while (i < cadena.size() && cadena[i] != '/') {
+            i++;
+        }
+
+        if (i + 1 < cadena.size()) {
+            int j = i + 1;
+            while (j < cadena.size() && cadena[j] != '/') {
+                j++;
+            }
+
+            int sumaGrupo = 0;
+            int multiplicador = 1;
+
+            for (int k = i + 1; k < j; k++) {
+                if (esDigito(cadena[k])) {
+                    sumaGrupo += (cadena[k] - '0') * multiplicador;
+                } else if (esLetra(cadena[k])) {
+                    int valorLetra = std::toupper(cadena[k]) - 'A' + 1;
+                    sumaGrupo += valorLetra;
+                }
+            }
+
+            sumaTotal += sumaGrupo;
+            i = j; 
+        } else {
+            break; 
+        }
+    }
+
+    return sumaTotal;
 }

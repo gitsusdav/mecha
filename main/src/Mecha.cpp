@@ -7,13 +7,29 @@
 #include "Clase.hpp"
 #include "Apunte.hpp"
 #include "Comentario.hpp"
+#include "NodoPadre.hpp"
+#include "NodoFuego.hpp"
+#include "TablaHash.hpp"
+#include "BaseMecha.hpp"
+#include "ManejoSqlite.hpp"
 
 
 /*
-    lineas de codigo provicionales para obtener la fecha
+    La aplicación Mecha utiliza para la estructura de datos un Árbol
+    el cual se llamó Árbol Padre se utiliza con el NodoPadre
+    los cuales tienen un apuntador a su padre.
 
-    std::tm fechaInicio = Utilidades::obtenerFecha(2024, 4, 1); // 1 de abril de 2024
-    std::tm fechaFin = Utilidades::obtenerFecha(2024, 7, 31);   // 31 de julio de 2024
+    Para obtener la lista de nodos de los hijos se está empleando 
+    una tabla hash que guarda la lista con la llave del camino
+    donde esta cada nodo en el árbol, si hay colisión en la 
+    tabla hash se guarda la lista en nodos de un árbol binario
+    que es el NodoFuego.
+
+    Los datos persisten gracias a que se está utilizando una
+    base de datos Sqlite en el archivo "DatosCalientesMecha.db".
+
+    Los test están listos, vamos a conectar el árbol y la tabla hash
+    con el menú de este archivo. 
 
 */
 
@@ -65,6 +81,12 @@ std::vector<Comentario> obtenerComentariosDeLaBaseDeDatos(){
 
 int main(int argc, char* argv[])
 {
+    ManejoSqlite baseDatos("DatosCalientesMecha.db");
+    bool crearBaseDeDatos = Utilidades::instanciarBaseDeDatos();
+    TablaHash hijosArbol = TablaHash();
+
+    NodoPadre* rootTreeFather;
+
     std::string nombre, descripcion, correo, clave;
     int opcion, rol;
 
@@ -180,7 +202,7 @@ int main(int argc, char* argv[])
                 for (const Usuario& usuario : usuarios) {
                     std::cout << "Nombre: " << usuario.obtenerNombre() << "\n";
                     std::cout << "Rol: ";
-                    switch (usuario.getRoles()[0]) {  
+                    switch (usuario.obtenerRoles()[0]) {  
                         case Rol::PROFESOR:
                             std::cout << "Profesor\n";
                             break;
