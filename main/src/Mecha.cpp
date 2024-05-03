@@ -126,12 +126,13 @@ int main(int argc, char* argv[])
         std::string idUsuario = baseDatos.obtenerIngresoUsuario( correo, clave);
         if(idUsuario != std::string("0")){
             Usuario usuarioRegistrado = baseDatos.obtenerUsuario(idUsuario);
+            // cargar todo los datos del usuario construir el arbol y la tabla hash
             std::cout << "Binvenido de nuevo a Mecha " << usuarioRegistrado.obtenerNombre() <<  "\n";
         }else{
            std::cout << "Credenciales Incorrectas, vuelve a ejecutar la aplicación\n"; 
             return 0;
         }
-        // obtener usuario ID 
+
 
     } else {
         std::cout << "Opción inválida\n";
