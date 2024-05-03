@@ -1,6 +1,7 @@
 #include <Usuario.hpp>
 #include "Apunte.hpp"
 #include "Periodo.hpp"
+#include "Utilidades.hpp"
 
 // Constructor
 Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
@@ -13,6 +14,7 @@ Usuario::Usuario(const std::string& nombre, const std::string& descripcion,
         seleccionRoles[Rol::GRADUADO] = "GRADUADO";
         ApuntesPropios = {};
         ApuntesSeguidos = {};
+        ID = Utilidades::generarId(this->toString());
     }
 Usuario::Usuario(){
     seleccionRoles[Rol::PROFESOR] = "PROFESOR";

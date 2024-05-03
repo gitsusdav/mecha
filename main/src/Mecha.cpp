@@ -35,7 +35,7 @@
 
 
 void guardarUsuarioEnLaBaseDeDatos(const Usuario& usuario) {
-    //logica con sqlite para guardar la clase
+
 }
 
 void guardarPeriodoEnLaBaseDeDatos(const Periodo& periodo) {
@@ -112,11 +112,27 @@ int main(int argc, char* argv[])
         std::cin.ignore(); 
 
         Usuario usuario(nombre, descripcion, {static_cast<Rol>(rol)}, correo, clave); 
-        guardarUsuarioEnLaBaseDeDatos(usuario);  
+        baseDatos.insertarUsuario(usuario);
+        baseDatos.insertarCredencialUsuario(usuario);
+       // guardarUsuarioEnLaBaseDeDatos(usuario);  
 
     } else if (opcion == 2) {
         //codigo de inicio de sesion
+        std::cout << "Ingrese su correo: ";
+        std::getline(std::cin, correo);
+        std::cout << "Ingrese su clave: ";
+        std::getline(std::cin, clave);
         
+        std::string idUsuario = baseDatos.obtenerIngresoUsuario( correo, clave);
+        if(idUsuario != std::string("0")){
+            Usuario usuarioRegistrado = baseDatos.obtenerUsuario(idUsuario);
+            std::cout << "Binvenido de nuevo a Mecha " << usuarioRegistrado.obtenerNombre() <<  "\n";
+        }else{
+           std::cout << "Credenciales Incorrectas, vuelve a ejecutar la aplicación\n"; 
+            return 0;
+        }
+        // obtener usuario ID 
+
     } else {
         std::cout << "Opción inválida\n";
         return 0;
