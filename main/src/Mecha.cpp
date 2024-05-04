@@ -7,47 +7,34 @@
 #include "Clase.hpp"
 #include "Apunte.hpp"
 #include "Comentario.hpp"
-#include <sqlite3.h>
+#include "NodoPadre.hpp"
+#include "NodoFuego.hpp"
+#include "TablaHash.hpp"
+#include "BaseMecha.hpp"
+#include "ManejoSqlite.hpp"
+
 
 /*
-    lineas de codigo provicionales para obtener la fecha
+    La aplicación Mecha utiliza para la estructura de datos un Árbol
+    el cual se llamó Árbol Padre se utiliza con el NodoPadre
+    los cuales tienen un apuntador a su padre.
 
-    std::tm fechaInicio = Utilidades::obtenerFecha(2024, 4, 1); // 1 de abril de 2024
-    std::tm fechaFin = Utilidades::obtenerFecha(2024, 7, 31);   // 31 de julio de 2024
+    Para obtener la lista de nodos de los hijos se está empleando 
+    una tabla hash que guarda la lista con la llave del camino
+    donde esta cada nodo en el árbol, si hay colisión en la 
+    tabla hash se guarda la lista en nodos de un árbol binario
+    que es el NodoFuego.
+
+    Los datos persisten gracias a que se está utilizando una
+    base de datos Sqlite en el archivo "DatosCalientesMecha.db".
+
+    Los test están listos, vamos a conectar el árbol y la tabla hash
+    con el menú de este archivo. 
 
 */
 
 
 void guardarUsuarioEnLaBaseDeDatos(const Usuario& usuario) {
-
- sqlite3* db;
-    int rc = sqlite3_open("database.db", &db); 
-    if (rc != SQLITE_OK) {
-        std::cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << std::endl;
-        return;
-    }
-
-    std::string sql = "INSERT INTO Usuario (nombre, descripcion, correo, clave) VALUES (?, ?, ?, ?)";
-    sqlite3_stmt* stmt;
-    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
-    if (rc != SQLITE_OK) {
-        std::cerr << "Error al preparar la consulta: " << sqlite3_errmsg(db) << std::endl;
-        sqlite3_close(db);
-        return;
-    }
-
-    sqlite3_bind_text(stmt, 1, usuario.obtenerNombre().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 2, usuario.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 3, usuario.obtenerCorreo().c_str(), -1, SQLITE_STATIC);
-    sqlite3_bind_text(stmt, 4, usuario.obtenerClave().c_str(), -1, SQLITE_STATIC);
-
-    rc = sqlite3_step(stmt);
-    if (rc != SQLITE_DONE) {
-        std::cerr << "Error al ejecutar la consulta: " << sqlite3_errmsg(db) << std::endl;
-    }
-
-    sqlite3_finalize(stmt); //finaliza la consulta
-    sqlite3_close(db); //cerrar la base de datos
 
 }
 
@@ -124,6 +111,12 @@ std::vector<Comentario> obtenerComentariosDeLaBaseDeDatos(){
 
 int main(int argc, char* argv[])
 {
+    ManejoSqlite baseDatos("DatosCalientesMecha.db");
+    bool crearBaseDeDatos = Utilidades::instanciarBaseDeDatos();
+    TablaHash hijosArbol = TablaHash();
+
+    NodoPadre* rootTreeFather;
+
     std::string nombre, descripcion, correo, clave;
     int opcion, rol;
 
@@ -149,11 +142,28 @@ int main(int argc, char* argv[])
         std::cin.ignore(); 
 
         Usuario usuario(nombre, descripcion, {static_cast<Rol>(rol)}, correo, clave); 
-        guardarUsuarioEnLaBaseDeDatos(usuario);  
+        baseDatos.insertarUsuario(usuario);
+        baseDatos.insertarCredencialUsuario(usuario);
+       // guardarUsuarioEnLaBaseDeDatos(usuario);  
 
     } else if (opcion == 2) {
         //codigo de inicio de sesion
+        std::cout << "Ingrese su correo: ";
+        std::getline(std::cin, correo);
+        std::cout << "Ingrese su clave: ";
+        std::getline(std::cin, clave);
         
+        std::string idUsuario = baseDatos.obtenerIngresoUsuario( correo, clave);
+        if(idUsuario != std::string("0")){
+            Usuario usuarioRegistrado = baseDatos.obtenerUsuario(idUsuario);
+            // cargar todo los datos del usuario construir el arbol y la tabla hash
+            std::cout << "Binvenido de nuevo a Mecha " << usuarioRegistrado.obtenerNombre() <<  "\n";
+        }else{
+           std::cout << "Credenciales Incorrectas, vuelve a ejecutar la aplicación\n"; 
+            return 0;
+        }
+
+
     } else {
         std::cout << "Opción inválida\n";
         return 0;
