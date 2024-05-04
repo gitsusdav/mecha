@@ -7,7 +7,7 @@
 #include "Clase.hpp"
 #include "Apunte.hpp"
 #include "Comentario.hpp"
-
+#include <sqlite3.h>
 
 /*
     lineas de codigo provicionales para obtener la fecha
@@ -19,7 +19,36 @@
 
 
 void guardarUsuarioEnLaBaseDeDatos(const Usuario& usuario) {
-    //logica con sqlite para guardar la clase
+
+ sqlite3* db;
+    int rc = sqlite3_open("database.db", &db); 
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << std::endl;
+        return;
+    }
+
+    std::string sql = "INSERT INTO Usuario (nombre, descripcion, correo, clave) VALUES (?, ?, ?, ?)";
+    sqlite3_stmt* stmt;
+    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error al preparar la consulta: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        return;
+    }
+
+    sqlite3_bind_text(stmt, 1, usuario.obtenerNombre().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 2, usuario.obtenerDescripcion().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 3, usuario.obtenerCorreo().c_str(), -1, SQLITE_STATIC);
+    sqlite3_bind_text(stmt, 4, usuario.obtenerClave().c_str(), -1, SQLITE_STATIC);
+
+    rc = sqlite3_step(stmt);
+    if (rc != SQLITE_DONE) {
+        std::cerr << "Error al ejecutar la consulta: " << sqlite3_errmsg(db) << std::endl;
+    }
+
+    sqlite3_finalize(stmt); //finaliza la consulta
+    sqlite3_close(db); //cerrar la base de datos
+
 }
 
 void guardarPeriodoEnLaBaseDeDatos(const Periodo& periodo) {
@@ -43,7 +72,37 @@ void guardarComentarioEnLaBaseDeDatos(const Comentario& comentario) {
 }
 
 std::vector<Usuario> obtenerUsuariosDeLaBaseDeDatos(){
-    return {};
+    std::vector<Usuario> usuarios;
+
+    sqlite3* db;
+    int rc = sqlite3_open("database.db", &db); 
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << std::endl;
+        return usuarios;
+    }
+
+    std::string sql = "SELECT nombre, descripcion, correo, clave FROM Usuario";
+    sqlite3_stmt* stmt;
+    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
+    if (rc != SQLITE_OK) {
+        std::cerr << "Error al preparar la consulta: " << sqlite3_errmsg(db) << std::endl;
+        sqlite3_close(db);
+        return usuarios;
+    }
+
+    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
+        std::string nombre = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+        std::string descripcion = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+        std::string correo = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+        std::string clave = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+        Usuario usuario(nombre, descripcion, {}, correo, clave);
+        usuarios.push_back(usuario);
+    }
+
+    sqlite3_finalize(stmt);
+    sqlite3_close(db);
+
+    return usuarios;
 }
 
 std::vector<Materia> obtenerMateriasDeLaBaseDeDatos(){
@@ -180,7 +239,7 @@ int main(int argc, char* argv[])
                 for (const Usuario& usuario : usuarios) {
                     std::cout << "Nombre: " << usuario.obtenerNombre() << "\n";
                     std::cout << "Rol: ";
-                    switch (usuario.getRoles()[0]) {  
+                    switch (usuario.obtenerRoles()[0]) {  
                         case Rol::PROFESOR:
                             std::cout << "Profesor\n";
                             break;
