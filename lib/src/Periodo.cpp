@@ -1,11 +1,14 @@
 #include "Periodo.hpp"
 #include "Materia.hpp"
+#include "Utilidades.hpp"
 
 // Constructor
 Periodo::Periodo( const std::string& nombre, const std::string& descripcion,
         const std::tm& fechaInicio, const std::tm& fechaFin )
     : Nombre(nombre), Descripcion(descripcion), FechaInicio(fechaInicio),
-      FechaFin(fechaFin) {}
+      FechaFin(fechaFin) {
+         ID = Utilidades::generarId(this->toString());
+      }
 Periodo::Periodo(){}
 // Métodos de acceso (getters)
 std::string Periodo::obtenerID() const {

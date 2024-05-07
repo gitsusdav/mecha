@@ -34,7 +34,9 @@
 */
 
 
-void guardarUsuarioEnLaBaseDeDatos(const Usuario& usuario) {
+void guardarUsuarioEnLaBaseDeDatos(const Usuario& usuario,  ManejoSqlite baseDatos ) {
+
+
 
 }
 
@@ -59,37 +61,7 @@ void guardarComentarioEnLaBaseDeDatos(const Comentario& comentario) {
 }
 
 std::vector<Usuario> obtenerUsuariosDeLaBaseDeDatos(){
-    std::vector<Usuario> usuarios;
-
-    sqlite3* db;
-    int rc = sqlite3_open("database.db", &db); 
-    if (rc != SQLITE_OK) {
-        std::cerr << "Error al abrir la base de datos: " << sqlite3_errmsg(db) << std::endl;
-        return usuarios;
-    }
-
-    std::string sql = "SELECT nombre, descripcion, correo, clave FROM Usuario";
-    sqlite3_stmt* stmt;
-    rc = sqlite3_prepare_v2(db, sql.c_str(), -1, &stmt, nullptr);
-    if (rc != SQLITE_OK) {
-        std::cerr << "Error al preparar la consulta: " << sqlite3_errmsg(db) << std::endl;
-        sqlite3_close(db);
-        return usuarios;
-    }
-
-    while ((rc = sqlite3_step(stmt)) == SQLITE_ROW) {
-        std::string nombre = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
-        std::string descripcion = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
-        std::string correo = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
-        std::string clave = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
-        Usuario usuario(nombre, descripcion, {}, correo, clave);
-        usuarios.push_back(usuario);
-    }
-
-    sqlite3_finalize(stmt);
-    sqlite3_close(db);
-
-    return usuarios;
+    return {};
 }
 
 std::vector<Materia> obtenerMateriasDeLaBaseDeDatos(){
@@ -117,6 +89,8 @@ int main(int argc, char* argv[])
 
     NodoPadre* rootTreeFather;
 
+    Usuario* actualUsuario;
+
     std::string nombre, descripcion, correo, clave;
     int opcion, rol;
 
@@ -142,9 +116,17 @@ int main(int argc, char* argv[])
         std::cin.ignore(); 
 
         Usuario usuario(nombre, descripcion, {static_cast<Rol>(rol)}, correo, clave); 
+        actualUsuario = &usuario;
+
+        BaseMecha* controlUsuario = actualUsuario; // a periodo a materia a clases a apunte a comentario 
+
+        rootTreeFather = new NodoPadre(controlUsuario, "/");
+        // hijos de usuario que son la lista de peridodo se agrega a la tabla hash donde la lleve es el path y el valor la lista de hijos
+        // asigna el perdio , apunte
+        // usuario.asignarPeriodos(std::vector<Periodo *>);
         baseDatos.insertarUsuario(usuario);
         baseDatos.insertarCredencialUsuario(usuario);
-       // guardarUsuarioEnLaBaseDeDatos(usuario);  
+       // guardarUsuarioEnLaBaseDeDatos(usuario, baseDatos);  
 
     } else if (opcion == 2) {
         //codigo de inicio de sesion
@@ -170,12 +152,15 @@ int main(int argc, char* argv[])
     }
 
     Usuario usuario(nombre, descripcion, {static_cast<Rol>(rol)}, correo, clave);
+    actualUsuario = &usuario;
 
     int accion;
     do {
         std::cout << "\n\n********** Opciones **********\n \n";
-        std::cout << "1. Añadir periodo\n";
-        std::cout << "2. Añadir materia\n";
+        // consultar perido devuelve la lista de los peridos guardados que tiene el usuario 
+        std::cout << "1. Añadir periodo\n"; // crear periodo, se seleciona un periodo 
+        // arbol 
+        std::cout << "2. Añadir materia\n"; // peridodo selecionado ver materias agregar materia 
         std::cout << "3. Añadir clase\n";
         std::cout << "4. Añadir apunte\n";
         std::cout << "5. Añadir comentario\n";
@@ -194,7 +179,12 @@ int main(int argc, char* argv[])
                 std::cout << "Ingrese la descripción del periodo: ";
                 std::getline(std::cin, descripcionPeriodo);
                 Periodo periodo(nombrePeriodo, descripcionPeriodo, {}, {});
-                guardarPeriodoEnLaBaseDeDatos(periodo);
+                //guardarPeriodoEnLaBaseDeDatos(periodo); // baseDatos 
+                baseDatos.insertarPeriodo(periodo);
+                Periodo * arbolPeriodo = &periodo;
+                BaseMecha * controlPeriodo = arbolPeriodo;
+                NodoPadre * nodoPeriodo = new NodoPadre(controlPeriodo,controlPeriodo->obtenerID());
+                nodoPeriodo->asignarPadre(rootTreeFather);
                 break;
             }
             case 2: {
@@ -206,6 +196,11 @@ int main(int argc, char* argv[])
                 std::getline(std::cin, descripcionMateria);
                 Materia materia(nullptr, descripcionMateria, {}, nombreMateria, {}, true);
                 guardarMateriaEnLaBaseDeDatos(materia);
+                /*baseDatos.insertarMateria(materia);
+                Materia * arbolMateria = &materia;
+                BaseMecha * controlMateria = arbolMateria;
+                NodoPadre * nodoMateria = new NodoPadre(controlMateria,controlMateria->obtenerID());
+                nodoMateria->asignarPadre(rootTreeFather);*/
                 break;
             }
             case 3: {
@@ -263,31 +258,32 @@ int main(int argc, char* argv[])
                 }
 
                 std::cout << "\n\n********** Periodos **********\n \n";  //obtener x DeLaBaseDeDatos seria la funcion de sqlite aun no implementada
-                std::vector<Periodo> periodos = obtenerPeriodosDeLaBaseDeDatos();
+                //std::vector<Periodo> periodos = obtenerPeriodosDeLaBaseDeDatos();
+                std::vector<Periodo> periodos = baseDatos.obtenerTodoLosPeriodos(); 
                 for (const Periodo& periodo : periodos) {
                     std::cout << periodo.obtenerNombre() << "\n";
                 }
 
                 std::cout << "\n\n********** Materias **********\n \n";
-                std::vector<Materia> materias = obtenerMateriasDeLaBaseDeDatos();
+                std::vector<Materia> materias = baseDatos.obtenerTodasLasMaterias();
                 for (const Materia& materia : materias) {
                     std::cout << materia.obtenerNombre() << "\n";
                 }
 
                 std::cout << "\n\n********** Clases **********\n \n";
-                std::vector<Clase> clases = obtenerClasesDeLaBaseDeDatos();
+                std::vector<Clase> clases = baseDatos.obtenerTodoLosClases();
                 for (const Clase& clase : clases) {
                     std::cout << clase.obtenerTema() << "\n";
                 }
 
                 std::cout << "\n\n********** Apuntes **********\n \n";
-                std::vector<Apunte> apuntes = obtenerApuntesDeLaBaseDeDatos();
+                std::vector<Apunte> apuntes = baseDatos.obtenerTodoLosApuntes();
                 for (const Apunte& apunte : apuntes) {
                     std::cout << apunte.obtenerContenido() << "\n";
                 }
 
                 std::cout << "\n\n********** Comentarios **********\n \n";
-                std::vector<Comentario> comentarios = obtenerComentariosDeLaBaseDeDatos();
+                std::vector<Comentario> comentarios = baseDatos.obtenerTodoLosComentarios();
                 for (const Comentario& comentario : comentarios) {
                     std::cout << comentario.obtenerContenido() << "\n";
                 }
@@ -306,3 +302,4 @@ int main(int argc, char* argv[])
 
     return 0;
 }
+

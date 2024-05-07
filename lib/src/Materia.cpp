@@ -1,13 +1,14 @@
 #include "Materia.hpp"
 #include "Periodo.hpp"
 #include "Clase.hpp" 
+#include "Utilidades.hpp" 
 
 // Constructor
 Materia::Materia( Periodo* periodo, const std::string& descripcion,
         const std::vector<std::string>& profesores, const std::string& nombre,
         const std::vector<Clase*>& clases, bool periodoActivo)
     :  periodo(periodo), Descripcion(descripcion), Profesores(profesores),
-      Nombre(nombre), Clases(clases), PeriodoActivo(periodoActivo) {}
+      Nombre(nombre), Clases(clases), PeriodoActivo(periodoActivo) {ID = Utilidades::generarId(this->toString());}
 Materia::Materia(){}
 // Métodos de acceso (getters)
 std::string Materia::obtenerID() const {
