@@ -24,6 +24,7 @@ LOCAL_SRC_FILES := \
     ../lib/src/Clase.cpp \
     ../lib/src/Comentario.cpp \
     ../lib/src/ManejoSqlite.cpp \
+    ../lib/src/Mecha.cpp \
     ../lib/src/Materia.cpp \
     ../lib/src/NodoFuego.cpp \
     ../lib/src/NodoPadre.cpp \

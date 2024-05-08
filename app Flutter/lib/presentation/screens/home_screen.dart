@@ -9,7 +9,7 @@ class HomeScreen extends StatelessWidget {
   Widget build(BuildContext context) {
     final Size size =MediaQuery.of(context).size;
       Mecha mecha = Mecha();
-      mecha.createUsuarioInstanceAndSetName('elias');
+      mecha.callFuncina('FUNCIONA desde Flutter =D');
     return Scaffold(
       appBar: AppBar(
         actions: [ Padding(
