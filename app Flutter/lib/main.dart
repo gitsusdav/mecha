@@ -4,6 +4,7 @@ import 'package:mecha_app/presentation/provider/riverpod_provider.dart';
 import 'package:mecha_app/presentation/screens/home_screen.dart';
 
 void main() {
+
   runApp(const ProviderScope(child:  MyApp()));
 }
 

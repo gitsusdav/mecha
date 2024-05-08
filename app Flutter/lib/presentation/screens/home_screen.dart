@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mecha_app/config/codigo_cpp.dart';
 import 'package:mecha_app/presentation/widgets/menu_lateral.dart';
 
 class HomeScreen extends StatelessWidget {
@@ -7,6 +8,8 @@ class HomeScreen extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     final Size size =MediaQuery.of(context).size;
+      Mecha mecha = Mecha();
+      mecha.createUsuarioInstanceAndSetName('elias');
     return Scaffold(
       appBar: AppBar(
         actions: [ Padding(
