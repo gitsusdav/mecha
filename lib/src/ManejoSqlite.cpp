@@ -329,6 +329,9 @@ int ManejoSqlite::insertarClase(const Clase& clase) {
     sqlite3_bind_text(stmt, 4, Utilidades::crearFecha(clase.obtenerFecha()).c_str(), -1, SQLITE_TRANSIENT);
     sqlite3_bind_text(stmt, 6, clase.obtenerTema().c_str(), -1, SQLITE_TRANSIENT);
 
+    sqlite3_int64 idUsuarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
+    int idUsuario = static_cast<int>(idUsuarioInsertado);
+
     resultado = sqlite3_step(stmt);
     if (resultado != SQLITE_DONE) {
         return -1;
@@ -908,3 +911,4 @@ Usuario ManejoSqlite::obtenerUsuario(std::string usuarioID) {
 
     return usuario;
 }
+

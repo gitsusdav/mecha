@@ -124,7 +124,7 @@ int main(int argc, char* argv[])
         // hijos de usuario que son la lista de peridodo se agrega a la tabla hash donde la lleve es el path y el valor la lista de hijos
         // asigna el perdio , apunte
         // usuario.asignarPeriodos(std::vector<Periodo *>);
-        baseDatos.insertarUsuario(usuario);
+        baseDatos.insertarUsuario(usuario); //!!!
         baseDatos.insertarCredencialUsuario(usuario);
        // guardarUsuarioEnLaBaseDeDatos(usuario, baseDatos);  
 
@@ -195,12 +195,14 @@ int main(int argc, char* argv[])
                 std::cout << "Ingrese la descripción de la materia: ";
                 std::getline(std::cin, descripcionMateria);
                 Materia materia(nullptr, descripcionMateria, {}, nombreMateria, {}, true);
-                guardarMateriaEnLaBaseDeDatos(materia);
+                baseDatos.insertarMateria(materia);
+
                 /*baseDatos.insertarMateria(materia);
                 Materia * arbolMateria = &materia;
                 BaseMecha * controlMateria = arbolMateria;
                 NodoPadre * nodoMateria = new NodoPadre(controlMateria,controlMateria->obtenerID());
                 nodoMateria->asignarPadre(rootTreeFather);*/
+                
                 break;
             }
             case 3: {
@@ -213,7 +215,7 @@ int main(int argc, char* argv[])
                 std::cout << "Ingrese el tema de la clase: ";
                 std::getline(std::cin, tema);
                 Clase clase(idMateria, descripcionClase, {}, tema);
-                guardarClaseEnLaBaseDeDatos(clase);
+                baseDatos.insertarClase(clase);
                 break;
             }
             case 4: {
@@ -226,7 +228,7 @@ int main(int argc, char* argv[])
                 std::cin >> popularidad;
                 std::cin.ignore();  
                 Apunte apunte(&usuario, contenido, {}, popularidad);
-                guardarApunteEnLaBaseDeDatos(apunte);
+                baseDatos.insertarApunte(apunte);
                 break;
             }
             case 5: {
@@ -235,12 +237,13 @@ int main(int argc, char* argv[])
                 std::cout << "Añade un nuevo comentario: ";
                 std::getline(std::cin, contenidoComentario);
                 Comentario comentario(&usuario, contenidoComentario, {});
-                guardarComentarioEnLaBaseDeDatos(comentario);
+                baseDatos.insertarComentario(comentario);
                 break;
             }
             case 6: {
                 std::cout << "\n\n********** Usuario **********\n \n";  
                 std::vector<Usuario> usuarios = obtenerUsuariosDeLaBaseDeDatos();
+                //std::vector<Usuario> usuarios = baseDatos.insertarUsuario(usuario);
                 for (const Usuario& usuario : usuarios) {
                     std::cout << "Nombre: " << usuario.obtenerNombre() << "\n";
                     std::cout << "Rol: ";
