@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:mecha_app/presentation/pantallas/detalle_clase.dart';
 import 'package:mecha_app/presentation/pantallas/historial_periodo.dart';
 import 'package:mecha_app/presentation/widgets/avatar_usuario.dart';
 import 'package:mecha_app/presentation/widgets/boton_primario.dart';
@@ -21,7 +22,9 @@ class PantallaDetalleMateria extends StatelessWidget {
         ),// Icons.manage_search_outlined
         actions: [Padding(
           padding: const EdgeInsets.only(right: 8.0),
-          child: IconButton(onPressed: (){}, icon:const Icon(Icons.edit, color: Colors.white,)),
+          child: IconButton(onPressed: (){
+            
+          }, icon:const Icon(Icons.edit, color: Colors.white,)),
         )]
       ),
       body:  Padding(
@@ -109,7 +112,7 @@ class PantallaDetalleMateria extends StatelessWidget {
                     // Construye cada elemento del grid
                     return GestureDetector(
                       onTap: (){
-                        Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaDetalleMateria(materia: 'Materia $index'),));
+                        Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaDetalleClase(clase: '${index+5}-05-2024'),));
                       },
                       child: Container(
                         decoration: BoxDecoration(borderRadius: BorderRadius.circular(20),

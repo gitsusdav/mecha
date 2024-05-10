@@ -12,4 +12,15 @@ final entradaClave = StateProvider<TextEditingController>((ref) => TextEditingCo
 final entradaNombre = StateProvider<TextEditingController>((ref) => TextEditingController());
 final esVisibleClave = StateProvider<bool>((ref) => false);
 
- 
+final animacionInicio = StateProvider<bool>((ref) => false);
+final animacionRegistro = StateProvider<bool>((ref) => false);
+final animacionCargando = StateProvider<bool>((ref) => false);
+
+// Estados Pantalla Base
+final selectionTarjeta = StateProvider<String>((ref) => '');
+final animacionTarjeta = StateProvider<bool>((ref) => false);
+final contenidoTarjeta = StateProvider<Widget>((ref) => const SizedBox());
+
+// Estados Pantalla Clase
+final animacionTarjetaApunte = StateProvider<bool>((ref) => false);
+final animacionComentariosApunte = StateProvider<bool>((ref) => false);

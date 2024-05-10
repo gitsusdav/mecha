@@ -5,17 +5,14 @@ class TemaClaro {
   static final ThemeData tema = ThemeData(
 
     colorScheme: ColorScheme.fromSwatch(
-      accentColor: primary,
-      primarySwatch: Colors.blue,
-
       
     ).copyWith(
-      primary: Colors.amber,
+      primary: Colors.purple,
       secondary: const Color.fromARGB(255, 45, 117, 47), // Materia
       tertiary: const Color.fromARGB(255, 250, 124, 40), // Periodo
       inversePrimary: const Color.fromARGB(255, 45, 117, 47), // Materia
       primaryContainer: const Color.fromARGB(255, 45, 117, 47), // Materia
-      onPrimary :const Color.fromARGB(255, 45, 117, 47), // Materia
+      onPrimary : const Color.fromARGB(255, 40, 133, 170), // Materia
       tertiaryContainer:  const Color.fromARGB(255, 45, 117, 47), // Materia
     ),
     primaryColor: primary,

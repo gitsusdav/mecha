@@ -18,7 +18,12 @@ class PantallaSelecionInstitucion extends StatelessWidget {
         ),
         actions: [Padding(
           padding: const EdgeInsets.only(right: 8.0),
-          child: IconButton(onPressed: (){}, icon:const Icon(Icons.add_home_outlined, color: Colors.white,)),
+          child: IconButton(onPressed: (){
+            showDialog(context: context, builder: (context) => Dialog(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(children: [Text('Puedes agregar una instituto pero solo sera visible para ti, si lo creas y compartes el codigo del instituto con 20 de tus compañeros ya estara disponible en esta lista de selecion')],),
+            ),),);
+          }, icon:const Icon(Icons.add_home_outlined, color: Colors.white,)),
         )]
       ),
       body:  Padding(

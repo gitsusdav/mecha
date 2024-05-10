@@ -1,5 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mecha_app/presentation/pantallas/configuracion_del_usuario.dart';
 import 'package:mecha_app/presentation/pantallas/inicio_sesion.dart';
 import 'package:mecha_app/presentation/pantallas/selecion_institucion.dart';
 import 'package:mecha_app/presentation/pantallas/todas_las_materias.dart';
@@ -22,10 +24,15 @@ class MenuLateral extends ConsumerWidget {
           children: [
         
           const SizedBox(height: 40),
-          Container(
-            height: 100,
-            width: 100,
-            decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.amber),
+          GestureDetector(
+            onTap: (){
+              Navigator.push(context, MaterialPageRoute(builder: (context) => PantallaConfiguracionDelUsuario(),));
+            },
+            child: Container(
+              height: 100,
+              width: 100,
+              decoration: const BoxDecoration(shape: BoxShape.circle, color: Colors.amber),
+            ),
           ),
           const SizedBox(height: 20),
           const Text('Nombre del usuario', style: TextStyle(fontSize: 20, color: Colors.white),),
@@ -38,7 +45,7 @@ class MenuLateral extends ConsumerWidget {
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaSelecionInstitucion(),));
               },
-              child:const ListTile(leading:  Icon(Icons.poll_rounded,color: Colors.white, size: 40,),title:  Text('Cambiar de Instituto',style: TextStyle(color:Colors.white, fontSize: 20),)),
+              child:const ListTile(leading:  Icon(Icons.business_rounded,color: Colors.white, size: 40,),title:  Text('Cambiar de Instituto',style: TextStyle(color:Colors.white, fontSize: 20),)),
             ),
           ),
           Padding(
@@ -48,7 +55,7 @@ class MenuLateral extends ConsumerWidget {
               onPressed: (){
                 Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaTodasLasMaterias(),));
               },
-              child:const ListTile(leading:  Icon(Icons.poll_rounded,color: Colors.white, size: 40,),title:  Text('Todas tus materias',style: TextStyle(color:Colors.white, fontSize: 20),)),
+              child:const ListTile(leading:  Icon(Icons.auto_stories_rounded,color: Colors.white, size: 40,),title:  Text('Todas mis materias',style: TextStyle(color:Colors.white, fontSize: 20),)),
             ),
           ),
           Padding(
@@ -59,7 +66,7 @@ class MenuLateral extends ConsumerWidget {
               onPressed: (){
                 
               },
-              child:const ListTile(leading:  Icon(Icons.chat,color: Colors.white, size: 40,),title:  Text('Historial de materias',style: TextStyle(color:Colors.white, fontSize: 20),)),
+              child:const ListTile(leading:  Icon(Icons.account_tree_rounded,color: Colors.white, size: 40,),title:  Text('Registro de periodos',style: TextStyle(color:Colors.white, fontSize: 20),)),
             ),
           ),
           Padding(
@@ -70,7 +77,7 @@ class MenuLateral extends ConsumerWidget {
               onPressed: (){
          
               },
-              child:const ListTile(leading:  Icon(Icons.search,color: Colors.white, size: 40,),title:  Text('Buscar apuntes',style: TextStyle(color:Colors.white, fontSize: 20),)),
+              child:const ListTile(leading:  Icon(Icons.search,color: Colors.white, size: 40,),title:  Text('Buscar tema',style: TextStyle(color:Colors.white, fontSize: 20),)),
             ),
           ),
           Padding(
@@ -81,7 +88,7 @@ class MenuLateral extends ConsumerWidget {
               onPressed: (){
             
               },
-              child:const ListTile(leading:  Icon(Icons.task,color: Colors.white, size: 40,),title:  Text('Todas tus evaluaciones',style: TextStyle(color:Colors.white, fontSize: 20),)),
+              child:const ListTile(leading:  Icon(Icons.task,color: Colors.white, size: 40,),title:  Text('Todas mis evaluaciones',style: TextStyle(color:Colors.white, fontSize: 20),)),
             ),
           ),
         

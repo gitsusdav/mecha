@@ -14,11 +14,12 @@ dependencies:
   cupertino_icons: ^1.0.6
   flutter_riverpod: ^2.5.1
   ffi: ^2.1.2
-  animate_do: 2.1.0
+  animate_do: ^3.3.4
   firebase_core: ^2.31.0
   firebase_auth: ^4.19.5
   flutter_launcher_icons: ^0.13.1
   google_sign_in: ^6.2.1
+  flutter_swiper_view: ^1.1.8
 
 
 dev_dependencies:

@@ -2,6 +2,7 @@ import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mecha_app/presentation/pantallas/base.dart';
+import 'package:mecha_app/presentation/pantallas/recorrigo_nuevo_usuario.dart';
 import 'package:mecha_app/presentation/provider/gestor_de_estado_riverpod.dart';
 import 'package:mecha_app/presentation/widgets/boton_primario.dart';
 import 'package:mecha_app/presentation/widgets/cargando.dart';
@@ -84,6 +85,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                 bottom: 0,
                 child: FadeInUpBig(
                   animate: false,
+                  manualTrigger: true,
                   controller: (animacionControl) {
                     animacionInicio = animacionControl;
                   },
@@ -143,7 +145,8 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                                 color: Colors.black,
                                 splashColor: Colors.white,
                                 onPressed: () async {
-                                 await iniciar( entradaCorreoControlador.text, entradaClaveControlador.text);
+                                  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const PantallaRecorridoNuevoUsuario(),));
+                                // await iniciar( entradaCorreoControlador.text, entradaClaveControlador.text);
                                 },
                                 child: const Text(
                                   'Entrar',
@@ -195,6 +198,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                 bottom: 0,
                 child: FadeInUpBig(
                   animate: false,
+                  manualTrigger: true,
                   controller: (animacionControl) {
                     animacionRegistro = animacionControl;
                   },
@@ -316,6 +320,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
               ),
               ZoomIn(
                 animate: false,
+                manualTrigger: true,
                 controller: (controller) {
                   animacionCargando = controller;
                 },

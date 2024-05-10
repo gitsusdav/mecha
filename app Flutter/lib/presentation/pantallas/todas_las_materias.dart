@@ -18,7 +18,13 @@ class PantallaTodasLasMaterias extends StatelessWidget {
         ),
         actions: [Padding(
           padding: const EdgeInsets.only(right: 8.0),
-          child: IconButton(onPressed: (){}, icon:const Icon(Icons.dashboard_customize_rounded, color: Colors.white,)),
+          child: IconButton(onPressed: (){
+            showDialog(context: context, builder: (context) => Dialog(child: Padding(
+              padding: const EdgeInsets.all(8.0),
+              child: Column(children: [Text('Puedes agregar una materia para el periodo actual o puedes selecionar una de esta materias que otros compañeros estan cursando en este instituto en este perido')],),
+            ),),);
+
+          }, icon:const Icon(Icons.dashboard_customize_rounded, color: Colors.white,)),
         )]
       ),
       body:  Padding(
