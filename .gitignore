@@ -8,6 +8,8 @@
 /app Flutter/.idea
 DatosCalientesMecha.db
 
+/app Flutter/android/app/google-services.json
+/app Flutter/lib/firebase_options.dart
 # Miscellaneous
 /app Flutter/*.class
 /app Flutter/*.log

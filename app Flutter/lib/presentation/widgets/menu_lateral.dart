@@ -1,5 +1,9 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
+import 'package:mecha_app/presentation/pantallas/inicio_sesion.dart';
+import 'package:mecha_app/presentation/pantallas/selecion_institucion.dart';
+import 'package:mecha_app/presentation/pantallas/todas_las_materias.dart';
+import 'package:mecha_app/utilidades/iniciar_con_google.dart';
 
 class MenuLateral extends ConsumerWidget {
   const MenuLateral({
@@ -27,12 +31,22 @@ class MenuLateral extends ConsumerWidget {
           const Text('Nombre del usuario', style: TextStyle(fontSize: 20, color: Colors.white),),
           const SizedBox(height: 20),
           const Divider(), 
-          Padding(
+           Padding(
             padding: const EdgeInsets.only(left:10.0 , right: 10.0),
             child: MaterialButton(
               color: Theme.of(context).primaryColor,
               onPressed: (){
-                
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaSelecionInstitucion(),));
+              },
+              child:const ListTile(leading:  Icon(Icons.poll_rounded,color: Colors.white, size: 40,),title:  Text('Cambiar de Instituto',style: TextStyle(color:Colors.white, fontSize: 20),)),
+            ),
+          ),
+          Padding(
+            padding: const EdgeInsets.only(left:10.0 ,top:10, right: 10.0),
+            child: MaterialButton(
+              color: Theme.of(context).primaryColor,
+              onPressed: (){
+                Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaTodasLasMaterias(),));
               },
               child:const ListTile(leading:  Icon(Icons.poll_rounded,color: Colors.white, size: 40,),title:  Text('Todas tus materias',style: TextStyle(color:Colors.white, fontSize: 20),)),
             ),
@@ -75,8 +89,11 @@ class MenuLateral extends ConsumerWidget {
             padding: const EdgeInsets.only(left: 10.0, top: 10),
             child: MaterialButton(
         color: Theme.of(context).primaryColor,
-        onPressed: () {
-         
+        onPressed: ()async {
+          await cerrarSesion();
+          if(context.mounted){
+            Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PantallaInicioSesion(),));
+          }
         },
         child: const Text('Cerrar Sesión',style:  TextStyle(color:Colors.white, fontSize: 20), )
           ),
