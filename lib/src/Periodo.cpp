@@ -1,15 +1,22 @@
 #include "Periodo.hpp"
-#include "Materia.hpp"
+#include "ManejoSqlite.hpp"
 #include "Utilidades.hpp"
+#include "Materia.hpp"
 
 // Constructor
-Periodo::Periodo( const std::string& nombre, const std::string& descripcion,
-        const std::tm& fechaInicio, const std::tm& fechaFin )
+Periodo::Periodo(const std::string& nombre, const std::string& descripcion,
+                 const std::tm& fechaInicio, const std::tm& fechaFin)
     : Nombre(nombre), Descripcion(descripcion), FechaInicio(fechaInicio),
       FechaFin(fechaFin) {
-         ID = Utilidades::generarId(this->toString());
-      }
-Periodo::Periodo(){}
+    ID = Utilidades::generarId(this->toString());
+}
+
+Periodo::Periodo(const std::string& nombre, const std::string& descripcion)
+    : Nombre(nombre), Descripcion(descripcion) {
+    ID = Utilidades::generarId(this->toString());
+}
+
+Periodo::Periodo() {}
 // Métodos de acceso (getters)
 std::string Periodo::obtenerID() const {
     return ID;
@@ -31,7 +38,7 @@ std::tm Periodo::obtenerFechaFin() const {
     return FechaFin;
 }
 
-std::vector<Materia *> Periodo::obtenerMaterias() const {
+std::vector<Materia*> Periodo::obtenerMaterias() const {
     return Materias;
 }
 
@@ -56,7 +63,7 @@ void Periodo::asignarFechaFin(const std::tm& fechaFin) {
     FechaFin = fechaFin;
 }
 
-void Periodo::asignarMaterias(const std::vector<Materia *>& materias) {
+void Periodo::asignarMaterias(const std::vector<Materia*>& materias) {
     Materias = materias;
 }
 
@@ -66,6 +73,6 @@ void Periodo::agregarMateria(Materia* materia) {
 
 std::string Periodo::toString() const {
     std::ostringstream oss;
-    oss << Nombre  << " " << Descripcion  << " " <<  std::put_time(&FechaInicio, "%Y-%m-%d %H:%M:%S");
+    oss << Nombre << " " << Descripcion << " " << std::put_time(&FechaInicio, "%Y-%m-%d %H:%M:%S");
     return oss.str();
-} 
+}

@@ -12,6 +12,7 @@
 #include "TablaHash.hpp"
 #include "BaseMecha.hpp"
 #include "ManejoSqlite.hpp"
+#include <limits>
 
 
 /*
@@ -75,7 +76,7 @@ std::vector<Clase> obtenerClasesDeLaBaseDeDatos(){
     return {};
 }
 std::vector<Apunte> obtenerApuntesDeLaBaseDeDatos(){
-    return {};
+    return {}; 
 }
 std::vector<Comentario> obtenerComentariosDeLaBaseDeDatos(){
     return {};
@@ -224,9 +225,23 @@ int main(int argc, char* argv[])
                 std::cout << "\n\n********** Apunte **********\n \n";
                 std::cout << "Añade un nuevo apunte: ";
                 std::getline(std::cin, contenido);
-                std::cout << "Ingrese la popularidad del apunte: ";
-                std::cin >> popularidad;
-                std::cin.ignore();  
+
+                bool entradaValida = false;
+                do {
+                    std::cout << "Ingrese la popularidad del apunte: ";
+                    std::string entradaPopularidad;
+                    std::getline(std::cin, entradaPopularidad);
+
+                    try {
+                        popularidad = std::stoi(entradaPopularidad);
+                        entradaValida = true;
+                    } catch (const std::invalid_argument&) {
+                        std::cout << "La popularidad debe ser un número entero. Inténtalo de nuevo.\n";
+                    } catch (const std::out_of_range&) {
+                        std::cout << "La popularidad es demasiado grande. Inténtalo de nuevo.\n";
+                    }
+                } while (!entradaValida);
+
                 Apunte apunte(&usuario, contenido, {}, popularidad);
                 baseDatos.insertarApunte(apunte);
                 break;
