@@ -843,3 +843,68 @@ int ManejoSqlite::insertarApunteComentario(int apunteID, int comentarioID) {
     sqlite3_int64 idApunteComentarioInsertado = sqlite3_last_insert_rowid(baseDeDatos);
     return static_cast<int>(idApunteComentarioInsertado);
 }
+
+std::string ManejoSqlite::obtenerIngresoUsuario( std::string correo, std::string clave){
+    std::string query = "SELECT id_Usuario FROM Usuario_Credenciales WHERE Correo = ? AND Clave = ?;";
+    sqlite3_stmt* stmt;
+    int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
+
+    if (resultado != SQLITE_OK) {
+        return "0";
+    }
+
+    sqlite3_bind_text(stmt, 1, correo.c_str(), -1, SQLITE_TRANSIENT);
+    sqlite3_bind_text(stmt, 2, clave.c_str(), -1, SQLITE_TRANSIENT);
+
+    resultado = sqlite3_step(stmt);
+    if (resultado == SQLITE_ROW) {
+        std::string idUsuario = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 0));
+        sqlite3_finalize(stmt);
+        return idUsuario;
+    } else {
+        sqlite3_finalize(stmt);
+        return std::string("0");
+    }
+}
+
+Usuario ManejoSqlite::obtenerUsuario(std::string usuarioID) {
+    Usuario usuario;
+    std::string query = "SELECT * FROM Usuario WHERE id_Usuario = ?;";
+    sqlite3_stmt* stmt;
+    int resultado = sqlite3_prepare_v2(baseDeDatos, query.c_str(), -1, &stmt, nullptr);
+
+    if (resultado != SQLITE_OK) {
+        return usuario;
+    }
+
+    sqlite3_bind_text(stmt, 1, usuarioID.c_str(), -1, SQLITE_TRANSIENT);
+
+    resultado = sqlite3_step(stmt);
+    if (resultado == SQLITE_ROW) {
+        const char* id = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 1));
+        const char* nombre = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 2));
+        const char* descripcion = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 3));
+        const int popularidad = sqlite3_column_int(stmt, 4);
+        const char* correo = reinterpret_cast<const char*>(sqlite3_column_text(stmt, 5));
+
+        if (id) {
+            usuario.asignarID(id);
+        } 
+        if (nombre) {
+            usuario.asignarNombre(nombre);
+        } 
+        if (descripcion) {
+            usuario.asignarDescripcion(descripcion);
+        }
+        if (popularidad) {
+            usuario.asignarPopularidad(popularidad);
+        } 
+        if (correo) {
+            usuario.asignarCorreo(correo);
+        } 
+    }
+
+    sqlite3_finalize(stmt);
+
+    return usuario;
+}
