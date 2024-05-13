@@ -1,7 +1,10 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mecha_app/configuraciones/codigo_cpp.dart';
+import 'package:mecha_app/presentation/dibujables/barra_de_navegacion.dart';
 import 'package:mecha_app/presentation/pantallas/actualizaciones.dart';
 import 'package:mecha_app/presentation/provider/gestor_de_estado_riverpod.dart';
 import 'package:mecha_app/presentation/widgets/menu_lateral.dart';
@@ -41,6 +44,7 @@ class PantallaBase extends ConsumerWidget {
         padding: const EdgeInsets.symmetric(vertical: 40.0),
         child: MenuLateral(size: size,),
       ),
+
       body: Stack(
         children: [
           Column(children: [
@@ -175,7 +179,47 @@ class PantallaBase extends ConsumerWidget {
             },),
           )
         ],
-      )
+      ),
+            resizeToAvoidBottomInset: false,
+     floatingActionButtonLocation: FloatingActionButtonLocation.centerDocked,
+      floatingActionButton: Stack(
+        children: [
+          Positioned(
+            left: 0,
+            right: 0,
+            bottom: 0,
+            child: SizedBox(
+              height: 85,
+              width: double.infinity,
+              child: CustomPaint(
+                  size: Size.infinite, painter: BarraNavegacion(color: Theme.of(context).secondaryHeaderColor)),
+            ),
+          ),
+          Positioned(
+            bottom: 50,
+            left: size.width / 2 - 29,
+            child: GestureDetector(
+              onTap: (){
+                print('Crean apunte');
+              },
+              child: Container(
+                    height: 60.0,
+                    width: 58.0,
+                    decoration: const BoxDecoration(
+                        shape: BoxShape.circle, color: Colors.blue),
+                    child: const Center(
+                      child: Icon(
+                              Icons.note_add,
+                              size: 40,
+                              color: Colors.white,
+                            )
+                          
+                    ),
+                  ),
+            ),
+          ),
+        ],
+      ),
     );
   }
 }

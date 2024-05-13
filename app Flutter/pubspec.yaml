@@ -21,6 +21,7 @@ dependencies:
   google_sign_in: ^6.2.1
   flutter_swiper_view: ^1.1.8
   cloud_firestore: ^4.17.3
+  flutter_native_splash: ^2.4.0
 
 dev_dependencies:
   flutter_test:
@@ -45,6 +46,11 @@ flutter_launcher_icons:
   macos:
     generate: true
     image_path: "assets/mecha-logo.jpg"
+
+flutter_native_splash:
+  background_image: assets/splash.jpg
+  android: true
+  ios: true
 
 flutter:
 

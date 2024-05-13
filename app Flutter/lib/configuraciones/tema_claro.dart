@@ -16,9 +16,11 @@ class TemaClaro {
       tertiaryContainer:  const Color.fromARGB(255, 45, 117, 47), // Materia
     ),
     primaryColor: primary,
+    dialogBackgroundColor: Colors.white,
     canvasColor:const Color.fromARGB(255, 45, 117, 47), // Materia
     secondaryHeaderColor: const Color.fromARGB(255, 255, 255, 255),
     indicatorColor: Colors.black,
+    cardColor: Colors.grey,
     iconTheme: const IconThemeData(color: Colors.white),
     bottomNavigationBarTheme: const BottomNavigationBarThemeData(
         backgroundColor: Colors.blue, unselectedItemColor: Colors.white),

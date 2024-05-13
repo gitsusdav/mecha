@@ -95,6 +95,9 @@ class PantallaRecorridoNuevoUsuario extends StatelessWidget {
              ),
            MaterialButton(
             color: Theme.of(context).primaryColor,
+            shape: RoundedRectangleBorder(
+              borderRadius: BorderRadius.circular(50), 
+            ),
             onPressed: (){
               Navigator.pushReplacement(context, MaterialPageRoute(builder: (context) => const PantallaConfiguracionInicial() ,));
            },

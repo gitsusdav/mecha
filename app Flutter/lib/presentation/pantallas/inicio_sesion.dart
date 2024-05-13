@@ -7,8 +7,8 @@ import 'package:mecha_app/presentation/provider/gestor_de_estado_riverpod.dart';
 import 'package:mecha_app/presentation/widgets/boton_primario.dart';
 import 'package:mecha_app/presentation/widgets/cargando.dart';
 import 'package:mecha_app/presentation/widgets/entrada_texto.dart';
-import 'package:mecha_app/utilidades/iniciar_clave_correo.dart';
-import 'package:mecha_app/utilidades/iniciar_con_google.dart';
+import 'package:mecha_app/controladores/iniciar_clave_correo.dart';
+import 'package:mecha_app/controladores/iniciar_con_google.dart';
 
 class PantallaInicioSesion extends ConsumerStatefulWidget {
   const PantallaInicioSesion({super.key});

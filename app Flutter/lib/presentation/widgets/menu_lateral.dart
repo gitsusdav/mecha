@@ -5,7 +5,7 @@ import 'package:mecha_app/presentation/pantallas/configuracion_del_usuario.dart'
 import 'package:mecha_app/presentation/pantallas/inicio_sesion.dart';
 import 'package:mecha_app/presentation/pantallas/selecion_institucion.dart';
 import 'package:mecha_app/presentation/pantallas/todas_las_materias.dart';
-import 'package:mecha_app/utilidades/iniciar_con_google.dart';
+import 'package:mecha_app/controladores/iniciar_con_google.dart';
 
 class MenuLateral extends ConsumerWidget {
   const MenuLateral({
