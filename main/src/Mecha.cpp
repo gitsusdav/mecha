@@ -1,5 +1,7 @@
 #include <iostream>
 #include <vector>
+#include <ctime>
+#include <chrono>
 #include "Utilidades.hpp"
 #include "Usuario.hpp"
 #include "Periodo.hpp"
@@ -12,7 +14,6 @@
 #include "TablaHash.hpp"
 #include "BaseMecha.hpp"
 #include "ManejoSqlite.hpp"
-#include <limits>
 
 
 /*
@@ -76,7 +77,7 @@ std::vector<Clase> obtenerClasesDeLaBaseDeDatos(){
     return {};
 }
 std::vector<Apunte> obtenerApuntesDeLaBaseDeDatos(){
-    return {}; 
+    return {};
 }
 std::vector<Comentario> obtenerComentariosDeLaBaseDeDatos(){
     return {};
@@ -179,7 +180,14 @@ int main(int argc, char* argv[])
                 std::getline(std::cin, nombrePeriodo);
                 std::cout << "Ingrese la descripción del periodo: ";
                 std::getline(std::cin, descripcionPeriodo);
-                Periodo periodo(nombrePeriodo, descripcionPeriodo, {}, {});
+
+                auto now = std::chrono::system_clock::now();
+
+                std::time_t time = std::chrono::system_clock::to_time_t(now);
+
+                std::tm* local_time = std::localtime(&time);
+
+                Periodo periodo(nombrePeriodo, descripcionPeriodo, *local_time, *local_time);
                 //guardarPeriodoEnLaBaseDeDatos(periodo); // baseDatos 
                 baseDatos.insertarPeriodo(periodo);
                 Periodo * arbolPeriodo = &periodo;
@@ -225,23 +233,9 @@ int main(int argc, char* argv[])
                 std::cout << "\n\n********** Apunte **********\n \n";
                 std::cout << "Añade un nuevo apunte: ";
                 std::getline(std::cin, contenido);
-
-                bool entradaValida = false;
-                do {
-                    std::cout << "Ingrese la popularidad del apunte: ";
-                    std::string entradaPopularidad;
-                    std::getline(std::cin, entradaPopularidad);
-
-                    try {
-                        popularidad = std::stoi(entradaPopularidad);
-                        entradaValida = true;
-                    } catch (const std::invalid_argument&) {
-                        std::cout << "La popularidad debe ser un número entero. Inténtalo de nuevo.\n";
-                    } catch (const std::out_of_range&) {
-                        std::cout << "La popularidad es demasiado grande. Inténtalo de nuevo.\n";
-                    }
-                } while (!entradaValida);
-
+                std::cout << "Ingrese la popularidad del apunte: ";
+                std::cin >> popularidad;
+                std::cin.ignore();  
                 Apunte apunte(&usuario, contenido, {}, popularidad);
                 baseDatos.insertarApunte(apunte);
                 break;
