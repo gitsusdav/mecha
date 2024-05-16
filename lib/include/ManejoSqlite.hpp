@@ -42,5 +42,6 @@ public:
     int insertarClaseApunte(int claseID, int apunteID); 
     int insertarRecursoClase(int claseID, const std::string& recurso);
     int insertarApunteComentario(int apunteID, int comentarioID);
-
+    std::string obtenerIngresoUsuario( std::string correo, std::string clave);
+    Usuario obtenerUsuario(std::string usuarioID);
 };
