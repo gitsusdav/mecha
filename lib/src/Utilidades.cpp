@@ -4,15 +4,16 @@
 #include <cctype>
 #include <chrono>
 #include <ctime>
-#include <openssl/evp.h>
+#include <openssl/evp.h> //funcion a quitar
 #include <vector>
 #include <iostream>
 #include <sqlite3.h>
+#include <functional>
 
 #include "Utilidades.hpp"
 
 
-std::string Utilidades::generarId(const std::string& claseToString) //sha256
+std::string Utilidades::generarId(const std::string& claseToString)
 {
     auto now = std::chrono::system_clock::now();
     auto now_ms = std::chrono::time_point_cast<std::chrono::milliseconds>(now);
@@ -21,26 +22,15 @@ std::string Utilidades::generarId(const std::string& claseToString) //sha256
     std::stringstream ss;
     ss << claseToString << value;
 
-    EVP_MD_CTX* mdctx = EVP_MD_CTX_new();
+    std::hash<std::string> str_hash;
+    auto hashed_value = str_hash(ss.str());
 
-    EVP_DigestInit_ex(mdctx, EVP_sha256(), NULL);
-
-    EVP_DigestUpdate(mdctx, ss.str().c_str(), ss.str().size());
-
-    std::vector<unsigned char> hash(EVP_MD_size(EVP_sha256()));
-
-    unsigned int len;
-    EVP_DigestFinal_ex(mdctx, hash.data(), &len);
-
-    EVP_MD_CTX_free(mdctx); // Limpiar
-
-    std::stringstream hashStream;   // Se convierte el hash a una cadena hexadecimal
-    for(auto byte : hash) {
-        hashStream << std::hex << std::setw(2) << std::setfill('0') << static_cast<int>(byte);
-    }
+    std::stringstream hashStream;
+    hashStream << std::hex << std::setw(16) << std::setfill('0') << hashed_value;
 
     return hashStream.str();
 }
+
 
 std::string Utilidades::crearFecha(int year, int month, int day) {
     std::ostringstream oss;
