@@ -1,5 +1,4 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mecha_app/presentation/pantallas/configuracion_del_usuario.dart';
 import 'package:mecha_app/presentation/pantallas/inicio_sesion.dart';

@@ -1,7 +1,9 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mecha_app/controladores/leer_escribir_materias.dart';
-import 'package:mecha_app/modelos/Materia.dart';
+import 'package:mecha_app/modelos/materia_mecha.dart';
 import 'package:mecha_app/presentation/pantallas/base.dart';
 import 'package:mecha_app/presentation/provider/gestor_de_estado_riverpod.dart';
 import 'package:mecha_app/presentation/widgets/entrada_texto.dart';
@@ -52,7 +54,7 @@ class PantallaAgregarMateria extends ConsumerWidget {
                     MaterialButton(
                       color: Theme.of(context).primaryColor,
                       onPressed: (){
-                       Materia nueva = Materia(nombre: ref.watch(crearMateriaNombre).text, profesor: ref.watch(crearMateriaProfesor).text, descripcion: 'Agrega una descripción', integrantes: [ ], instituto: ref.read(instritutoSelecionado), periodo: ref.watch(periodoSelecionado));
+                       Materia nueva = Materia(clases: [], nombre: ref.watch(crearMateriaNombre).text, profesor: ref.watch(crearMateriaProfesor).text, descripcion: 'Agrega una descripción', integrantes: [ ], instituto: ref.read(instritutoSelecionado), periodo: ref.watch(periodoSelecionado));
                        agregarMateria(nueva);
                        ref.read(materiaAgregada.notifier).state = nueva;
                         Navigator.pop(context);
@@ -123,7 +125,8 @@ class PantallaAgregarMateria extends ConsumerWidget {
                                         const Icon(Icons.person)
                                        :  ClipRRect(
                                         borderRadius: BorderRadius.circular(500),
-                                        child: Image.network(materias[index].integrantes[i].imagen)));
+                                        child: Image.network(materias[index].integrantes[i].imagen,
+                                        errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, color:Colors.black) )));
                                     },),
                                   ),
                                   Expanded(child: Text(materias[index].descripcion, overflow: TextOverflow.ellipsis,)),
@@ -153,6 +156,7 @@ class PantallaAgregarMateria extends ConsumerWidget {
         MaterialButton(
           color: Theme.of(context).colorScheme.secondary,
           onPressed: materiasElegidas.isEmpty? null : (){
+            asignarMateriasUsuario(FirebaseAuth.instance.currentUser!.uid,materiasElegidas);
             Navigator.pushAndRemoveUntil(context,MaterialPageRoute(builder: (context) => const PantallaBase(),), (Route<dynamic> route) => false);
           },
           shape: RoundedRectangleBorder(
@@ -161,5 +165,12 @@ class PantallaAgregarMateria extends ConsumerWidget {
           child: Text('Continuar', style: TextStyle(fontSize: 18,color: Theme.of(context).dialogBackgroundColor),),)
       ],),
     );
+  }
+  void asignarMateriasUsuario(String usuarioID, List<Materia> materias)async{
+    final referenciaRealTime = FirebaseDatabase.instance.ref().child('usuarios').child(usuarioID).child('materiasID');
+    for (var element in materias) { 
+      await referenciaRealTime.push().set(element.id);
+    }
+    
   }
 }

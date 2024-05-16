@@ -5,12 +5,12 @@ Future<void> agregarPeriodo(Periodo periodo) async {
   await FirebaseFirestore.instance.collection('periodo').add(periodo.toMap());
 }
 
-Future<List<Periodo>> obtenerPeriodo(String instituto) async {
-  QuerySnapshot querySnapshot = await FirebaseFirestore.instance
+Stream<List<Periodo>> obtenerPeriodo(String instituto) {
+  return FirebaseFirestore.instance
       .collection('periodo')
       .where('instituto', isEqualTo: instituto)
-      .get();
-  return querySnapshot.docs
-      .map((doc) => Periodo.fromMap(doc.data() as Map<String, dynamic>))
-      .toList();
+      .snapshots()
+      .map((querySnapshot) => querySnapshot.docs
+          .map((doc) => Periodo.fromMap(doc.data() as Map<String, dynamic>))
+          .toList());
 }

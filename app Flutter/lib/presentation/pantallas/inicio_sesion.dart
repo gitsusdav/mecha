@@ -1,3 +1,5 @@
+// ignore_for_file: use_build_context_synchronously
+
 import 'package:animate_do/animate_do.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
@@ -18,9 +20,6 @@ class PantallaInicioSesion extends ConsumerStatefulWidget {
 }
 
 class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
-  late AnimationController animacionInicio;
-  late AnimationController animacionRegistro;
-  late AnimationController animacionCargando;
 
   @override
   Widget build(BuildContext context) {
@@ -60,8 +59,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
         SizedBox(height: size.height * 0.13),
                     MaterialButton(
                       onPressed: () {
-                        animacionInicio.reset();
-                        animacionInicio.forward();
+                       ref.read(animacionInicio.notifier).state=true;
                       },
                       color: Colors.white,
                       elevation: 5,
@@ -72,8 +70,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                     SizedBox(height: size.height * 0.001),
                     TextButton(
                         onPressed: () {
-                          animacionRegistro.reset();
-                          animacionRegistro.forward();
+                          ref.read(animacionRegistro.notifier).state=true;
                         },
                         child: const Text('Regístrate aquí'))
                   ],
@@ -84,11 +81,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                 right: 0,
                 bottom: 0,
                 child: FadeInUpBig(
-                  animate: false,
-                  manualTrigger: true,
-                  controller: (animacionControl) {
-                    animacionInicio = animacionControl;
-                  },
+                  animate: ref.watch(animacionInicio),
                   child: Container(
                     height: size.height * 0.78,
                     width: double.infinity,
@@ -114,7 +107,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                               height: 60,
                               shape: const CircleBorder(),
                               onPressed: () {
-                                animacionInicio.reverse();
+                                ref.read(animacionInicio.notifier).state=false;
                                 FocusScope.of(context).requestFocus(FocusNode());
                               },
                               child: const Icon(
@@ -145,8 +138,20 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                                 color: Colors.black,
                                 splashColor: Colors.white,
                                 onPressed: () async {
-                                  Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const PantallaRecorridoNuevoUsuario(),));
-                                // await iniciar( entradaCorreoControlador.text, entradaClaveControlador.text);
+                                  ref.read(animacionCargando.notifier).state = true;
+                                 bool completado = await iniciar( entradaCorreoControlador.text, entradaClaveControlador.text,ref,false,null);
+                                  if(completado){
+                                        Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const PantallaBase(),));
+                                  }else{
+                                    showDialog(context: context, builder: (context) => Dialog(
+                                      child: Padding(
+                                        padding: const EdgeInsets.only(top: 40.0, bottom: 40, left: 20,right: 20),
+                                        child: Text(ref.watch(mostrarMensaje), textAlign: TextAlign.center),
+                                      ),
+                                    ),);
+                                    ref.read(animacionCargando.notifier).state = false;
+                                  }
+                                 
                                 },
                                 child: const Text(
                                   'Entrar',
@@ -174,8 +179,8 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                               BotonPrimario(
                                 contenido:  Image.asset('assets/google_logo.png'),
                                 sePreciona: () => () {
-                                  animacionCargando.forward();
                                   inciarConGoogle(context);
+                                  ref.read(animacionCargando.notifier).state=true;
                                 }
                               ),
                               SizedBox(height: size.height * 0.050),
@@ -197,11 +202,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                 right: 0,
                 bottom: 0,
                 child: FadeInUpBig(
-                  animate: false,
-                  manualTrigger: true,
-                  controller: (animacionControl) {
-                    animacionRegistro = animacionControl;
-                  },
+                  animate:  ref.watch(animacionRegistro),
                   child: Container(
                     height: size.height * 0.78,
                     width: double.infinity,
@@ -227,7 +228,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                               height: 60,
                               shape: const CircleBorder(),
                               onPressed: () {
-                                animacionRegistro.reverse();
+                                ref.read(animacionRegistro.notifier).state=false;
                                 FocusScope.of(context).requestFocus(FocusNode());
                               },
                               child: const Icon(
@@ -240,6 +241,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                          Expanded(
                             child: GestureDetector(
                               onTap: (){
+                               
                                 FocusScope.of(context).requestFocus(FocusNode());
                               },
                               child: SingleChildScrollView(
@@ -268,7 +270,21 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                               MaterialButton(
                                 color: Colors.black,
                                 splashColor: Colors.white,
-                                onPressed: () {},
+                                onPressed: ()async {
+                                  ref.read(animacionCargando.notifier).state = true;
+                                  bool completado = await iniciar(entradaCorreoControlador.text, entradaClaveControlador.text, ref,true, entradaNombreControlador.text );
+                                  if(completado){
+                                      Navigator.pushReplacement(context,MaterialPageRoute(builder: (context) => const PantallaRecorridoNuevoUsuario(),));
+                                  }else{
+                                    ref.read(animacionCargando.notifier).state = false;     
+                                     showDialog(context: context, builder: (context) => Dialog(
+                                      child: Padding(
+                                          padding: const EdgeInsets.only(top: 40.0, bottom: 40, left: 20,right: 20),
+                                        child: Text(ref.watch(mostrarMensaje), textAlign: TextAlign.center,),
+                                      ),
+                                    ),);
+                                  }
+                                },
                                 child: const Text(
                                   'Registrar',
                                   style: TextStyle(color: Colors.white),
@@ -295,7 +311,7 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                               BotonPrimario(
                                 contenido: Image.asset('assets/google_logo.png'),
                                 sePreciona: () => () {
-                                  animacionCargando.forward();
+                                //  animacionCargando.forward();
                                   inciarConGoogle(context);
                                 }
                               ),
@@ -319,16 +335,8 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
                 ),
               ),
               ZoomIn(
-                animate: false,
-                manualTrigger: true,
-                controller: (controller) {
-                  animacionCargando = controller;
-                },
-                child: GestureDetector(
-                  onTap: (){
-                    animacionCargando.reset();
-                  },
-                  child: const Cargando()))
+                animate: ref.watch(animacionCargando),
+                child: const Cargando())
             ],
           ),
         ),
@@ -336,42 +344,37 @@ class PantallaInicioSesionState extends ConsumerState<PantallaInicioSesion> {
     );
   }
 
-Future iniciar(String correo, String clave) async{
+Future<bool> iniciar(String correo, String clave, WidgetRef ref, bool registro, String? nombre) async{
  if (!RegExp(r"^[a-zA-Z0-9.a-zA-Z0-9.!#$%&'*+-/=?^_`{|}~]+@[a-zA-Z0-9]+\.[a-zA-Z]+")
       .hasMatch(correo)) {
-    // ref.read(showMensaje.notifier).state =
-    //     'No es un correo valido';
-    // controllerAnim.showMensaje.reset();
-    // controllerAnim.showMensaje.forward();
-    return;
+    ref.read(mostrarMensaje.notifier).state = 'No es un correo valido';
+    ref.read(animacionCargando.notifier).state = false;
+    return false;
   }
   if (clave.length < 6) {
-    // ref.read(showMensaje.notifier).state =
-    //     'La clave debe ser mayor a 6 digitos 🧐';
-    // controllerAnim.showMensaje.reset();
-    // controllerAnim.showMensaje.forward();
-    return;
+    ref.read(mostrarMensaje.notifier).state = 'La clave debe ser mayor a 6 digitos 🧐';
+    ref.read(animacionCargando.notifier).state = false;
+    return false;
   }
-  // controllerAnim.showalerta.reset(); // cargando
-  // controllerAnim.showalerta.forward(); 
-  final yaInicio = await iniciarSesion(correo, clave);
-  if (context.mounted && yaInicio) {
-    Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaBase(),));
-  } else {
-    if (!yaInicio) {
-    //   controllerAnim.showalerta.reverse();
-    //   ref.read(showMensaje.notifier).state =
-    //       'Usuario o clave incorrectos 🚿';
-    //   controllerAnim.showMensaje.reset();
-    //   controllerAnim.showMensaje.forward();
-    // } else {
-    //   controllerAnim.showalerta.reverse();
-    //   ref.read(showMensaje.notifier).state =
-    //       'Sucedió un error, Intenta de nuevo 😉';
-    //   controllerAnim.showMensaje.reset();
-    //   controllerAnim.showMensaje.forward();
+  if(!registro){
+    final yaInicio = await iniciarSesion(correo, clave);
+    if (context.mounted && yaInicio) {
+      Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaBase(),));
+    } else {
+      if (!yaInicio) {
+        ref.read(mostrarMensaje.notifier).state = 'Usuario o clave incorrectos 🚿';
+        ref.read(animacionCargando.notifier).state = false;
+      }
     }
+  }else{
+    final registroCompleto = await registrarUsuario(correo, clave, nombre!);
+    if(registroCompleto.isEmpty){
+      return true;
+    }
+    ref.read(mostrarMensaje.notifier).state = registroCompleto;
+    return false;
   }
+  return false;
   }
 }
 

@@ -1,3 +1,5 @@
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mecha_app/controladores/leer_escribir_periodos.dart';
@@ -46,7 +48,8 @@ class PantallaEleguirPeriodo extends ConsumerWidget {
                     MaterialButton(
                       color: Theme.of(context).primaryColor,
                       onPressed: (){
-                        agregarPeriodo(Periodo(facultad: ref.watch(crearPeriodoFacultad).text, nombre:ref.watch(crearPeriodoNombre).text, enCurso: true ));
+                        agregarPeriodo(Periodo(codigo:'${ref.watch(crearPeriodoNombre).text}${ref.watch(crearPeriodoFacultad).text}' ,instituto: ref.watch(instritutoSelecionado),facultad: ref.watch(crearPeriodoFacultad).text, nombre:ref.watch(crearPeriodoNombre).text, enCurso: true ));
+                        
                         Navigator.pop(context);
                     },
                     child: Text('Crear', style: TextStyle(color: Theme.of(context).secondaryHeaderColor),),
@@ -62,8 +65,8 @@ class PantallaEleguirPeriodo extends ConsumerWidget {
       body: Column(children: [
         Text('Estos son los periodos habilitados en este momento dentro del Instituto, Elige en el que estas o crea el tuyo personal', style: TextStyle(fontSize: 18, color: Theme.of(context).indicatorColor), textAlign: TextAlign.center,),
         Expanded(
-          child: FutureBuilder(
-            future: obtenerPeriodo(ref.watch(instritutoSelecionado)),
+          child: StreamBuilder(
+            stream: obtenerPeriodo(ref.watch(instritutoSelecionado)),
             builder: (context, snapshot) {
               if(snapshot.hasData){
                 List<Periodo> periodosEnCuros = snapshot.data!;
@@ -81,6 +84,7 @@ class PantallaEleguirPeriodo extends ConsumerWidget {
                       return GestureDetector(
                         onTap: (){
                           ref.read(periodoSelecionado.notifier).state= periodosEnCuros[index].codigo;
+                          agsinarPeridoUsuario( FirebaseAuth.instance.currentUser!.uid,periodosEnCuros[index].codigo);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaAgregarMateria(),));
                         },
                         child: Container(
@@ -103,5 +107,11 @@ class PantallaEleguirPeriodo extends ConsumerWidget {
         )
       ],),
     );
+  }
+  void agsinarPeridoUsuario(String usuarioID, String periodoCodigo){
+    final referenciaRealTime = FirebaseDatabase.instance.ref().child('usuarios').child(usuarioID);
+    referenciaRealTime.update({
+      'peridoActual':periodoCodigo
+    });
   }
 }

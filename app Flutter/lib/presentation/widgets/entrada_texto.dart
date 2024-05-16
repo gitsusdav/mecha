@@ -62,7 +62,7 @@ class EntradaTexto extends StatelessWidget {
                 width: 40,
                 child: IconButton(
                   splashRadius: 20,
-                  icon: mostrarClave? const Icon(Icons.remove_red_eye_sharp) : const Icon(Icons.visibility_off) ,
+                  icon: mostrarClave? const Icon(Icons.remove_red_eye_sharp, color: Colors.black,) : const Icon(Icons.visibility_off,color: Colors.black,) ,
                   onPressed: mostrar!(),
                 )),
             const SizedBox(

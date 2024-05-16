@@ -3,10 +3,12 @@ class Periodo {
   String nombre ='';
   bool enCurso = false;
   String codigo = '';
+  String instituto ='';
   Periodo({
     required this.facultad,
     required this.nombre,
     this.enCurso = false,
+    required this.instituto,
     this.codigo = '',
   });
 
@@ -14,6 +16,7 @@ class Periodo {
       : facultad = map['facultad'],
         nombre = map['nombre'],
         codigo = map['codigo'],
+        instituto = map['instituto'],
         enCurso = map['enCurso'];
 
   Map<String, dynamic> toMap() {
@@ -21,7 +24,8 @@ class Periodo {
       'facultad': facultad,
       'nombre': nombre,
       'enCurso': enCurso,
-      'codigo': codigo
+      'codigo': codigo,
+      'instituto':instituto
     };
   }
 }

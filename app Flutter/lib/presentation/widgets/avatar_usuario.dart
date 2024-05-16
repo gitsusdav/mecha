@@ -15,22 +15,26 @@ class AvatarUsuario extends StatelessWidget {
       child: Padding(
         padding: const EdgeInsets.all(4.0),
         child: Center(
-          child: Container(
-            width: 50,
-            height: 50,
-              decoration: const BoxDecoration(
-              shape: BoxShape.circle,
-            color:Color.fromARGB(255, 31, 46, 177),),
-          ),
+          child: SizedBox(
+            width: 40,
+            height:40,
+              child: ClipRRect(
+                borderRadius: BorderRadius.circular(500),
+                child: Image.network(imagen,
+                errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, color:Colors.black),
+                ) ),
+            )
         ),
       ),
     ): 
-    Container(
-          width: 50,
-          height: 50,
-            decoration: const BoxDecoration(
-            shape: BoxShape.circle,
-          color:Color.fromARGB(255, 31, 46, 177),),
+    SizedBox(
+        width: 40,
+        height:40,
+          child: ClipRRect(
+            borderRadius: BorderRadius.circular(500),
+            child: Image.network(imagen,
+            errorBuilder: (context, error, stackTrace) => const Icon(Icons.person, color:Colors.black),
+            ) ),
         )
     ;
   }

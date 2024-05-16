@@ -18,9 +18,9 @@ class PantallaHistorialPeriodo extends StatelessWidget {
       ),
       body:  Column(
         children: [
-          Padding(
-            padding: const EdgeInsets.all(8.0),
-            child: const Text('Estas son las Materias que fueron registradas por los estudiantes para este periodo'),
+          const Padding(
+            padding:  EdgeInsets.all(8.0),
+            child:  Text('Estas son las Materias que fueron registradas por los estudiantes para este periodo'),
           ),
           Expanded(
             child: Padding(

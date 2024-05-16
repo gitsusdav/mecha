@@ -1,4 +1,6 @@
 import 'package:animate_do/animate_do.dart';
+import 'package:firebase_auth/firebase_auth.dart';
+import 'package:firebase_database/firebase_database.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_riverpod/flutter_riverpod.dart';
 import 'package:mecha_app/controladores/leer_escribir_institutos.dart';
@@ -72,6 +74,7 @@ class PantallaConfiguracionInicial extends ConsumerWidget {
                             return;
                           }
                           ref.read(instritutoSelecionado.notifier).state= enBaseDeDatos[index].codigo;
+                          asignarInstitutoUsuario(FirebaseAuth.instance.currentUser!.uid,enBaseDeDatos[index].codigo);
                           Navigator.push(context, MaterialPageRoute(builder: (context) => const PantallaEleguirPeriodo(),));
                         },
                         child: Container(
@@ -107,6 +110,7 @@ class PantallaConfiguracionInicial extends ConsumerWidget {
               animate: ref.watch(mostrarCrearInstituto),
               child: GestureDetector(
                 onTap: (){
+                  FocusScope.of(context).requestFocus(FocusNode());
                   ref.read(mostrarCrearInstituto.notifier).state = false;
                 },
                 child: Container(
@@ -141,13 +145,17 @@ class PantallaConfiguracionInicial extends ConsumerWidget {
                           MaterialButton(
                             color: Theme.of(context).primaryColor,
                             onPressed: () async{
-                                        
+                              if( ref.watch(crearInstitutoNombre).text.isEmpty){
+                                showDialog(context: context, builder: (context) => const Dialog(
+                                  child:  Text('Escribe el nombre del Instituto que vas agregar'),
+                                ),);
+                                return;
+                              }          
                               Instituto nuevo = Instituto(codigo: ref.watch(crearInstitutoNombre).text, descripcion: '', miembros: 1,nombre: ref.watch(crearInstitutoNombre).text, privado: false );
                               await agregarInstituto(nuevo);
                               ref.read(mostrarCrearInstituto.notifier).state = false;          
                             },
                             child: Text('Crear',style: TextStyle(color: Theme.of(context).secondaryHeaderColor) ,),),
-                            Text('Si crear un instituto, será visible solo para ti, comenzará a estar en la lista pública cuando más de 20 personas agreguen el mismo Instituto. Comparte el nombre del Instituto', textAlign: TextAlign.center, style: TextStyle(fontSize: 16,color: Theme.of(context).indicatorColor),),
                       
                         ],),  
                       ),
@@ -158,6 +166,12 @@ class PantallaConfiguracionInicial extends ConsumerWidget {
           ],
         )
     );
+  }
+  void asignarInstitutoUsuario(String usuarioID,String instituto){
+    final referenciaRealTime = FirebaseDatabase.instance.ref().child('usuarios').child(usuarioID);
+    referenciaRealTime.update({
+      'instituto':instituto
+    });
   }
 }
 
@@ -179,7 +193,7 @@ class CrearInstituto extends ConsumerWidget {
        child: Center(
          child: Icon(Icons.add_circle_outline_rounded, color: Theme.of(context).indicatorColor, size: 30,)
        ),
-                        ),
+      ),
     );
   }
 }

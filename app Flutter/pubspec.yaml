@@ -22,6 +22,9 @@ dependencies:
   flutter_swiper_view: ^1.1.8
   cloud_firestore: ^4.17.3
   flutter_native_splash: ^2.4.0
+  firebase_database: ^10.5.5
+  shared_preferences: ^2.2.3
+  shimmer: ^3.0.0
 
 dev_dependencies:
   flutter_test:
